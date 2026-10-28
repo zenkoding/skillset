@@ -1,0 +1,54 @@
+name: Bug report
+description: Report behavior that is not working as expected
+labels: ["needs-triage", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Title tip:** Name the symptom so others can find the report.
+
+        Check [existing issues](https://github.com/zenkoding/skillset/issues) for a matching report. See the [workflow](https://github.com/zenkoding/skillset/blob/main/CONTRIBUTING.md#workflow) for what happens next.
+
+        This issue is public. Remove credentials, internal repo names, hostnames and other identifying details.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened, and how does it affect your work? Include the command, skill or prompt and relevant output when applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction_or_evidence
+    attributes:
+      label: Reproduction or evidence
+      description: Share steps to reproduce, a minimal example, or evidence such as sanitized logs or screenshots. If reproduction is uncertain, describe what you observed and when.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "skillset commit (`git rev-parse --short HEAD`) and host version (`claude --version` or `codex --version`)."
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, shell and Go version, where relevant.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: When did this start? Include relevant changes, workarounds or troubleshooting already tried.

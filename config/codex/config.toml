@@ -1,0 +1,21 @@
+# Codex defaults: merge missing keys into ~/.codex/config.toml by hand.
+# App-managed connections, credentials, projects and unrelated preferences stay local.
+model = "gpt-6-astra"
+model_reasoning_effort = "medium"
+plan_mode_reasoning_effort = "high"
+approval_policy = "on-request"
+approvals_reviewer = "guardian_subagent"
+sandbox_mode = "workspace-write"
+
+[agents]
+# Safe fallback for unspecified, potentially ambiguous work. Explicit narrow
+# tasks use Luna through the working agreement.
+default_subagent_model = "gpt-6.1-sol"
+default_subagent_reasoning_effort = "high"
+
+[features]
+multi_agent = true
+
+[sandbox_workspace_write]
+# Private project knowledge stores (config/instructions/shared.md, "Project knowledge"), shared with Claude Code.
+writable_roots = ["~/.local/share/agents"]

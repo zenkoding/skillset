@@ -1,0 +1,45 @@
+# dcg configuration for skillset
+# https://github.com/Dicklesworthstone/destructive_command_guard
+#
+# Packs mirror the deny categories in config/claude/settings.json.
+# Core packs (filesystem + git) are always enabled by dcg implicitly.
+#
+# NOTE: strict_git was evaluated and excluded — it blocks `git rebase` which is
+# in our allow list. The core.git pack handles the truly dangerous git operations
+# (push --force, reset --hard, branch -D, clean -f, stash drop/clear).
+
+[packs]
+custom_paths = [
+    "~/.config/dcg/packs/*.yaml",
+]
+
+enabled = [
+    # Core: filesystem (rm -rf) and git (force-push, reset --hard, etc.)
+    # These are enabled by default, but listed explicitly for clarity.
+    "core.filesystem",
+    "core.git",
+
+    # Kubernetes: philosophy is "Read Everything, Write Nothing"
+    # All mutation operations require human confirmation.
+    "kubernetes.kubectl",
+    "kubernetes.helm",
+    "kubernetes.kustomize",
+
+    # Containers: registry ops, image deletion, volume pruning
+    "containers.docker",
+    "containers.compose",
+
+    # GitHub CLI: PR merge/approve/close, issue lifecycle, releases
+    "platform.github",
+
+    # Databases: defense-in-depth (not in allow list at all)
+    "database.postgresql",
+    "database.mysql",
+    "database.mongodb",
+    "database.redis",
+    "database.sqlite",
+
+    # System: chmod 777, dangerous disk ops (dd, mkfs, fdisk)
+    "system.permissions",
+    "system.disk",
+]

@@ -1,0 +1,116 @@
+# Custom pack: kubectl flag-bypass fix
+#
+# The built-in kubernetes.kubectl pack fails to match destructive commands
+# when global flags (--context, -n, --kubeconfig, etc.) are interspersed
+# between 'kubectl' and the subcommand. The keyword pre-filter sees
+# "kubectl --context dev delete ..." and skips evaluation because it
+# expects 'kubectl' and 'delete' to be adjacent tokens.
+#
+# This pack uses simple .* wildcards between significant tokens.
+# Since evaluation is already gated on the 'kubectl' keyword, these
+# patterns only run against kubectl commands — false positives are unlikely.
+
+schema_version: 1
+id: custom.kubectl_flag_bypass
+name: "kubectl flag-bypass fix"
+version: "1.1.0"
+description: |
+  Catches destructive kubectl commands when global flags like --context,
+  --namespace, or --kubeconfig are placed anywhere in the command, bypassing
+  the built-in kubernetes.kubectl pack's keyword scanner.
+
+keywords:
+  - kubectl
+
+safe_patterns:
+  # uncordon is the safe reverse of cordon — don't block it
+  - name: uncordon-is-safe
+    pattern: \bkubectl\b.*\buncordon\b
+    description: "uncordon restores scheduling on a node (safe reverse of cordon)"
+
+destructive_patterns:
+  # --- delete namespace (most dangerous single command) ---
+  - name: delete-namespace-with-flags
+    pattern: \bkubectl\b.*\bdelete\b.*\b(?:namespace|ns)\b
+    severity: critical
+    description: "kubectl delete namespace removes the entire namespace and ALL resources within it."
+    explanation: |
+      Deleting a namespace destroys EVERYTHING inside it — deployments, pods,
+      services, configmaps, secrets, PVCs, ingresses, RBAC resources.
+
+      This is irreversible. Preview what would be deleted:
+        kubectl get all -n <namespace>
+
+  # --- delete --all (mass deletion in a namespace) ---
+  - name: delete-all-with-flags
+    pattern: \bkubectl\b.*\bdelete\b.*\s--all\b
+    severity: critical
+    description: "kubectl delete --all removes every resource of that type in the namespace."
+    explanation: |
+      --all deletes every resource of the specified type. This is often
+      run accidentally when intending to delete a single resource.
+
+      Safer: delete specific resources by name.
+
+  # --- delete -f (file-based deletion) ---
+  - name: delete-file-with-flags
+    pattern: \bkubectl\b.*\bdelete\b.*\s-f\s
+    severity: high
+    description: "kubectl delete -f removes all resources defined in a file/directory."
+    explanation: |
+      Deleting by file can remove many resources at once. Review the file
+      contents first:
+        kubectl diff -f <file>
+
+  # --- drain (evicts all pods from a node) ---
+  - name: drain-with-flags
+    pattern: \bkubectl\b.*\bdrain\b
+    severity: high
+    description: "kubectl drain evicts all pods from a node, causing service disruption."
+    explanation: |
+      Draining a node evicts all workloads. In small clusters this can
+      cause outages. Ensure you have sufficient capacity on other nodes.
+
+      Check what's running first:
+        kubectl get pods --field-selector spec.nodeName=<node>
+
+  # --- cordon (prevents scheduling on a node) ---
+  - name: cordon-with-flags
+    pattern: \bkubectl\b.*\bcordon\b
+    severity: critical
+    description: "kubectl cordon prevents new pods from being scheduled on a node."
+    explanation: |
+      Cordoning is reversible (uncordon), but can cause scheduling pressure
+      if done on multiple nodes. Check node status first:
+        kubectl get nodes
+
+  # --- scale to zero (effectively kills a service) ---
+  - name: scale-zero-with-flags
+    pattern: \bkubectl\b.*\bscale\b.*--replicas[= ]0\b
+    severity: high
+    description: "kubectl scale --replicas=0 removes all running pods for a workload."
+    explanation: |
+      Scaling to zero effectively takes a service offline. This might be
+      intentional for cost savings but is destructive in production.
+
+      Check current state first:
+        kubectl get deploy <name> -o wide
+
+  # --- replace --force (delete + recreate, causes downtime) ---
+  - name: replace-force-with-flags
+    pattern: \bkubectl\b.*\breplace\b.*--force\b
+    severity: high
+    description: "kubectl replace --force deletes and recreates the resource, causing downtime."
+    explanation: |
+      --force with replace deletes the resource first, then creates it.
+      This causes downtime. Use 'kubectl apply' for zero-downtime updates.
+
+  # --- apply from stdin (opaque input, hard to audit) ---
+  - name: apply-stdin-with-flags
+    pattern: \bkubectl\b.*\bapply\b.*\s-f\s+-\s*$
+    severity: critical
+    description: "kubectl apply -f - applies resources from stdin, which is hard to audit."
+    explanation: |
+      Piping manifests via stdin makes it difficult to review what's being
+      applied. Prefer writing to a file first, then reviewing with:
+        kubectl diff -f <file>

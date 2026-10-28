@@ -1,0 +1,35 @@
+# Today's whole setup as one set. Its files stay where they are; later PRs
+# split it into smaller sets.
+name = "legacy"
+description = "Full setup: shared instructions, all skills, Claude settings, statusline and dcg config"
+hosts = ["claude", "codex"]
+
+shared = "../../instructions/shared.md"
+skills = ["../../skills"]
+settings = "../../claude/settings.json"
+
+[instructions]
+claude = "../../instructions/claude.md"
+codex = "../../instructions/codex.md"
+
+[[files]]
+home = ".claude/statusline.sh"
+hosts = ["claude"]
+path = "../../claude/statusline.sh"
+
+[[files]]
+home = ".claude/hooks/project-knowledge.sh"
+path = "../../claude/hooks/project-knowledge.sh"
+
+[[files]]
+home = ".claude/output-styles"
+hosts = ["claude"]
+path = "../../claude/output-styles"
+
+[[files]]
+home = ".config/dcg/config.toml"
+path = "../../dcg/config.toml"
+
+[[files]]
+home = ".config/dcg/packs"
+path = "../../dcg/packs"

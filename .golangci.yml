@@ -1,0 +1,19 @@
+version: "2"
+
+linters:
+  enable:
+    - misspell
+  settings:
+    errcheck:
+      exclude-functions:
+        - (*github.com/spf13/cobra.Command).MarkFlagRequired
+        - fmt.Fprintln
+        - fmt.Fprintf
+    misspell:
+      ignore-rules:
+        - strat
+  exclusions:
+    rules:
+      - path: "_test\\.go"
+        linters:
+          - errcheck
