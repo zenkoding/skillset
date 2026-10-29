@@ -5,6 +5,8 @@ Build your own agent setup for supported agents from composable **sets**: instru
 ## Quick start
 
 ```sh
+brew install zenkoding/tap/skillset
+# or
 go install github.com/zenkoding/skillset/cmd/skillset@latest
 
 skillset init        # pick hosts (Claude, Codex) and sets; required sets are added
@@ -86,3 +88,15 @@ make help        # everything else
 Optional extras: `make install/dcg` installs the dcg binary and `make install/plugins` the Claude plugins, marketplaces and MCP servers listed in `config/claude/settings.json`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow.
+
+## Releasing
+
+Push a `v*` tag. `.github/workflows/release.yml` runs GoReleaser
+(`.goreleaser.yaml`): darwin/linux amd64/arm64 archives go to a GitHub
+release, and the `skillset` formula in `zenkoding/homebrew-tap` is updated.
+The same tag is the catalog ref `skillset update` moves to.
+
+The tap push uses a GitHub App installed on `zenkoding/homebrew-tap` with
+Contents read and write. The workflow reads its ID from the Actions variable
+`RELEASE_APP_ID` and its private key from the secret `RELEASE_APP_PRIVATE_KEY`,
+and mints a one-hour token per run.

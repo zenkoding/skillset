@@ -56,11 +56,15 @@ type options struct {
 	sets    []string
 }
 
+// version is set at release time with -ldflags "-X main.version=...".
+var version = "dev"
+
 func newRootCmd(in io.Reader, out io.Writer) *cobra.Command {
 	opts := &options{}
 	root := &cobra.Command{
 		Use:           "skillset",
 		Short:         "Install agent instructions, skills and settings from composable sets",
+		Version:       version,
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}

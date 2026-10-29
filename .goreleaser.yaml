@@ -1,0 +1,53 @@
+# GoReleaser config for skillset. Releases run from .github/workflows/release.yml
+# on v* tags; CI runs `goreleaser check` when this file changes.
+version: 2
+
+project_name: skillset
+
+builds:
+  - id: skillset
+    main: ./cmd/skillset
+    binary: skillset
+    env:
+      - CGO_ENABLED=0
+    goos: [darwin, linux]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+# Formula in zenkoding/homebrew-tap, installed as zenkoding/tap/skillset.
+# `brews` is deprecated from GoReleaser v2.10, so the workflows pin v2.9.0.
+# HOMEBREW_TAP_TOKEN is a short-lived GitHub App token minted by release.yml.
+brews:
+  - name: skillset
+    repository:
+      owner: zenkoding
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/zenkoding/skillset
+    description: Build your own agent setup from composable sets
+    license: MIT
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    test: |
+      assert_match version.to_s, shell_output("#{bin}/skillset --version")
