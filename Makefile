@@ -4,11 +4,12 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-# Colors for output
-BLUE := \033[0;34m
-GREEN := \033[0;32m
-YELLOW := \033[1;33m
-NC := \033[0m
+# Colors for output. Real escape bytes, because macOS bash's builtin echo
+# prints \033 literally.
+BLUE := $(shell printf '\033[0;34m')
+GREEN := $(shell printf '\033[0;32m')
+YELLOW := $(shell printf '\033[1;33m')
+NC := $(shell printf '\033[0m')
 
 .PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
 
