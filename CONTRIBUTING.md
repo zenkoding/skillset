@@ -51,5 +51,3 @@ make release BUMP=minor      # force a bump: patch, minor or major
 ```
 
 `scripts/release.sh` computes the tag with [svu](https://github.com/caarlos0/svu) (a `svu` on PATH, else `go run` at a pinned version). The default `next` reads commit titles since the last tag: `feat:` bumps minor, anything else bumps patch, and versions stay on v0 until `BUMP=major`. It refuses unless `main` is checked out, clean and in sync with `origin/main`.
-
-The tap push uses an SSH deploy key with write access on `zenkoding/homebrew-tap`. Its private half is the Actions secret `HOMEBREW_TAP_DEPLOY_KEY` in this repo.
