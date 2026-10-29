@@ -14,12 +14,12 @@ NC := \033[0m
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
-GOLANGCI_LINT_VERSION := 2.6.1
+GOLANGCI_LINT_VERSION := 2.15.0
 GOLANGCI_LINT_BINARY  := $(BIN_DIR)/golangci-lint-$(GOLANGCI_LINT_VERSION)
 
 $(GOLANGCI_LINT_BINARY):
 	@mkdir -p $(BIN_DIR)
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BIN_DIR) v$(GOLANGCI_LINT_VERSION)
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v$(GOLANGCI_LINT_VERSION)/install.sh | sh -s -- -b $(BIN_DIR) v$(GOLANGCI_LINT_VERSION)
 	@mv $(BIN_DIR)/golangci-lint $@
 
 help: ## Show this help message
