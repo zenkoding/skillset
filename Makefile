@@ -10,7 +10,7 @@ GREEN := \033[0;32m
 YELLOW := \033[1;33m
 NC := \033[0m
 
-.PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
+.PHONY: help init plan apply install uninstall uninstall/plan bin release release/plan install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
@@ -57,6 +57,12 @@ uninstall: ## Remove the links and unedited settings copies apply installed
 bin: ## Install the skillset binary into GOPATH/bin
 	@go install ./cmd/skillset
 	@echo "$(GREEN)✓$(NC) Installed $(shell go env GOPATH)/bin/skillset"
+
+release/plan: ## Show the next release tag (BUMP=next|patch|minor|major)
+	@./scripts/release.sh -n $(BUMP)
+
+release: ## Tag the next release with svu and push it (BUMP=next|patch|minor|major)
+	@./scripts/release.sh $(BUMP)
 
 install/plugins: ## Install Claude Code plugins, marketplaces, and MCP servers
 	@./scripts/install-plugins.sh

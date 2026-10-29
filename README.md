@@ -88,14 +88,3 @@ make help        # everything else
 Optional extras: `make install/dcg` installs the dcg binary and `make install/plugins` the Claude plugins, marketplaces and MCP servers listed in `config/claude/settings.json`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow.
-
-## Releasing
-
-Push a `v*` tag. `.github/workflows/release.yml` runs GoReleaser
-(`.goreleaser.yaml`): darwin/linux amd64/arm64 archives go to a GitHub
-release, and the `skillset` formula in `zenkoding/homebrew-tap` is updated.
-The same tag is the catalog ref `skillset update` moves to.
-
-The tap push uses an SSH deploy key with write access on
-`zenkoding/homebrew-tap`. Its private half is the Actions secret
-`HOMEBREW_TAP_DEPLOY_KEY` in this repo.
