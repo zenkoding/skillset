@@ -24,7 +24,7 @@ Done when you can state in two sentences what the change is meant to do and whic
 
 Read, before judging anything:
 
-- **The PR body.** Its `### Review guide`, when present (written by `publish-pr`): start from its Verdict, Must check items and High files, then verify the rest of the diff rather than trusting the guide.
+- **The PR body.** Its `### Reviewer notes` (written by `publish-pr`): start from the Merge danger and, when present, the Verdict, Must check items and High files, then verify the rest of the diff rather than trusting the notes. Its How to test steps are what a reviewer would run.
 - **The intent.** The linked issue, or the tracker's plan when the repo uses one: `docs/agents/issue-tracker.md` says where plans live and how to find one from a branch name, PR title or body. Its acceptance criteria (**Done when** or similar) are what the change is judged against.
 - **The rules.** `REVIEW.md` at the repo root, else the [default rules](references/default-rules.md). Then `AGENTS.md` or `CLAUDE.md`, the docs catalog in `docs/agents/README.md`, `CONTEXT.md`, the vision or non-goals doc when the repo has one, and ADRs in the touched area.
 - **The code.** Each touched file around the changed lines, not only the hunks; callers of changed interfaces; recent history. Run the project's build, lint and tests when that is cheap and safe; record what ran and the result.
@@ -34,7 +34,7 @@ Done when every changed file is matched to the rules that govern it and you hold
 ## 3. Review, in order of importance
 
 1. **Product fit.** Does the change belong in this project? Check it against the vision, non-goals and `CONTEXT.md`.
-2. **Rationale.** Does it add a useful feature, make a necessary enhancement, or fix a real issue? Give each acceptance criterion and each Review guide Must check item a verdict: met, partial, missing, or not checkable from the diff. Note scope nobody asked for.
+2. **Rationale.** Does it add a useful feature, make a necessary enhancement, or fix a real issue? Give each acceptance criterion and each Reviewer notes Must check item a verdict: met, partial, missing, or not checkable from the diff. Note scope nobody asked for.
 3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here.
 4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when security-sensitive code is in the diff. Note missing or weak tests for new behaviour.
 
