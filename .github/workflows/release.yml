@@ -4,8 +4,8 @@ on:
   push:
     tags: ["v*"]
 
-# Actions are SHA-pinned: this job holds a contents: write token and mints a
-# token that can push to zenkoding/homebrew-tap.
+# Actions are SHA-pinned: this job holds a contents: write token and the
+# deploy key that can push to zenkoding/homebrew-tap.
 permissions:
   contents: write
 
@@ -22,15 +22,6 @@ jobs:
         with:
           go-version-file: go.mod
 
-      # One-hour token from the release GitHub App, limited to the tap repo.
-      - id: tap-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
-        with:
-          app-id: ${{ vars.RELEASE_APP_ID }}
-          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
-          owner: zenkoding
-          repositories: homebrew-tap
-
       - uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6.4.0
         with:
           distribution: goreleaser
@@ -39,4 +30,5 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_TOKEN: ${{ steps.tap-token.outputs.token }}
+          # Private half of a write deploy key on zenkoding/homebrew-tap.
+          HOMEBREW_TAP_DEPLOY_KEY: ${{ secrets.HOMEBREW_TAP_DEPLOY_KEY }}

@@ -35,13 +35,16 @@ changelog:
 
 # Formula in zenkoding/homebrew-tap, installed as zenkoding/tap/skillset.
 # `brews` is deprecated from GoReleaser v2.10, so the workflows pin v2.9.0.
-# HOMEBREW_TAP_TOKEN is a short-lived GitHub App token minted by release.yml.
+# The push uses an SSH deploy key with write access to the tap only.
 brews:
   - name: skillset
     repository:
       owner: zenkoding
       name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+      branch: main
+      git:
+        url: git@github.com:zenkoding/homebrew-tap.git
+        private_key: "{{ .Env.HOMEBREW_TAP_DEPLOY_KEY }}"
     directory: Formula
     homepage: https://github.com/zenkoding/skillset
     description: Build your own agent setup from composable sets

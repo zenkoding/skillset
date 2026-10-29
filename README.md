@@ -96,7 +96,6 @@ Push a `v*` tag. `.github/workflows/release.yml` runs GoReleaser
 release, and the `skillset` formula in `zenkoding/homebrew-tap` is updated.
 The same tag is the catalog ref `skillset update` moves to.
 
-The tap push uses a GitHub App installed on `zenkoding/homebrew-tap` with
-Contents read and write. The workflow reads its ID from the Actions variable
-`RELEASE_APP_ID` and its private key from the secret `RELEASE_APP_PRIVATE_KEY`,
-and mints a one-hour token per run.
+The tap push uses an SSH deploy key with write access on
+`zenkoding/homebrew-tap`. Its private half is the Actions secret
+`HOMEBREW_TAP_DEPLOY_KEY` in this repo.
