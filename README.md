@@ -5,6 +5,8 @@ Build your own agent setup for supported agents from composable **sets**: instru
 ## Quick start
 
 ```sh
+brew install zenkoding/tap/skillset
+# or
 go install github.com/zenkoding/skillset/cmd/skillset@latest
 
 skillset init        # pick hosts (Claude, Codex) and sets; required sets are added

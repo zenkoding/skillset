@@ -29,6 +29,8 @@ func TestCommands(t *testing.T) {
 		out   string // substring of stdout
 		error string // substring of the error; "" means success
 	}{
+		{"version", []string{"--version"}, "skillset version dev", ""},
+		{"help", []string{"--help"}, "Usage:", ""},
 		{"unknown set", []string{"plan", "--catalog", root, "--home", home, "--set", "nope"}, "", `unknown set "nope"`},
 		{"plan", []string{"plan", "--catalog", root, "--home", home}, "1 to render, 1 to link", ""},
 		{"apply", []string{"apply", "--catalog", root, "--home", home}, "installed", ""},

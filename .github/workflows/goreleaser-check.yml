@@ -1,0 +1,25 @@
+name: GoReleaser check
+
+on:
+  pull_request:
+    paths:
+      - .goreleaser.yaml
+      - .github/workflows/release.yml
+      - .github/workflows/goreleaser-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: goreleaser check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          # Keep in step with release.yml.
+          version: v2.9.0
+          args: check
