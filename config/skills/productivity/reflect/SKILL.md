@@ -18,7 +18,7 @@ Done when you can name the work in scope and where it was tracked.
 Read every source in scope that you can reach, not a sample. List the ones you could not reach; they go in the report.
 
 1. **Tracker.** The epic or issues and their comments, as `docs/agents/issue-tracker.md` says. Open every doc they link through the matching adapter (`docs/agents/product-docs.md` for a docs store): specs, briefs, research, handovers. Read handovers and results first.
-2. **Committed debrief output.** What `debrief` filed in the repo: `docs/agents/*.md` and `docs/adr/` entries changed by the work in scope.
+2. **Committed debrief output.** What `debrief` filed in the repo: `docs/agents/*.md` and `docs/adr/` entries changed by the work in scope, plus any debrief notes a user asked to commit (search the repo for `### Debrief:` headings).
 3. **PRs.** Each PR in scope with its review comments and reviews (`gh pr view <n> --comments`, `gh api repos/{owner}/{repo}/pulls/<n>/reviews`), its CI failures, and reverts or fixup commits in git history.
 4. **Local only, when present.** Private debrief notes under `<store>/notes/` (the store path is in "Project knowledge" in your user instructions); session transcripts: Claude Code under `~/.claude/projects/<project>/*.jsonl` (`<project>` is the repo path with `/` replaced by `-`), Codex under `~/.codex/sessions/`.
 
