@@ -15,6 +15,8 @@ debriefed: CI fixes, review replies, scheduled runs.
 
 ## 1. Write the debrief
 
+When the objective has a `brief.md` from `brief` in its notes, read it first: Decisions and Friction name where the work left the plan.
+
 Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 
 ```markdown
@@ -43,6 +45,8 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
   private note paths: `publish-pr`'s reviewer notes quote them verbatim.
 - Every `path:line` in Worth understanding exists at the final commit; check
   it before posting.
+- Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.
+- When the objective finished the last open feature of an epic or milestone, offer `retrospect` for it.
 - A friction item is **seen before** when an earlier note under
   `<store>/notes/` records the same friction: grep the notes for its key
   words. Only seen-before friction gets a Proposed fix.
