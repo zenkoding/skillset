@@ -28,6 +28,6 @@ Build one **feature** from its **plan** to a PR into the default branch. The fea
 
 7. **Open the PR.** Commit, push, and open one PR with `publish-pr`, titled with the identifier first (`<ID>: <feature title>`) so the tracker links it. Its **How to test** starts from the plan's. Add the PR link to the issue. Done when the PR is open and its title carries the identifier.
 
-   A feature too large to review as one PR becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the issue. The issue goes In Review when the first PR opens and Done when the last merges.
+   A feature whose diff would be large ([work sizing](references/work-sizing.md)) becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the issue. The issue goes In Review when the first PR opens and Done when the last merges.
 
 8. **Hand to review.** When the tracker moves the issue to In Review as the PR opens, check it moved and set it by hand only if it didn't. Mark the PR ready and add `ready-for-agent` when the repo uses `review-pr` routines. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.

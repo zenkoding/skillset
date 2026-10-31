@@ -1,6 +1,6 @@
 # Working notes and resumption
 
-Use notes when the task is large enough to benefit from them or may need to resume. Choose a private writable location consistent with the host/project instructions and record its path. Small tasks need no separate tracking ceremony.
+Use notes when the task is substantial, as [work sizing](work-sizing.md) defines it; it also says where they go. Record their path. Small tasks need no separate tracking ceremony.
 
 Capture the question, scope and authorization, source identities/revisions, useful evidence, unresolved questions, checks actually run, and next steps. Keep enough context to resume without copying unrelated private data. Update notes at meaningful milestones.
 

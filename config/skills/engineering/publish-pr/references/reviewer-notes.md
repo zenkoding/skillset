@@ -4,10 +4,7 @@
 
 ## When to offer the full notes
 
-Offer only when creating the PR, and add them only on a yes. Updates refresh existing full notes but never offer them. An explicit request ("publish with full reviewer notes") adds them at any size, on create or update. Offer when either holds:
-
-- **500+ counted changed lines.** Count additions plus deletions, excluding lockfiles, generated or vendored files, pure renames and test fixtures.
-- **A risky area at any size**: public contracts or APIs, migrations or schema, auth, secrets or permissions, dependency manifests, or code many callers share.
+Offer only when creating the PR, and add them only on a yes. Updates refresh existing full notes but never offer them. An explicit request ("publish with full reviewer notes") adds them at any size, on create or update. Offer when the diff is **large** or touches a **risky area**, as [work sizing](work-sizing.md) defines them.
 
 The offer is one line: "This PR is large/risky (<reason>). Add full reviewer notes?"
 
@@ -41,9 +38,11 @@ How the change works belongs in **What**, and the hand-test steps in **How to te
 
 ## Verdicts
 
-- **✓ fast track**: mechanical or isolated; reading the diff once is enough.
-- **◐ quick review**: real logic, contained blast radius, covered by tests.
-- **⚠ careful review**: touches a risky area, changes behaviour callers rely on, or tests leave a gap.
+Pick by [work sizing](work-sizing.md), first match wins:
+
+- **⚠ careful review**: a risky area, a one-way door, a change to behaviour callers rely on, or a gap in the tests.
+- **✓ fast track**: trivial and not large; reading the diff once is enough.
+- **◐ quick review**: everything else: real logic, contained blast radius, covered by tests.
 
 ## Rules
 
