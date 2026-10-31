@@ -10,6 +10,8 @@ The person decides the goal, the non-goals, the "done when" and which epics exis
 
 ## 1. Gather where we are
 
+When the previous milestone is closed and no `retrospect` ran on it, offer one first (when installed): its product lessons are input for this milestone.
+
 Read, without asking the person for any of it:
 
 - The vision doc, the project-wide decisions doc when the repo has one, and the glossary.
