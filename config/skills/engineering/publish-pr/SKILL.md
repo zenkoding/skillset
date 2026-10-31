@@ -14,7 +14,7 @@ Resolve the head repository, branch and SHA, target base, and existing PR. A bra
 
 Inspect the relevant diff/history, project instructions, and dirty/index state. Run required checks. Keep unrelated edits and the index unchanged when publishing committed work; temporary PR metadata is never part of the staged change. Use an isolated checkout when necessary.
 
-When creating a PR whose diff crosses the [review guide](references/review-guide.md) threshold, offer one; add it when the user says yes or asked for it.
+When creating a PR whose diff crosses the [reviewer notes](references/reviewer-notes.md) threshold, offer the full notes; add them when the user says yes or asked for them.
 
 Compose only missing title/body fields using the [authoring guidance](references/pr-authoring-format.md). Preserve supplied text and treat input files as read-only. Prepare multiline text in a separate temporary body file. If approval is still needed, present the concrete result; reuse authorization already given for this publication.
 
@@ -22,7 +22,7 @@ Compose only missing title/body fields using the [authoring guidance](references
 
 Keep history intact unless cleanup serves the user's request. For authorized cleanup, preserve a backup ref and verify that history-only edits leave the tip tree unchanged. A rejected push is not permission to force: rewriting a published branch requires explicit authorization and an exact expected-SHA lease. Never force-update the default or base branch.
 
-Push to the verified head remote/ref. Reuse a matching existing PR and preserve its draft status and base; otherwise create a draft PR with explicit head/base and a body file. When updating a PR whose body has a review guide, refresh the guide against the final diff. Do not merge, publish a release, or post unrelated comments as part of opening a PR.
+Push to the verified head remote/ref. Reuse a matching existing PR and preserve its draft status and base; otherwise create a draft PR with explicit head/base and a body file. When updating a PR, refresh its Reviewer notes against the final diff. Do not merge, publish a release, or post unrelated comments as part of opening a PR.
 
 Verify the resulting PR identity and metadata. Clean up only run-owned temporary files using ordinary filesystem operations. If cleanup is unavailable, leave and report them; never reset, stash, force-checkout, or clean the user's checkout to remove PR metadata. Recheck that unrelated edits and index state are preserved.
 

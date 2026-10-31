@@ -103,7 +103,7 @@ repo private  <store>/README.md                catalog; outside the repo, never 
               <store>/*.md
               <store>/notes/<objective>/       session notes
 repo public   <repo>/docs/agents/README.md     catalog, committed
-              <repo>/docs/agents/*.md, docs/adr/, CONTEXT.md
+              <repo>/docs/agents/*.md, docs/adr/, CONTEXT.md, REVIEW.md
 user          these instructions and the installed skills
 
 <store> = ~/.local/share/agents/projects/<key>/
