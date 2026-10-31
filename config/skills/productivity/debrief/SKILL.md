@@ -46,6 +46,7 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 - Every `path:line` in Worth understanding exists at the final commit; check
   it before posting.
 - Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.
+- When the objective finished the last open feature of an epic or milestone, offer `retrospect` for it.
 - A friction item is **seen before** when an earlier note under
   `<store>/notes/` records the same friction: grep the notes for its key
   words. Only seen-before friction gets a Proposed fix.
