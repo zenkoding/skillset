@@ -1,12 +1,12 @@
 # Reviewer notes
 
-`### Reviewer notes` is the last section of a PR body. It tells the reviewer where the risk is and what to confirm, so attention goes to the few files and decisions that matter. Every PR carries **Merge danger** ([authoring guidance](pr-authoring-format.md)); large or risky PRs add the full notes below.
+`### Reviewer notes` is the last section of a PR body. It tells the reviewer where the risk is and what to confirm, so attention goes to the few files and decisions that matter. Every PR carries **Merge danger** ([authoring guidance](pr-authoring-format.md)); PRs with high Risk or a large diff add the full notes below.
 
 ## When to offer the full notes
 
-Offer only when creating the PR, and add them only on a yes. Updates refresh existing full notes but never offer them. An explicit request ("publish with full reviewer notes") adds them at any size, on create or update. Offer when the diff is **large** or touches a **risky area**, as [work sizing](work-sizing.md) defines them.
+Offer only when creating the PR, and add them only on a yes. Updates refresh existing full notes but never offer them. An explicit request ("publish with full reviewer notes") adds them at any size, on create or update. Offer when the change is high on **Risk** or the diff is **large**, as [work sizing](work-sizing.md) defines them.
 
-The offer is one line: "This PR is large/risky (<reason>). Add full reviewer notes?"
+The offer is one line: "This PR is high-risk/large (<reason>). Add full reviewer notes?"
 
 ## Template
 
@@ -38,11 +38,13 @@ How the change works belongs in **What**, and the hand-test steps in **How to te
 
 ## Verdicts
 
-Pick by [work sizing](work-sizing.md), first match wins:
+Confirm the [work sizing](work-sizing.md) axes on the final diff and its **What**, then pick, first match wins:
 
-- **⚠ careful review**: a risky area, a one-way door, a change to behaviour callers rely on, or a gap in the tests.
-- **✓ fast track**: trivial and not large; reading the diff once is enough.
-- **◐ quick review**: everything else: real logic, contained blast radius, covered by tests.
+- **⚠ careful review**: high Risk, a change to behaviour callers rely on, or a gap in the tests.
+- **◐ quick review**: high Complexity or Taste, or a large diff.
+- **✓ fast track**: trivial; reading the diff once is enough.
+
+When an axis came out higher than the plan or brief predicted, say which and why under **Contentious points**.
 
 ## Rules
 

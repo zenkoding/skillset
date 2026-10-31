@@ -16,7 +16,7 @@ Resolve the PR (`gh pr view`, `gh pr diff`); a URL resolves to its number first.
 
 Stop without reviewing when the PR is a draft, closed or merged, or the diff is empty. Also stop when a review carrying the `<!-- review-pr -->` marker already exists on the head SHA. A review on an older head means this is a re-review: review only the commits since that head, and never repeat a finding already posted.
 
-Size the change with [work sizing](references/work-sizing.md): its counted lines, whether it is large, which risky areas it touches, and its door (one-way or two-way).
+Size the change with [work sizing](references/work-sizing.md): judge Risk, Complexity and Taste on the diff and the PR's What, note its door (one-way or two-way), and count its lines.
 
 Done when you can state in two sentences what the change is meant to do and which files carry the risk.
 
@@ -35,8 +35,8 @@ Done when every changed file is matched to the rules that govern it and you hold
 
 1. **Product fit.** Does the change belong in this project? Check it against the vision, non-goals and `CONTEXT.md`.
 2. **Rationale.** Does it add a useful feature, make a necessary enhancement, or fix a real issue? Give each acceptance criterion and each Reviewer notes Must check item a verdict: met, partial, missing, or not checkable from the diff. Note scope nobody asked for.
-3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here.
-4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when the diff touches a risky area. Note missing or weak tests for new behaviour.
+3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here. When Complexity is high, check that each new abstraction or cross-component change is earned. When Taste is high and nothing (issue, PR body, ADR) says who picked the option or why, ask with a `Question`.
+4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when Risk is high. Note missing or weak tests for new behaviour.
 
 An earlier area outranks a later one: a change that doesn't belong needs no bug hunt. Skip what `REVIEW.md` or the defaults say not to report.
 
