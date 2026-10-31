@@ -4,22 +4,23 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-# Colors for output
-BLUE := \033[0;34m
-GREEN := \033[0;32m
-YELLOW := \033[1;33m
-NC := \033[0m
+# Colors for output. Real escape bytes, because macOS bash's builtin echo
+# prints \033 literally.
+BLUE := $(shell printf '\033[0;34m')
+GREEN := $(shell printf '\033[0;32m')
+YELLOW := $(shell printf '\033[1;33m')
+NC := $(shell printf '\033[0m')
 
 .PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
-GOLANGCI_LINT_VERSION := 2.6.1
+GOLANGCI_LINT_VERSION := 2.15.0
 GOLANGCI_LINT_BINARY  := $(BIN_DIR)/golangci-lint-$(GOLANGCI_LINT_VERSION)
 
 $(GOLANGCI_LINT_BINARY):
 	@mkdir -p $(BIN_DIR)
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BIN_DIR) v$(GOLANGCI_LINT_VERSION)
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v$(GOLANGCI_LINT_VERSION)/install.sh | sh -s -- -b $(BIN_DIR) v$(GOLANGCI_LINT_VERSION)
 	@mv $(BIN_DIR)/golangci-lint $@
 
 help: ## Show this help message
