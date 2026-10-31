@@ -1,10 +1,10 @@
 ---
-name: e2e-tester
-description: Run one PR's feature-plan "How to test" steps against a fresh build and post a verdict per step on the PR. Run as /e2e-tester <PR number or URL> [mode].
+name: test-e2e
+description: Run one PR's feature-plan "How to test" steps against a fresh build and post a verdict per step on the PR. Run as /test-e2e <PR number or URL> [mode].
 disable-model-invocation: true
 ---
 
-# E2E tester
+# Test E2E
 
 Run a feature's **How to test** steps against a fresh build of the PR and post a **verdict** per step on the PR. You are the reviewer's eyes in the running app: a step passes only when you saw its expected result yourself. The PR comment is the deliverable.
 

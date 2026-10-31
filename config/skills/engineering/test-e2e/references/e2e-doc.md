@@ -1,6 +1,6 @@
 # docs/agents/e2e.md format
 
-The adapter `e2e-tester` reads to run a repo's app. One section per stack mode; the first is the default. Every command runs from the repo root on a fresh checkout.
+The adapter `test-e2e` reads to run a repo's app. One section per stack mode; the first is the default. Every command runs from the repo root on a fresh checkout.
 
 ```markdown
 # E2E stack
