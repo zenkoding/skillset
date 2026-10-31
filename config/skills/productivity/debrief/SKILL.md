@@ -15,6 +15,8 @@ debriefed: CI fixes, review replies, scheduled runs.
 
 ## 1. Write the debrief
 
+When the objective has a `brief.md` from `brief` in its notes, read it first: Decisions and Friction name where the work left the plan.
+
 Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 
 ```markdown
