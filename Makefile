@@ -11,7 +11,7 @@ GREEN := $(shell printf '\033[0;32m')
 YELLOW := $(shell printf '\033[1;33m')
 NC := $(shell printf '\033[0m')
 
-.PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
+.PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint sync/shared test test/go test/json validate
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
@@ -84,6 +84,13 @@ lint: $(GOLANGCI_LINT_BINARY) ## Run golangci-lint (sandboxed install)
 	@echo "$(BLUE)Running golangci-lint...$(NC)"
 	@$(GOLANGCI_LINT_BINARY) run ./...
 	@echo "$(GREEN)✓$(NC) Lint passed"
+
+sync/shared: ## Copy config/shared files over their copies in skills
+	@for src in config/shared/*.md; do \
+		name=$$(basename "$$src"); \
+		find config/skills -name "$$name" -type f -exec cp "$$src" {} \; ; \
+	done
+	@echo "$(GREEN)✓$(NC) Shared references synced"
 
 test: test/go test/json ## Run all tests
 

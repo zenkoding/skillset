@@ -45,18 +45,20 @@ List what you'd need to know to plan the work. Answer each from the code and pri
 **Plan**
 1. <step> (~<time>)
 
-**Call**: <trivial | non-trivial | defect>: <why>
+**Sizing**: Risk <low | high>, Complexity <low | high>, Taste <low | high>: <why, for each high axis>
+
+**Call**: <trivial | non-trivial | defect>
 
 **Next**: <the next phase>. Go?
 ```
 
-Make the call:
+Predict the three axes of [work sizing](references/work-sizing.md) from the plan, then make the call:
 
-- **Defect**: the ask reports behaviour that differs from what the code or docs promise. Next is `fix-bug`, to establish the cause before any fix; the fix is then trivial or non-trivial like any other work.
-- **Trivial**: bounded scope, one obvious approach, no architecture, UX/UI or taste decision. Next is building: `build-feature` for a tracker feature, otherwise test-first (the `tdd` skill when installed).
-- **Non-trivial**: open-ended, needs taste decisions, or has options to choose from. Next is `grilling` (or one question at a time when it isn't installed), seeded with the Unknown list.
+- **Defect**: next is `fix-bug`, to establish the cause before any fix.
+- **Trivial**: next is building: `build-feature` for a tracker feature, otherwise test-first (the `tdd` skill when installed).
+- **Non-trivial**: next is `grilling` (or one question at a time when it isn't installed), seeded with the Unknown list and each high axis: the design for Complexity, the options for Taste, the rollback and blast radius for Risk.
 
-When in doubt between trivial and non-trivial, call it non-trivial: a short grill costs less than rework. Keep each list to about five items; the plan names times.
+Keep each list to about five items; the plan names times.
 
 Wait for the user's go. A go starts the named phase; a different call from the user wins.
 

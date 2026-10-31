@@ -14,7 +14,7 @@ Resolve the head repository, branch and SHA, target base, and existing PR. A bra
 
 Inspect the relevant diff/history, project instructions, and dirty/index state. Run required checks. Keep unrelated edits and the index unchanged when publishing committed work; temporary PR metadata is never part of the staged change. Use an isolated checkout when necessary.
 
-When creating a PR whose diff crosses the [reviewer notes](references/reviewer-notes.md) threshold, offer the full notes; add them when the user says yes or asked for them.
+When creating a PR that is high on Risk or large ([work sizing](references/work-sizing.md)), per the [reviewer notes](references/reviewer-notes.md) guide, offer the full notes; add them when the user says yes or asked for them.
 
 Compose only missing title/body fields using the [authoring guidance](references/pr-authoring-format.md). Preserve supplied text and treat input files as read-only. Prepare multiline text in a separate temporary body file. If approval is still needed, present the concrete result; reuse authorization already given for this publication.
 

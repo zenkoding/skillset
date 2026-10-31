@@ -13,7 +13,8 @@ settings, and skills, installed into `~/.claude`, `~/.codex` and `~/.agents`.
 Layout: code and config are split. `config/` is the catalog the installer
 reads: `config/skills/` the single skill source, `config/instructions/` the
 shared instructions source, `config/sets/` the sets (`legacy` wraps
-everything), `config/claude/`, `config/codex/` and `config/dcg/` the host
+everything), `config/shared/` references several skills carry as synced copies
+(`make sync/shared`), `config/claude/`, `config/codex/` and `config/dcg/` the host
 settings. Code: `cmd/skillset` is the installer for both hosts, packages under
 `internal/`, helper scripts under `scripts/`.
 

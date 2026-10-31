@@ -63,10 +63,10 @@ Numbered steps a reviewer can run on a fresh checkout: commands, URLs, seed data
 
 Always carries **Merge danger**:
 
-- **Door**: one-way when the change is hard to undo (data migrations, deleted data, published API or schema changes, external side effects); two-way when a revert fixes it.
+- **Door**: one-way or two-way, as [work sizing](work-sizing.md) defines it.
 - **Blast radius**: one line on what else this can break.
 
-Large or risky PRs add the full notes; see [reviewer-notes.md](reviewer-notes.md).
+PRs with high Risk or a large diff add the full notes; see [reviewer-notes.md](reviewer-notes.md).
 
 ## Before publication
 
