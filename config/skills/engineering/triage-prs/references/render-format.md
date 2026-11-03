@@ -64,8 +64,8 @@ Emit `### Section Name (N)` as the bucket header, followed by a Markdown table. 
 |---|---|
 | Ready to Merge | `` `gh pr merge NUM --repo owner/repo --squash --auto` `` |
 | Needs Landing | `` `/land-pr NUM` `` |
-| Needs Re-review | `` `/review-pr https://github.com/owner/repo/pull/NUM` `` |
-| Fresh — Needs First Review | `` `/review-pr https://github.com/owner/repo/pull/NUM` `` |
+| Needs Re-review | `` `/review https://github.com/owner/repo/pull/NUM` `` |
+| Fresh — Needs First Review | `` `/review https://github.com/owner/repo/pull/NUM` `` |
 | My Drafts | `` `gh pr ready NUM --repo owner/repo` `` |
 
 ---
