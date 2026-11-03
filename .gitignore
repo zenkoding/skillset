@@ -43,4 +43,4 @@ docs/investigations
 
 
 # Rendered instruction files (skillset)
-build/
+/build/
