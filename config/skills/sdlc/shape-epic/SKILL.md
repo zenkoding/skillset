@@ -40,7 +40,7 @@ Each settled call that later work must respect is a **decision**. Give each one 
 - A project-wide rule: an entry in the decisions doc. A person must approve that edit in review.
 - A product call only this epic needs: the spec's **Rabbit holes**.
 
-ADRs, RFCs and decisions-doc edits land through a branch and a PR opened with `publish-pr`. The spec links each one.
+ADRs, RFCs and decisions-doc edits land through a branch and a PR opened with `publish`. The spec links each one.
 
 Done when every decision from the grill has one home and each repo change is in an open PR.
 
