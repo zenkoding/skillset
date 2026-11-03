@@ -1,6 +1,6 @@
 # Default review rules
 
-`review-pr` applies these when the repo has no `REVIEW.md`. A repo's `REVIEW.md` replaces the section it names and keeps the defaults for the rest.
+`review` applies these when the repo has no `REVIEW.md`. A repo's `REVIEW.md` replaces the section it names and keeps the defaults for the rest.
 
 ## What blocks a merge
 

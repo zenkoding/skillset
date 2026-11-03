@@ -1,5 +1,5 @@
 ---
-name: review-pr
+name: review
 description: Review a GitHub pull request for product fit, rationale, approach, security and bugs, show the summary, and post it to the PR as one GitHub review once confirmed. Use when asked to review a PR, or from a PR review routine; not for branches or uncommitted changes without a PR.
 compatibility: Requires Git and a readable checkout; authenticated gh for pull requests. Parallel subagents are optional.
 ---
@@ -24,7 +24,7 @@ Done when you can state in two sentences what the change is meant to do and whic
 
 Read, before judging anything:
 
-- **The PR body.** Its `### Reviewer notes` (written by `publish-pr`): start from the Merge danger and, when present, the Verdict, Must check items and High files, then verify the rest of the diff rather than trusting the notes. Its How to test steps are what a reviewer would run.
+- **The PR body.** Its `### Reviewer notes` (written by `publish`): start from the Merge danger and, when present, the Verdict, Must check items and High files, then verify the rest of the diff rather than trusting the notes. Its How to test steps are what a reviewer would run.
 - **The intent.** The linked issue, or the tracker's plan when the repo uses one: `docs/agents/issue-tracker.md` says where plans live and how to find one from a branch name, PR title or body. Its acceptance criteria (**Done when** or similar) are what the change is judged against.
 - **The rules.** `REVIEW.md` at the repo root, else the [default rules](references/default-rules.md). Then `AGENTS.md` or `CLAUDE.md`, the docs catalog in `docs/agents/README.md`, `CONTEXT.md`, the vision or non-goals doc when the repo has one, and ADRs in the touched area.
 - **The code.** Each touched file around the changed lines, not only the hunks; callers of changed interfaces; recent history. Run the project's build, lint and tests when that is cheap and safe; record what ran and the result.

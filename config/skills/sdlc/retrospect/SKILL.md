@@ -41,7 +41,7 @@ For each lesson give: the target path, the exact change (a diff or the new text)
 
 ## 5. Land them
 
-- **With a person**: show the list, process and product apart, and ask which to apply. Apply the process edits on one branch and open one PR with `publish-pr`. Product lessons go where the product lane keeps them: a vision change through `envision`, input for the next milestone into its brief through `scope-milestone`, new work as Backlog issues in the tracker. Edits to the vision, the glossary (`CONTEXT.md`) or a project-wide decisions doc are listed under **Reviewer notes** so the reviewer approves each one.
+- **With a person**: show the list, process and product apart, and ask which to apply. Apply the process edits on one branch and open one PR with `publish`. Product lessons go where the product lane keeps them: a vision change through `envision`, input for the next milestone into its brief through `scope-milestone`, new work as Backlog issues in the tracker. Edits to the vision, the glossary (`CONTEXT.md`) or a project-wide decisions doc are listed under **Reviewer notes** so the reviewer approves each one.
 - **Routine run**: open no PR. Post the list as a comment on the epic or tracker issue in scope, or as the run's final message, with the unreachable sources named.
 
 Done when every lesson is in the PR, handed to the product lane, declined by the user, or posted.
@@ -54,7 +54,7 @@ Done when every lesson is in the PR, handed to the product lane, declined by the
 - **ADR** (`docs/adr/`): a technical choice was re-argued or made inconsistently. Propose a new ADR or an amendment.
 - **Glossary, vision, decisions**: a term was used two ways, scope drifted, or a settled rule was reopened.
 - **Automated check**: the mistake is mechanical (a banned API, an import shape, a file location). A lint rule, pre-commit hook or CI job beats any written rule. Read the repo's existing checks first; a check that exists but is unwired is the lesson.
-- **Review rule**: a judgement call a reviewer should have caught. Add it to `REVIEW.md` at the repo root, creating it if missing; `review-pr` reads it.
+- **Review rule**: a judgement call a reviewer should have caught. Add it to `REVIEW.md` at the repo root, creating it if missing; `review` reads it.
 - **Tooling and access**: an expensive or repeated tool call, or information the agent could not reach. Propose the script, connector or read access.
 - **Pruning**: an instruction changed nothing or contradicted another. Propose deleting it.
 

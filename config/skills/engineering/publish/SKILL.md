@@ -1,5 +1,5 @@
 ---
-name: publish-pr
+name: publish
 description: Publish a Git branch as a GitHub pull request, or update its existing PR, when the user requests publication.
 compatibility: Requires Git, authenticated gh, repository access, and project-required checks.
 ---

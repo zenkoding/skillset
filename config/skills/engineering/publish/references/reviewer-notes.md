@@ -52,4 +52,4 @@ When an axis came out higher than the plan or brief predicted, say which and why
 - Every path in Where to focus is in the PR diff.
 - Links in the notes are absolute `https://github.com/<owner>/<repo>/blob/<head-branch>/` URLs; relative links in a PR body resolve under `/pull/` and 404.
 - Every Must check item names what to confirm.
-- When `publish-pr` updates the PR, rewrite the notes against the final diff; the rest of the body follows the usual preservation rules.
+- When `publish` updates the PR, rewrite the notes against the final diff; the rest of the body follows the usual preservation rules.

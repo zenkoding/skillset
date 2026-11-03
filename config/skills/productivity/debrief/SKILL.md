@@ -42,7 +42,7 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 ```
 
 - Decisions always read "chose X over Y because Z", self-contained, with no
-  private note paths: `publish-pr`'s reviewer notes quote them verbatim.
+  private note paths: `publish`'s reviewer notes quote them verbatim.
 - Every `path:line` in Worth understanding exists at the final commit; check
   it before posting.
 - Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.

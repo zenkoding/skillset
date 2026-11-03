@@ -55,7 +55,7 @@ List what you'd need to know to plan the work. Answer each from the code and pri
 Predict the three axes of [work sizing](references/work-sizing.md) from the plan, then make the call:
 
 - **Defect**: next is `fix-bug`, to establish the cause before any fix.
-- **Trivial**: next is building: `build-feature` for a tracker feature, otherwise test-first (the `tdd` skill when installed).
+- **Trivial**: next is building: `build` for a tracker feature, otherwise test-first (the `tdd` skill when installed).
 - **Non-trivial**: next is `grilling` (or one question at a time when it isn't installed), seeded with the Unknown list and each high axis: the design for Complexity, the options for Taste, the rollback and blast radius for Risk.
 
 Keep each list to about five items; the plan names times.
