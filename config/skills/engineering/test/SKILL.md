@@ -1,6 +1,6 @@
 ---
-name: test-e2e
-description: Run one PR's feature-plan "How to test" steps against a fresh build and post a verdict per step on the PR. Run as /test-e2e <PR number or URL> [mode].
+name: test
+description: Run one PR's feature-plan "How to test" steps against a fresh build and post a verdict per step on the PR. Run as /test <PR number or URL> [mode].
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
-name: build-feature
-description: "Build one tracker feature from its plan to an open PR a reviewer can check from the body alone. Run as /build-feature <feature id>."
+name: build
+description: "Build one tracker feature from its plan to an open PR a reviewer can check from the body alone. Run as /build <feature id>."
 disable-model-invocation: true
 ---
 
@@ -26,8 +26,8 @@ Build one **feature** from its **plan** to a PR into the default branch. The fea
 
 6. **Check.** Run the check command that `AGENTS.md` or `CLAUDE.md` names (lint, tests, build) and fix what it reports until it exits 0. When it fails on code this feature didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
 
-7. **Open the PR.** Commit, push, and open one PR with `publish-pr`, titled with the identifier first (`<ID>: <feature title>`) so the tracker links it. Its **How to test** starts from the plan's. Add the PR link to the issue. Done when the PR is open and its title carries the identifier.
+7. **Open the PR.** Commit, push, and open one PR with `publish`, titled with the identifier first (`<ID>: <feature title>`) so the tracker links it. Its **How to test** starts from the plan's. Add the PR link to the issue. Done when the PR is open and its title carries the identifier.
 
    A feature too large to review as one PR becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the issue. The issue goes In Review when the first PR opens and Done when the last merges.
 
-8. **Hand to review.** When the tracker moves the issue to In Review as the PR opens, check it moved and set it by hand only if it didn't. Mark the PR ready and add `ready-for-agent` when the repo uses `review-pr` routines. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.
+8. **Hand to review.** When the tracker moves the issue to In Review as the PR opens, check it moved and set it by hand only if it didn't. Mark the PR ready and add `ready-for-agent` when the repo uses `review` routines. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.
