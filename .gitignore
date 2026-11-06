@@ -51,3 +51,5 @@ config/skills/**/work-sizing.md
 config/skills/**/planning-loop.md
 config/skills/**/plan-template.md
 config/skills/**/semantic-labels.md
+config/skills/**/e2e-stack.md
+config/skills/**/review-rules.md
