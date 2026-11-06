@@ -14,9 +14,11 @@ import (
 var sharedLink = regexp.MustCompile(`\]\(([^)#\s]*?)([^/)#\s]+\.md)\)`)
 
 // TestSharedReferencesInSync checks that every copy of a config/shared file
-// inside a skill matches its source, and that every skill linking one carries
-// the copy at the linked path. Skills install one by one, so each needs its
-// own copy; run `make sync/shared` after editing a source.
+// inside a skill is the generated copy of its source, that every skill linking
+// one carries the copy at the linked path, and that .gitattributes marks the
+// copies as generated. Skills install one by one (including through tools that
+// copy skill folders as-is), so each needs its own committed copy; run
+// `make sync/shared` after editing a source.
 func TestSharedReferencesInSync(t *testing.T) {
 	root, err := filepath.Abs("../../config")
 	if err != nil {
@@ -60,7 +62,7 @@ func TestSharedReferencesInSync(t *testing.T) {
 		}
 		if src, ok := sources[d.Name()]; ok {
 			copies++
-			if !bytes.Equal(b, src) {
+			if !bytes.Equal(b, generatedCopy(d.Name(), src)) {
 				t.Errorf("%s differs from shared/%s; run make sync/shared", rel, d.Name())
 			}
 		}
@@ -86,4 +88,22 @@ func TestSharedReferencesInSync(t *testing.T) {
 	if copies == 0 {
 		t.Error("no skill carries a shared reference")
 	}
+
+	attrs, err := os.ReadFile(filepath.Join(root, "..", ".gitattributes"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for name := range sources {
+		want := "config/skills/**/" + name + " linguist-generated=true"
+		if !bytes.Contains(attrs, []byte(want)) {
+			t.Errorf(".gitattributes lacks %q, so copies of %s show up in PR diffs", want, name)
+		}
+	}
+}
+
+// generatedCopy is what make sync/shared writes into a skill: a header naming
+// the source, then the source itself.
+func generatedCopy(name string, src []byte) []byte {
+	header := "<!-- Generated from config/shared/" + name + " by `make sync/shared`. Edit the source, not this copy. -->\n\n"
+	return append([]byte(header), src...)
 }

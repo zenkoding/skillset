@@ -88,7 +88,9 @@ lint: $(GOLANGCI_LINT_BINARY) ## Run golangci-lint (sandboxed install)
 sync/shared: ## Copy config/shared files over their copies in skills
 	@for src in config/shared/*.md; do \
 		name=$$(basename "$$src"); \
-		find config/skills -name "$$name" -type f -exec cp "$$src" {} \; ; \
+		find config/skills -name "$$name" -type f | while read -r dst; do \
+			{ printf '<!-- Generated from config/shared/%s by `make sync/shared`. Edit the source, not this copy. -->\n\n' "$$name"; cat "$$src"; } > "$$dst"; \
+		done; \
 	done
 	@echo "$(GREEN)✓$(NC) Shared references synced"
 

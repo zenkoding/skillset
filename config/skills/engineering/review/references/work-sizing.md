@@ -1,3 +1,5 @@
+<!-- Generated from config/shared/work-sizing.md by `make sync/shared`. Edit the source, not this copy. -->
+
 # Work sizing
 
 Shared criteria for how risky, complex and taste-dependent a piece of work is. Several skills carry this same file, so they size work the same way. Each term below has one definition; each skill decides what to do with it.
