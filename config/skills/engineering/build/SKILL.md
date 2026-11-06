@@ -35,6 +35,6 @@ Build one **ticket** (whatever the tracker calls a unit of work: a feature, task
 
 8. **Open the PR.** Commit, push, and open one PR with `publish`. `publish` writes the title; its **Why** links the ticket, and its **How to test** starts from the plan's. The branch name carries the identifier, so trackers that link by branch still link the PR. Add the PR link to the ticket. Done when the PR is open and its Why links the ticket.
 
-   A ticket too large to review as one PR becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the ticket. The ticket goes In Review when the first PR opens and Done when the last merges.
+   A ticket whose diff would be large ([work sizing](references/work-sizing.md)) becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the ticket. The ticket goes In Review when the first PR opens and Done when the last merges.
 
 9. **Hand to review.** `publish` opens the PR as a draft and flips it to ready, with its review label, once it checks out and CI is green. When the tracker moves the ticket to In Review as the PR opens, check it moved and set it by hand only if it didn't. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.

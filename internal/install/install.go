@@ -95,7 +95,7 @@ type Plan struct {
 
 // Render is one generated file the installer writes inside the repo.
 type Render struct {
-	Path    string // absolute path under <repo>/build
+	Path    string // absolute path under <repo>/build, or a shared reference inside a skill
 	Content []byte
 	Exists  bool // already up to date
 }
@@ -221,6 +221,10 @@ type Source struct {
 	SkillDirs []string
 	// Roots are more directories whose links belong to the installer.
 	Roots []string
+	// Shared are reference files several skills link. Each skill that links
+	// one by file name gets it written at the linked path inside the skill
+	// (a gitignored copy), so the repo keeps a single source.
+	Shared []string
 }
 
 func (s Source) path(p string) string {
@@ -327,6 +331,9 @@ func MakeSourcePlan(src Source, home string) (*Plan, error) {
 		return nil, err
 	}
 	p := &Plan{Skipped: skipped, manifest: filepath.Join(home, ManifestPath)}
+	if p.Renders, err = src.renderShared(skills); err != nil {
+		return nil, err
+	}
 	if p.Ignore, err = planIgnore(home); err != nil {
 		return nil, err
 	}

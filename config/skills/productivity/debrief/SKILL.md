@@ -8,8 +8,8 @@ description: Debrief the user at the end of substantial work (code changed, PR o
 A debrief keeps the user's understanding in step with work an agent did, and
 turns repeated friction into fixes. It is a short chat message, then filing.
 
-Run it once per objective, at the end of work that changed code, opened a PR
-or made a decision, and whenever the user asks. Skip it for
+Run it once per objective, at the end of substantial work
+([work sizing](references/work-sizing.md)), and whenever the user asks. Skip it for
 question-and-answer sessions and for follow-up fixes to work already
 debriefed: CI fixes, review replies, scheduled runs.
 

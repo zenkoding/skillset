@@ -16,7 +16,7 @@ Resolve the PR (`gh pr view`, `gh pr diff`); a URL resolves to its number first.
 
 Stop without reviewing when the PR is a draft, closed or merged, or the diff is empty. Also stop when a review carrying the `<!-- review-pr -->` marker already exists on the head SHA. A review on an older head means this is a re-review: review only the commits since that head, and never repeat a finding already posted.
 
-Count changed lines (additions plus deletions, excluding lockfiles, generated or vendored files, pure renames and test fixtures). Note whether security-sensitive code is in the diff: auth, input parsing, secrets, crypto, permissions.
+Size the change with [work sizing](references/work-sizing.md): judge Risk, Complexity and Taste on the diff and the PR's What, note its door (one-way or two-way), and count its lines.
 
 Done when you can state in two sentences what the change is meant to do and which files carry the risk.
 
@@ -35,12 +35,12 @@ Done when every changed file is matched to the rules that govern it and you hold
 
 1. **Product fit.** Does the change belong in this project? Check it against the vision, non-goals and `CONTEXT.md`.
 2. **Rationale.** Does it add a useful feature, make a necessary enhancement, or fix a real issue? Give each acceptance criterion and each Reviewer notes Must check item a verdict: met, partial, missing, or not checkable from the diff. Note scope nobody asked for.
-3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here.
-4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when security-sensitive code is in the diff. Note missing or weak tests for new behaviour.
+3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here. When Complexity is high, check that each new abstraction or cross-component change is earned. When Taste is high and nothing (issue, PR body, ADR) says who picked the option or why, ask with a `Question`.
+4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when Risk is high. Note missing or weak tests for new behaviour.
 
 An earlier area outranks a later one: a change that doesn't belong needs no bug hunt. Skip what `REVIEW.md` or the defaults say not to report.
 
-For 500+ counted lines, when the host supports subagents, run the four areas as parallel finders, each given the scope summary, the intent, the rules and the touched files. Then hand all candidates to one verifier subagent for step 4. Smaller diffs run one pass yourself.
+For a large diff, when the host supports subagents, run the four areas as parallel finders, each given the scope summary, the intent, the rules and the touched files. Then hand all candidates to one verifier subagent for step 4. Smaller diffs run one pass yourself.
 
 Done when every touched file has been read under every area that applies to it.
 
@@ -89,7 +89,7 @@ Use `Crucial` only for wrong behaviour, a security hole, data loss, a regression
 
 Each finding is `Label: <mechanism, then the ask>` with its `path:line`, in two to four sentences. Use a `suggestion` block for a concrete one-line change. State conclusions, not process. A clean change gets the counts line, the intent and a one-line verdict.
 
-**Verdict** is `merge` only when nothing is `Crucial` and every checkable criterion is met. It is a recommendation: never merge, approve or request changes yourself.
+**Verdict** is `merge` only when nothing is `Crucial`, every checkable criterion is met, and a one-way door has a stated rollback or migration plan. It is a recommendation: never merge, approve or request changes yourself.
 
 ## 6. Deliver
 
