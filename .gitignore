@@ -48,3 +48,4 @@ docs/investigations
 
 # Shared references the installer copies into skills (source: config/shared)
 config/skills/**/work-sizing.md
+config/skills/**/semantic-labels.md
