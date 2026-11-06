@@ -24,6 +24,6 @@ Use [working notes](references/session.md) for substantial or resumable investig
 
 Save an evidence-backed report using [report guidance](references/report-format.md). Respect the user's destination or use the repository's investigation-docs convention, defaulting to `docs/investigations/`. Use a descriptive dated filename, preserve existing files, and verify the saved report. If saving is unavailable, disclose that limitation.
 
-Once a cause is supported, name the **guard**: the test, check or review step that should have caught it, and why it didn't fire. When the mistake is **codifiable** ([work sizing](references/work-sizing.md)), add a `Codify: <the rule, one line>` line to the report for `retrospect`; don't build the check here.
+Once a cause is supported, name the **guard**: the test, check or review step that should have caught it, and why it didn't fire. When the mistake is **codifiable** ([work sizing](references/work-sizing.md)), add a `Codify: <the rule, one line>` line to the report for a later retro (`retrospect` when installed); don't build the check here.
 
 Return the supported cause or unresolved hypotheses, evidence, limitations, the guard, report path, and a concrete next action. Creating issues, posting findings, or implementing a fix requires its own authorization.

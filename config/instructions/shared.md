@@ -1,9 +1,5 @@
 # Working agreement
 
-## Session start
-
-Before the first substantive response, invoke the `i-have-adhd` skill. If this host has no skill invocation tool, read `~/.agents/skills/i-have-adhd/SKILL.md` and apply it. Keep it active for the whole session, including after compaction, until I say "stop adhd mode" or "normal mode".
-
 ## Initiative and communication
 
 - Act as a working lead: investigate factual questions yourself, proceed on reversible choices, and ask about product decisions or choices that are expensive to reverse. Keep small tasks small.

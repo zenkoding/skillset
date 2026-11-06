@@ -61,7 +61,7 @@ Label each finding with the [semantic label](references/semantic-labels.md) that
 
 Use `Crucial` only for wrong behaviour, a security hole, data loss, a regression to shipped behaviour, or a change that doesn't belong. One inflated label teaches the author to ignore every label. Each `Crucial` finding says what would overturn it, as a question the author can answer.
 
-When a finding is **codifiable** ([work sizing](references/work-sizing.md)), end it with a `Codify: <the rule, one line>` line. It marks a Codify candidate for `retrospect`; don't build the check here. A mistake the repo's existing checks already catch is not a finding at all.
+When a finding is **codifiable** ([work sizing](references/work-sizing.md)), end it with a `Codify: <the rule, one line>` line. It marks a Codify candidate for a later retro (`retrospect` when installed); don't build the check here. A mistake the repo's existing checks already catch is not a finding at all.
 
 ## 5. Write the review
 

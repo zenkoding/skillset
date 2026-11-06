@@ -6,7 +6,7 @@ At session start, invoke `i-have-adhd` before the first substantive response. If
 
 Personal agent setup for Claude Code and Codex: user-level instructions, settings, and skills, installed into `~/.claude`, `~/.codex` and `~/.agents`.
 
-Layout: code and config are split. `config/` is the catalog the installer reads: `config/skills/` the single skill source, `config/instructions/` the shared instructions source, `config/sets/` the sets (`legacy` wraps everything), `config/shared/` references several skills link (the installer copies each into the skills that link it), `config/claude/`, `config/codex/` and `config/dcg/` the host settings. Code: `cmd/skillset` is the installer for both hosts, packages under `internal/`, helper scripts under `scripts/`.
+Layout: code and config are split. `config/` is the catalog the installer reads: `config/skills/` the single skill source, `config/instructions/` the shared instructions source, `config/sets/` the sets (base, engineering, product, productivity; `legacy` requires all four), `config/shared/` references several skills link (the installer copies each into the skills that link it), `config/claude/`, `config/codex/` and `config/dcg/` the host settings. Code: `cmd/skillset` is the installer for both hosts, packages under `internal/`, helper scripts under `scripts/`.
 
 ## Working here
 
