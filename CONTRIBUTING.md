@@ -38,5 +38,5 @@ Commit format: title / what / why.
 ## Adding a skill
 
 1. Create `config/skills/<set>/<name>/SKILL.md` with `name: <name>` in its frontmatter (drafts go in `config/skills/in-progress/`).
-2. To name a skill from a set yours doesn't require, write "`<skill>` when installed"; `make test` checks this.
+2. To name a skill from a set yours doesn't require, write "`<skill>` when installed"; `make test` checks this. A file that only names skills conditionally (like guide's workflow map) can say so once with `<!-- every skill named here: when installed -->`.
 3. Run `make plan`, then `make apply`.
