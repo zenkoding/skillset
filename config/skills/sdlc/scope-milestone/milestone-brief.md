@@ -14,8 +14,7 @@ Shape rules:
 - **Length**: one to two pages. Link to the vision and earlier briefs instead of restating them.
 
 ```markdown
-Date: <YYYY-MM-DD>. Owner: <person>. Target date: <YYYY-MM-DD, or "none">.
-Vision: <link to docs/vision.md>. Previous milestone: <brief link, or "none">.
+Previous milestone: <brief link, or "none">.
 
 **Next action:** <who does what, one line>
 

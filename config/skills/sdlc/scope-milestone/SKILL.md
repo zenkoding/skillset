@@ -23,7 +23,7 @@ Done when you can write, with a link or PR for each claim, what the product does
 
 ## 2. Grill the goal
 
-Run a grilling skill when installed (otherwise interview the person one question at a time) on the gap. The design tree starts at the goal and branches into every section of [`milestone-brief.md`](milestone-brief.md): owner and target date, goal, rough shape, non-goals, done when with appetite, and epics. The template holds the shape rules for each; hold every answer to them.
+Run a grilling skill when installed (otherwise interview the person one question at a time) on the gap. The design tree starts at the goal and branches into every section of [`milestone-brief.md`](milestone-brief.md): goal, rough shape, non-goals, done when with appetite, and epics. The template holds the shape rules for each; hold every answer to them.
 
 Two rules the template cannot carry:
 
