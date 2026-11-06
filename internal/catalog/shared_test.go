@@ -2,108 +2,58 @@ package catalog
 
 import (
 	"bytes"
-	"io/fs"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/zenkoding/skillset/internal/install"
 )
 
-// sharedLink matches a Markdown link target to a shared reference file.
-var sharedLink = regexp.MustCompile(`\]\(([^)#\s]*?)([^/)#\s]+\.md)\)`)
-
-// TestSharedReferencesInSync checks that every copy of a config/shared file
-// inside a skill is the generated copy of its source, that every skill linking
-// one carries the copy at the linked path, and that .gitattributes marks the
-// copies as generated. Skills install one by one (including through tools that
-// copy skill folders as-is), so each needs its own committed copy; run
-// `make sync/shared` after editing a source.
-func TestSharedReferencesInSync(t *testing.T) {
+// TestSharedReferences plans an install of the real catalog and checks that
+// every config/shared file reaches at least one skill, and that .gitignore
+// keeps the copies the installer writes out of the repo.
+func TestSharedReferences(t *testing.T) {
 	root, err := filepath.Abs("../../config")
 	if err != nil {
 		t.Fatal(err)
 	}
-	sharedDir := filepath.Join(root, "shared")
-	entries, err := os.ReadDir(sharedDir)
+	c, err := Load(root)
 	if err != nil {
 		t.Fatal(err)
 	}
-	sources := map[string][]byte{}
-	for _, e := range entries {
-		if e.IsDir() || !strings.HasSuffix(e.Name(), ".md") {
-			continue
-		}
-		b, err := os.ReadFile(filepath.Join(sharedDir, e.Name()))
-		if err != nil {
-			t.Fatal(err)
-		}
-		sources[e.Name()] = b
-	}
-	if len(sources) == 0 {
-		t.Fatal("no shared sources in config/shared")
-	}
-
-	copies := 0
-	skills := filepath.Join(root, "skills")
-	err = filepath.WalkDir(skills, func(path string, d fs.DirEntry, err error) error {
-		if err != nil || d.IsDir() || !strings.HasSuffix(path, ".md") {
-			return err
-		}
-		rel, _ := filepath.Rel(root, path)
-		parts := strings.SplitN(filepath.ToSlash(rel), "/", 4) // skills/<group>/<skill>/...
-		if len(parts) < 4 {
-			return nil
-		}
-		skillDir := filepath.Join(root, parts[0], parts[1], parts[2])
-		b, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		if src, ok := sources[d.Name()]; ok {
-			copies++
-			if !bytes.Equal(b, generatedCopy(d.Name(), src)) {
-				t.Errorf("%s differs from shared/%s; run make sync/shared", rel, d.Name())
-			}
-		}
-		for _, m := range sharedLink.FindAllSubmatch(b, -1) {
-			name := string(m[2])
-			if _, ok := sources[name]; !ok {
-				continue
-			}
-			target := filepath.Join(filepath.Dir(path), string(m[1]), name)
-			if !strings.HasPrefix(target, skillDir+string(filepath.Separator)) {
-				t.Errorf("%s links %s outside its skill", rel, name)
-				continue
-			}
-			if _, err := os.Stat(target); err != nil {
-				t.Errorf("%s links %s%s, which is missing; copy shared/%s there", rel, m[1], name, name)
-			}
-		}
-		return nil
-	})
+	sets, err := c.Resolve(c.Names())
 	if err != nil {
 		t.Fatal(err)
 	}
-	if copies == 0 {
-		t.Error("no skill carries a shared reference")
-	}
-
-	attrs, err := os.ReadFile(filepath.Join(root, "..", ".gitattributes"))
+	src, err := c.Source(sets, Hosts)
 	if err != nil {
 		t.Fatal(err)
 	}
-	for name := range sources {
-		want := "config/skills/**/" + name + " linguist-generated=true"
-		if !bytes.Contains(attrs, []byte(want)) {
-			t.Errorf(".gitattributes lacks %q, so copies of %s show up in PR diffs", want, name)
+	if len(src.Shared) == 0 {
+		t.Fatal("no shared references in config/shared")
+	}
+	plan, err := install.MakeSourcePlan(src, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	reached := map[string]bool{}
+	for _, r := range plan.Renders {
+		if strings.HasPrefix(r.Path, filepath.Join(root, "skills")+string(filepath.Separator)) {
+			reached[filepath.Base(r.Path)] = true
 		}
 	}
-}
-
-// generatedCopy is what make sync/shared writes into a skill: a header naming
-// the source, then the source itself.
-func generatedCopy(name string, src []byte) []byte {
-	header := "<!-- Generated from config/shared/" + name + " by `make sync/shared`. Edit the source, not this copy. -->\n\n"
-	return append([]byte(header), src...)
+	attrs, err := os.ReadFile(filepath.Join(root, "..", ".gitignore"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, f := range src.Shared {
+		name := filepath.Base(f)
+		if !reached[name] {
+			t.Errorf("no skill links shared/%s", name)
+		}
+		if want := "config/skills/**/" + name; !bytes.Contains(attrs, []byte(want+"\n")) {
+			t.Errorf(".gitignore lacks %q, so installed copies of %s would show as untracked", want, name)
+		}
+	}
 }
