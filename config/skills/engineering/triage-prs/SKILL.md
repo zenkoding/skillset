@@ -19,7 +19,7 @@ user-invocable: true
 
 The dashboard render path never asks the user anything. The dashboard is printed; the user reads it and runs the printed `Next:` command themselves.
 
-This skill **MUST NOT** run `/review-pr` or `/land-pr` on the dashboard render path. The `Next:` line emits the command as text; the user dispatches the follow-up.
+This skill **MUST NOT** run `/review` or `/land-pr` on the dashboard render path. The `Next:` line emits the command as text; the user dispatches the follow-up.
 
 ---
 
@@ -357,7 +357,7 @@ Users coming from the prior interactive version of this skill:
 1. **First invocation auto-creates `github_handle.md`** — no user action required. `gh api user --jq .login` runs once, writes the cache, and adds the `MEMORY.md` index entry.
 2. **Existing `pr-triage.md` blocks continue to apply.** The block schema is unchanged. PRs skipped at a remembered SHA stay hidden on first run of the new version. On the first run where a remembered PR's head SHA differs, the PR re-surfaces with a banner (instead of silently appearing).
 3. **Skip is now an explicit sub-command.** Where you previously chose `Skip` from a menu, you now run `/triage-prs skip <num> "<reason>"` as a separate invocation.
-4. **`/review-pr` and `/land-pr` are still the canonical follow-ups.** The dashboard prints the command verbatim under `Next:`; you copy and run it.
+4. **`/review` and `/land-pr` are still the canonical follow-ups.** The dashboard prints the command verbatim under `Next:`; you copy and run it.
 
 ---
 
@@ -366,7 +366,7 @@ Users coming from the prior interactive version of this skill:
 | Mistake | Fix |
 |---------|-----|
 | Asking the user a question during render | Forbidden. The dashboard is printed; the user reads it. |
-| Invoking `/review-pr` or `/land-pr` automatically | Forbidden on the render path. The `Next:` cell emits the command; user dispatches. |
+| Invoking `/review` or `/land-pr` automatically | Forbidden on the render path. The `Next:` cell emits the command; user dispatches. |
 | Counting bot reviews toward `human_review_exists` | Forbidden. Bots fold into `ci_status` (APPROVED = pass; CHANGES_REQUESTED = fail). |
 | Treating bot reviews as "reviewed by others" in F3 | Forbidden. F3 checks for **non-bot** reviews only. A bot-only-reviewed PR must stay visible as `fresh`. |
 | Downgrading approved + new-commits to `needs_re_review` | Forbidden. Approval implies trust. The state stays `ready_to_merge`. |
