@@ -1,9 +1,12 @@
 #!/bin/bash
-# SessionStart hook: print the current repo's project knowledge catalogs so
-# they land in the session context (config/instructions/shared.md, "Project knowledge").
+# SessionStart hook: print the current repo's private project knowledge store
+# path and catalog so they land in the session context
+# (config/instructions/shared.md, "Project knowledge").
 #
-#   private  ~/.local/share/agents/projects/<key>/README.md  outside the repo, one per main checkout
-#   public   <worktree>/docs/agents/README.md                committed, per branch
+#   ~/.local/share/agents/projects/<key>/README.md  outside the repo, one per main checkout
+#
+# Public docs are human-first (CONTRIBUTING.md and docs/contributing/); agents
+# read them on demand, so the hook prints nothing from the repo.
 #
 # <key> is the origin URL normalized to host/owner/repo and slugified, so all
 # clones and worktrees of a repo share one store. Without an origin it is
@@ -12,7 +15,8 @@
 # into the main checkout; ~/.local/share/agents is granted once in settings.
 # AGENTS_DATA_HOME overrides that root (tests).
 #
-# Prints nothing outside a git repo or when neither catalog exists. Always
+# Prints nothing outside a git repo. Inside one it always prints the store
+# path, which skills write notes to, plus the catalog when it exists. Always
 # exits 0 so a broken repo never blocks a session.
 
 dir=${CLAUDE_PROJECT_DIR:-$PWD}
@@ -33,8 +37,6 @@ else
 	store=$projects/$local
 fi
 private=$store/README.md
-public=$top/docs/agents/README.md
-[ -f "$private" ] || [ -f "$public" ] || exit 0
 
 max=200 # lines per catalog; a catalog is an index, not a doc
 print() { # label path
@@ -45,14 +47,13 @@ print() { # label path
 	[ "$n" -le "$max" ] || printf '\n[cut at %d of %d lines: trim it with the project-knowledge skill]\n' "$max" "$n"
 }
 
-echo "# Project knowledge catalogs"
+echo "# Project knowledge"
 echo
 echo "Private store: $store (write private docs and notes here, by this absolute path)."
-echo "Open the docs the task needs; paths are relative to each catalog's directory."
+echo "Open the docs the task needs; catalog paths are relative to the store. Public docs: CONTRIBUTING.md in the repo."
 echo "Precedence: private > public > user. Write policy: \"Project knowledge\" in your instructions."
 if [ "$store" != "$projects/$local" ] && [ -d "$projects/$local" ]; then
 	echo "Note: $projects/$local is this checkout's store from before it had an origin; move its docs into the store above."
 fi
-print "Private (edit freely)" "$private"
-print "Public (committed; propose changes)" "$public"
+print "Private catalog (edit freely)" "$private"
 exit 0

@@ -1,11 +1,11 @@
-# docs/agents/e2e.md format
+# E2E stack format
 
-The adapter the `test` skill reads to run a repo's app. One section per stack mode; the first is the default. Every command runs from the repo root on a fresh checkout.
+The section of `docs/contributing/testing.md` the `test` skill reads to run a repo's app. People use it too, to run the app the way a reviewer would. One subsection per stack mode; the first is the default. Every command runs from the repo root on a fresh checkout.
 
 ```markdown
-# E2E stack
+## E2E stack
 
-## <mode, e.g. host>
+### <mode, e.g. host>
 
 When to use: <e.g. cloud routines; no containers>
 

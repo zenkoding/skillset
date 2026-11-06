@@ -22,7 +22,7 @@ Use [working notes](references/session.md) for substantial or resumable investig
 
 ## Result
 
-Save an evidence-backed report using [report guidance](references/report-format.md). Respect the user's destination or use the repository's investigation-docs convention, defaulting to `docs/investigations/`. Use a descriptive dated filename, preserve existing files, and verify the saved report. If saving is unavailable, disclose that limitation.
+Save an evidence-backed report using [report guidance](references/report-format.md). Respect the user's destination, otherwise save it in the private project knowledge store under `<store>/notes/<objective>/`, by the absolute path the session-start hook prints. Never default to a repo path. Use a descriptive dated filename, preserve existing files, and verify the saved report. Then offer to attach the report to the tracker issue (`docs/contributing/issues.md` says how). If saving is unavailable, disclose that limitation.
 
 Once a cause is supported, name the **guard**: the test, check or review step that should have caught it, and why it didn't fire. When the mistake is **codifiable** ([work sizing](references/work-sizing.md)), add a `Codify: <the rule, one line>` line to the report for a later retro (`retrospect` when installed); don't build the check here.
 

@@ -1,6 +1,6 @@
 # Vision brief template
 
-The format for `docs/vision.md`. About 1 to 1.5 pages in total. Living: re-read at each milestone close; every change gets a changelog line and a person's approval. No front matter. Keep the headings as written so people and agents find the same section in the same place, and replace every `<...>`.
+The format for `VISION.md`. About 1 to 1.5 pages in total. Living: re-read at each milestone close; every change gets a changelog line and a person's approval. No front matter. Keep the headings as written so people and agents find the same section in the same place, and replace every `<...>`.
 
 ```markdown
 # <Product> vision
