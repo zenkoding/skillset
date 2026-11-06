@@ -1,11 +1,6 @@
 ---
 name: triage-prs
-description: >
-  Use when triaging open pull requests across recurring review sessions —
-  deciding which PRs need attention, which to skip, which to land, or
-  which already have a reviewer. Triggers on "triage PRs",
-  "what should I review", "check PR queue", "review queue",
-  "which PRs need attention".
+description: "Use when triaging open pull requests across recurring review sessions — deciding which PRs need attention, which to skip, which to land, or which already have a reviewer. Triggers on \"triage PRs\", \"what should I review\", \"check PR queue\", \"review queue\", \"which PRs need attention\"."
 argument-hint: "[owner/repo] | skip <num> \"<reason>\" | forget <num> | --include-mine | --include-others-drafts | --include-others-reviewed | --all"
 user-invocable: true
 ---

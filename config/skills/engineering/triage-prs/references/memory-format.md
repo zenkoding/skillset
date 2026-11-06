@@ -1,7 +1,6 @@
 # Memory File Formats
 
-Reference for the two memory files /triage-prs reads and writes.
-Canonical schema — do not deviate from these formats.
+Reference for the two memory files /triage-prs reads and writes. Canonical schema — do not deviate from these formats.
 
 ---
 
