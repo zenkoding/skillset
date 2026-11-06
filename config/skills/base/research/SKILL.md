@@ -1,5 +1,5 @@
 ---
-name: research-scope
+name: research
 description: Research a question that needs a saved, source-backed report, including technical comparisons, conflicting claims, or synthesis across project and external sources.
 compatibility: Requires access to relevant sources and file writes for saved reports.
 ---
@@ -20,6 +20,6 @@ Follow questions that could change the conclusion. Reconcile disagreements or ex
 
 Keep [working notes](reference/orchestration-details.md) when they help with a substantial or resumable task. Delegate useful independent questions when the host supports it. Check that substantive claims have actual supporting sources and label self-review; a required independent review remains unmet if unavailable.
 
-Use the [report guidance](reference/report-format.md), sized to the question. Save the report at the user's chosen location, otherwise in the private project knowledge store under `<store>/notes/<objective>/`, by the absolute path the session-start hook prints. Never default to a repo path. Use the current date and a descriptive filename, preserve existing files, and verify the saved content. Then offer to attach the report to the tracker issue it informs (`docs/contributing/issues.md` says how). If there is no store or file access, provide the report and say it was not saved.
+Use the [report guidance](reference/report-format.md), sized to the question. Save the report at the user's chosen location, otherwise in the private project knowledge store under `<store>/notes/<objective>/`, by the absolute path the session-start hook prints. Never default to a repo path. Use the current date and a descriptive filename, preserve existing files, and verify the saved content. Then offer to attach the report to the tracker issue it informs (`docs/contributing/issues.md` says how) or to file it in the docs store (`docs/contributing/docs.md`). If there is no store or file access, provide the report and say it was not saved.
 
 Return the answer, important limitations, and report path. Publication or changes to shared systems require authorization beyond preparing the report.

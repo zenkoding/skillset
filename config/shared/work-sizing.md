@@ -31,7 +31,7 @@ Skills that find a codifiable mistake tag it as a **Codify candidate**, written 
 
 ## Counted lines
 
-Additions plus deletions in the diff, excluding lockfiles, generated or vendored files, pure renames and test fixtures. **Large** means 500 or more counted lines. Size is not an axis: it only sets review mechanics (splitting a diff, parallel review passes), never how dangerous a change is.
+Additions plus deletions in the diff, excluding lockfiles, generated or vendored files, pure renames and test fixtures. **Large** means 500 or more counted lines. Size is not an axis: it only sets review mechanics (splitting a diff, parallel review passes), never how dangerous a change is. A large diff splits into steps that each leave the system working on their own, one PR per step.
 
 ## Substantial
 
