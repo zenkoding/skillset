@@ -6,6 +6,7 @@ Organize the report around what helps the reader understand and act on the findi
 - The supported cause, or leading hypotheses and the evidence needed to distinguish them.
 - Evidence with actual source locations, commands, outcomes, and relevant revisions.
 - What a correct fix should preserve, recommended actions, and useful alternatives.
+- The guard that should have caught it and why it didn't fire; a `Codify:` line when the mistake is codifiable.
 - Checks actually performed, their limitations, and remaining checks.
 
 Use only sections that help this investigation. Clearly distinguish a tested approach from an untested recommendation. Note unresolved validation issues and whether review was independent or a self-review. An evidence gap can be a valid result; it is not a passed test.
