@@ -25,9 +25,9 @@ func fixture(t *testing.T) (repo, home string) {
 	t.Helper()
 	repo, home = t.TempDir(), t.TempDir()
 	write(t, filepath.Join(repo, "skills/eng/alpha/SKILL.md"), skill("alpha"))
-	write(t, filepath.Join(repo, "skills/sdlc/beta/SKILL.md"), skill("beta"))
+	write(t, filepath.Join(repo, "skills/product/beta/SKILL.md"), skill("beta"))
 	write(t, filepath.Join(repo, "skills/in-progress/draft/SKILL.md"), skill("draft"))
-	write(t, filepath.Join(repo, "skills/sdlc/empty/SKILL.md"), "")
+	write(t, filepath.Join(repo, "skills/product/empty/SKILL.md"), "")
 	write(t, filepath.Join(repo, "skills/eng/wrong/SKILL.md"), skill("other"))
 	write(t, filepath.Join(repo, "instructions/shared.md"), "shared\n")
 	write(t, filepath.Join(repo, "instructions/claude.md"), "claude\n")
@@ -56,7 +56,7 @@ func TestInstall(t *testing.T) {
 	}{
 		{".claude/skills/alpha", "skills/eng/alpha"},
 		{".codex/skills/alpha", "skills/eng/alpha"},
-		{".agents/skills/beta", "skills/sdlc/beta"},
+		{".agents/skills/beta", "skills/product/beta"},
 		{".claude/CLAUDE.md", "build/claude/CLAUDE.md"},
 		{".codex/AGENTS.md", "build/codex/AGENTS.md"},
 		{".claude/skills/draft", ""},
@@ -291,7 +291,7 @@ func TestRenderInstructions(t *testing.T) {
 
 func TestDuplicateSkillNames(t *testing.T) {
 	repo, _ := fixture(t)
-	write(t, filepath.Join(repo, "skills/sdlc/alpha/SKILL.md"), skill("alpha"))
+	write(t, filepath.Join(repo, "skills/product/alpha/SKILL.md"), skill("alpha"))
 	if _, _, err := repoSource(repo).discover(); err == nil {
 		t.Fatal("want duplicate-name error")
 	}
