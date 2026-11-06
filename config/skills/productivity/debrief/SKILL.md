@@ -5,13 +5,9 @@ description: Debrief the user at the end of substantial work (code changed, PR o
 
 # Debrief
 
-A debrief keeps the user's understanding in step with work an agent did, and
-turns repeated friction into fixes. It is a short chat message, then filing.
+A debrief keeps the user's understanding in step with work an agent did, and turns repeated friction into fixes. It is a short chat message, then filing.
 
-Run it once per objective, at the end of substantial work
-([work sizing](references/work-sizing.md)), and whenever the user asks. Skip it for
-question-and-answer sessions and for follow-up fixes to work already
-debriefed: CI fixes, review replies, scheduled runs.
+Run it once per objective, at the end of substantial work ([work sizing](references/work-sizing.md)), and whenever the user asks. Skip it for question-and-answer sessions and for follow-up fixes to work already debriefed: CI fixes, review replies, scheduled runs.
 
 ## 1. Write the debrief
 
@@ -44,24 +40,16 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 - <for friction seen before: the concrete change to a skill, instruction or doc>. Awaiting your OK.
 ```
 
-- Decisions always read "chose X over Y because Z", self-contained, with no
-  private note paths: `publish`'s reviewer notes quote them verbatim.
-- Every `path:line` in Worth understanding exists at the final commit; check
-  it before posting.
+- Decisions always read "chose X over Y because Z", self-contained, with no private note paths: `publish`'s reviewer notes quote them verbatim.
+- Every `path:line` in Worth understanding exists at the final commit; check it before posting.
 - Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.
 - When the objective finished the last open feature of an epic or milestone, offer `retrospect` for it.
-- A Codify candidate is a mechanical mistake from this objective that is
-  **codifiable** ([work sizing](references/work-sizing.md)): one a reviewer, a
-  test or the user caught, or one the agent made and fixed. List it; building
-  the check is `retrospect`'s call.
-- A friction item is **seen before** when an earlier note under
-  `<store>/notes/` records the same friction: grep the notes for its key
-  words. Only seen-before friction gets a Proposed fix.
+- A Codify candidate is a mechanical mistake from this objective that is **codifiable** ([work sizing](references/work-sizing.md)): one a reviewer, a test or the user caught, or one the agent made and fixed. List it; building the check is `retrospect`'s call.
+- A friction item is **seen before** when an earlier note under `<store>/notes/` records the same friction: grep the notes for its key words. Only seen-before friction gets a Proposed fix.
 
 ## 2. File each item
 
-Pick the destination per item. `<store>` is the repo's private project
-knowledge store, by the absolute path the session-start hook prints.
+Pick the destination per item. `<store>` is the repo's private project knowledge store, by the absolute path the session-start hook prints.
 
 ```
 session-only ─────────────> <store>/notes/<objective>/        write now
@@ -71,15 +59,8 @@ ADR-worthy decision ──────> docs/adr/NNNN-*.md      ├ proposed in 
 recurring friction ───────> skill / instruction fix ┘ written on the user's OK
 ```
 
-- Append the debrief's Decisions, Friction and Codify candidates bullets,
-  dated, to the objective's note, so a later debrief can find seen-before
-  friction and `retrospect` can count repeated candidates.
-- A decision is **ADR-worthy** when it is hard to reverse, surprising
-  without context, and a real trade-off. Otherwise it stays in the note or a
-  doc.
-- Committed docs, ADRs, skills and instructions change only after the user
-  approves, per the write policy in "Project knowledge".
+- Append the debrief's Decisions, Friction and Codify candidates bullets, dated, to the objective's note, so a later debrief can find seen-before friction and `retrospect` can count repeated candidates.
+- A decision is **ADR-worthy** when it is hard to reverse, surprising without context, and a real trade-off. Otherwise it stays in the note or a doc.
+- Committed docs, ADRs, skills and instructions change only after the user approves, per the write policy in "Project knowledge".
 
-Done when the debrief is posted, every session-only and private item is
-written, and every shared item is either written with approval or listed as a
-proposal.
+Done when the debrief is posted, every session-only and private item is written, and every shared item is either written with approval or listed as a proposal.

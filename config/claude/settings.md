@@ -1,8 +1,6 @@
 # claude/settings.json: why each rule exists
 
-Precedence is deny > ask > allow. `defaultMode: auto` handles everything
-not listed, so `allow` only lists commands that should never need a check.
-Change a rule here and in `settings.json` together.
+Precedence is deny > ask > allow. `defaultMode: auto` handles everything not listed, so `allow` only lists commands that should never need a check. Change a rule here and in `settings.json` together.
 
 ## allow
 
