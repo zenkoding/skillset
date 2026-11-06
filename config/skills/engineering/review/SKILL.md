@@ -16,6 +16,8 @@ Resolve the PR (`gh pr view`, `gh pr diff`); a URL resolves to its number first.
 
 Stop without reviewing when the PR is a draft, closed or merged, or the diff is empty. Also stop when a review carrying the `<!-- review-pr -->` marker already exists on the head SHA. A review on an older head means this is a re-review: review only the commits since that head, and never repeat a finding already posted.
 
+When the PR adds or changes an RFC, review its design with the [RFC checklist](references/rfc-checklist.md) in step 3 instead of the code checks.
+
 Size the change with [work sizing](references/work-sizing.md): judge Risk, Complexity and Taste on the diff and the PR's What, note its door (one-way or two-way), and count its lines.
 
 Done when you can state in two sentences what the change is meant to do and which files carry the risk.
