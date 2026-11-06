@@ -1,33 +1,40 @@
 ---
 name: build
-description: "Build one tracker feature from its plan to an open PR a reviewer can check from the body alone. Run as /build <feature id>."
+description: "Build one tracker ticket from its plan to an open PR a reviewer can check from the body alone. Run as /build <ticket ID, URL or description>."
 disable-model-invocation: true
 ---
 
-Build one **feature** from its **plan** to a PR into the default branch. The feature identifier is the argument; if none is given, ask for it.
+Build one **ticket** (whatever the tracker calls a unit of work: a feature, task, story or bug) from its **plan** to a PR into the default branch.
 
-`docs/agents/issue-tracker.md` says how to read and change the issue, where the plan lives, which plan sections you may edit, and the delivery rules. Use its operations for every tracker step below.
+`docs/agents/issue-tracker.md` says how to read and change the ticket, where the plan lives, which plan sections you may edit, and the delivery rules. Use its operations for every tracker step below.
 
 ## Steps
 
-1. **Claim.** Read the feature issue. State its title and parent epic. Go on when it is a feature or bug issue; for anything else, stop and say what it is. Go on when the parent epic is out of Backlog (its spec is approved); while it is in Backlog, stop and report that. Assign yourself. When the tracker moves the issue to In Progress once a branch carrying the identifier exists (step 2), check it moved and set it by hand only if it didn't. Done when the tracker shows In Progress.
+1. **Find the ticket.** The argument can be:
+   - **an identifier or a tracker URL**: read that ticket;
+   - **free text**: search the tracker for matching tickets and show the best few. Ask the user to confirm which one they meant. When nothing matches, ask what they meant and whether it is new work; for new work, create the ticket first, then go on with it.
+   - **nothing**: ask for one of the above.
 
-2. **Branch.** Work on a branch whose name carries the identifier in lower case (the tracker's suggested branch name works). Keep the current branch if it already carries the identifier (a worktree session often starts on one); otherwise cut one from the current default branch. Done when `git branch --show-current` contains the identifier.
+   Done when exactly one ticket is confirmed.
 
-3. **Read the plan.** Read every section of the plan, the epic's description and the docs it links. Then open the repo docs that apply to this change from the docs catalog (`docs/agents/README.md`): usually the decisions doc, the architecture doc, ADRs in the area, and the glossary for names. Done when each **Done when** item maps to a check you know how to run.
+2. **Claim.** Read the ticket. State its title and its parent epic when it has one. Go on when it is buildable work (a feature, task, story or bug); for anything else, such as an epic, stop and say what it is. Go on when the parent epic is out of Backlog (its spec is approved); while it is in Backlog, stop and report that. Assign yourself. When the tracker moves the ticket to In Progress once a branch carrying the identifier exists (step 3), check it moved and set it by hand only if it didn't. Done when the tracker shows In Progress.
 
-4. **Resolve open questions.** Every item under the plan's **Open questions**, and every gap step 3 found, gets an answer before code:
+3. **Branch.** Work on a branch whose name carries the identifier in lower case (the tracker's suggested branch name works). Keep the current branch if it already carries the identifier (a worktree session often starts on one); otherwise cut one from the current default branch. Done when `git branch --show-current` contains the identifier.
+
+4. **Read the plan.** Read every section of the plan, the parent epic's description and the docs it links. Then open the repo docs that apply to this change from the docs catalog (`docs/agents/README.md`): usually the decisions doc, the architecture doc, ADRs in the area, and the glossary for names. Done when each **Done when** item maps to a check you know how to run.
+
+5. **Resolve open questions.** Every item under the plan's **Open questions**, and every gap step 4 found, gets an answer before code:
    - Answer it from the code, the repo docs or the epic's spec when they settle it. Write the answer and its source under **Open questions**.
-   - When only a person can answer it, or the answer would change **What to build** or **Done when**, add it under **Open questions**, comment the question on the issue, and stop. The issue stays In Progress and assigned to you, with the question as its last comment. Report the question.
+   - When only a person can answer it, or the answer would change **What to build** or **Done when**, add it under **Open questions**, comment the question on the ticket, and stop. The ticket stays In Progress and assigned to you, with the question as its last comment. Report the question.
 
    Done when every item under **Open questions** has an answer.
 
-5. **Build test-first.** Read the plan's **Flags**; if it names a flag, put unfinished work behind it. Otherwise keep unfinished UI unlinked, so the default branch stays deployable after every PR. Work test-first (the `tdd` skill when installed). The **Done when** checks are the pre-agreed seams; a seam the plan does not name goes through step 4 first. Tick each **Done when** item on the issue once its check passes. Done when every item is ticked, or noted for the step 8 report with why it can't be checked from the branch.
+6. **Build test-first.** Read the plan's **Flags**; if it names a flag, put unfinished work behind it. Otherwise keep unfinished UI unlinked, so the default branch stays deployable after every PR. Work test-first (the `tdd` skill when installed). The **Done when** checks are the pre-agreed seams; a seam the plan does not name goes through step 5 first. Tick each **Done when** item on the ticket once its check passes. Done when every item is ticked, or noted for the step 9 report with why it can't be checked from the branch.
 
-6. **Check.** Run the check command that `AGENTS.md` or `CLAUDE.md` names (lint, tests, build) and fix what it reports until it exits 0. When it fails on code this feature didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
+7. **Check.** Run the check command that `AGENTS.md` names (lint, tests, build) and fix what it reports until it exits 0. When it fails on code this ticket didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
 
-7. **Open the PR.** Commit, push, and open one PR with `publish`, titled with the identifier first (`<ID>: <feature title>`) so the tracker links it. Its **How to test** starts from the plan's. Add the PR link to the issue. Done when the PR is open and its title carries the identifier.
+8. **Open the PR.** Commit, push, and open one PR with `publish`. `publish` writes the title; its **Why** links the ticket, and its **How to test** starts from the plan's. The branch name carries the identifier, so trackers that link by branch still link the PR. Add the PR link to the ticket. Done when the PR is open and its Why links the ticket.
 
-   A feature too large to review as one PR becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the issue. The issue goes In Review when the first PR opens and Done when the last merges.
+   A ticket too large to review as one PR becomes a stack: each PR into its own base, each leaving the default branch deployable, each linked on the ticket. The ticket goes In Review when the first PR opens and Done when the last merges.
 
-8. **Hand to review.** When the tracker moves the issue to In Review as the PR opens, check it moved and set it by hand only if it didn't. Mark the PR ready and add `ready-for-agent` when the repo uses `review` routines. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.
+9. **Hand to review.** `publish` opens the PR as a draft and flips it to ready, with its review label, once it checks out and CI is green. When the tracker moves the ticket to In Review as the PR opens, check it moved and set it by hand only if it didn't. Report the PR URL, any **Done when** item still unticked and why, and anything not tested. Done when the tracker shows In Review.
