@@ -14,7 +14,7 @@ import (
 // set or from sets that set requires, directly or not. A name followed by
 // "when installed" in the same clause ("`tdd` when installed", "the `grill`
 // skill when installed") may point anywhere: it is a soft link the skill can
-// do without.
+// do without. A file carrying softFileMarker treats every name that way.
 func TestSkillLinksFollowSets(t *testing.T) {
 	root, err := filepath.Abs("../../config")
 	if err != nil {
@@ -60,6 +60,9 @@ func TestSkillLinksFollowSets(t *testing.T) {
 				return err
 			}
 			rel, _ := filepath.Rel(root, path)
+			if strings.Contains(string(data), softFileMarker) {
+				return nil // every name in this file is a soft link
+			}
 			for _, s := range sentences(string(data)) {
 				for _, other := range names(setOf) {
 					if reach[setOf[other]] || !hardMention(s, other) {
@@ -142,6 +145,10 @@ func sentences(text string) []string {
 	}
 	return out
 }
+
+// softFileMarker opts a whole file out: every skill it names is named only
+// when installed (a map of all the skills, for one).
+const softFileMarker = "<!-- every skill named here: when installed -->"
 
 var softRE = regexp.MustCompile(`^[^.;,]{0,40}?when installed`)
 
