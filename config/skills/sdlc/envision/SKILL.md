@@ -4,7 +4,7 @@ description: Take a rough product idea through research, a mockup or PoC, and a 
 disable-model-invocation: true
 ---
 
-Product-lane skill: turn a rough idea into a change to the project's vision. The output is an edited vision doc (`docs/vision.md` unless the docs catalog names another) in the **vision brief** format ([`vision-brief.md`](vision-brief.md)). Vision changes wait for a person, so this skill opens a PR and stops for approval.
+Turn a rough idea into a change to the project's vision. The output is an edited vision doc (`docs/vision.md` unless the docs catalog names another) in the **vision brief** format ([`vision-brief.md`](vision-brief.md)). Vision changes wait for a person, so this skill opens a PR and stops for approval.
 
 Read the vision doc, the project-wide decisions doc when the repo has one, the glossary (`CONTEXT.md`, per `docs/agents/domain.md`) and `docs/agents/product-docs.md` before step 1. Name things with glossary terms.
 

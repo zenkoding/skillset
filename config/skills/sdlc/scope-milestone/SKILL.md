@@ -4,7 +4,7 @@ description: Scope the next milestone. Compare where the project is with the vis
 disable-model-invocation: true
 ---
 
-A product-lane skill. It turns "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the adapters say: `docs/agents/issue-tracker.md` and `docs/agents/product-docs.md`.
+Turn "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the adapters say: `docs/agents/issue-tracker.md` and `docs/agents/product-docs.md`.
 
 The person decides the goal, the non-goals, the "done when" and which epics exist. You find the facts and draft.
 
