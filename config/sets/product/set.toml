@@ -1,0 +1,6 @@
+name = "product"
+description = "Product loop skills: envision, scope-milestone, shape-epic, retrospect, RFCs and proofs of concept"
+hosts = ["claude", "codex"]
+requires = ["engineering"]
+
+skills = ["../../skills/product"]

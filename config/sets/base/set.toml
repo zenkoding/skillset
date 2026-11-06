@@ -1,0 +1,34 @@
+# The core every other set builds on: instructions, Claude settings, the project knowledge hook, and the planning skills (brief, debrief, research, project-knowledge).
+name = "base"
+description = "Shared instructions, Claude settings, statusline, dcg config and the planning skills"
+hosts = ["claude", "codex"]
+
+shared = "../../instructions/shared.md"
+skills = ["../../skills/base"]
+settings = "../../claude/settings.json"
+
+[instructions]
+claude = "../../instructions/claude.md"
+codex = "../../instructions/codex.md"
+
+[[files]]
+home = ".claude/statusline.sh"
+hosts = ["claude"]
+path = "../../claude/statusline.sh"
+
+[[files]]
+home = ".claude/hooks/project-knowledge.sh"
+path = "../../claude/hooks/project-knowledge.sh"
+
+[[files]]
+home = ".claude/output-styles"
+hosts = ["claude"]
+path = "../../claude/output-styles"
+
+[[files]]
+home = ".config/dcg/config.toml"
+path = "../../dcg/config.toml"
+
+[[files]]
+home = ".config/dcg/packs"
+path = "../../dcg/packs"

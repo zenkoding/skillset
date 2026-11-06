@@ -40,11 +40,11 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 - <for friction seen before: the concrete change to a skill, instruction or doc>. Awaiting your OK.
 ```
 
-- Decisions always read "chose X over Y because Z", self-contained, with no private note paths: `publish`'s reviewer notes quote them verbatim.
+- Decisions always read "chose X over Y because Z", self-contained, with no private note paths: the PR's reviewer notes (`publish` when installed) quote them verbatim.
 - Every `path:line` in Worth understanding exists at the final commit; check it before posting.
-- Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.
-- When the objective finished the last open feature of an epic or milestone, offer `retrospect` for it.
-- A Codify candidate is a mechanical mistake from this objective that is **codifiable** ([work sizing](references/work-sizing.md)): one a reviewer, a test or the user caught, or one the agent made and fixed. List it; building the check is `retrospect`'s call.
+- Friction that spans several objectives is a retro's job (`retrospect` when installed): say so in the debrief instead of proposing a one-off fix.
+- When the objective finished the last open feature of an epic or milestone, offer a retro for it (`retrospect` when installed).
+- A Codify candidate is a mechanical mistake from this objective that is **codifiable** ([work sizing](references/work-sizing.md)): one a reviewer, a test or the user caught, or one the agent made and fixed. List it; building the check is a retro's call (`retrospect` when installed).
 - A friction item is **seen before** when an earlier note under `<store>/notes/` records the same friction: grep the notes for its key words. Only seen-before friction gets a Proposed fix.
 
 ## 2. File each item
@@ -59,7 +59,7 @@ ADR-worthy decision ──────> docs/adr/NNNN-*.md      ├ proposed in 
 recurring friction ───────> skill / instruction fix ┘ written on the user's OK
 ```
 
-- Append the debrief's Decisions, Friction and Codify candidates bullets, dated, to the objective's note, so a later debrief can find seen-before friction and `retrospect` can count repeated candidates.
+- Append the debrief's Decisions, Friction and Codify candidates bullets, dated, to the objective's note, so a later debrief can find seen-before friction and a retro (`retrospect` when installed) can count repeated candidates.
 - A decision is **ADR-worthy** when it is hard to reverse, surprising without context, and a real trade-off. Otherwise it stays in the note or a doc.
 - Committed docs, ADRs, skills and instructions change only after the user approves, per the write policy in "Project knowledge".
 

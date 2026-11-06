@@ -5,7 +5,7 @@ description: Brief the user at the start of work on an idea, ticket or problem: 
 
 # Brief
 
-The start-of-session counterpart of `debrief`. A brief turns a one-line ask into shared understanding and a plan before any code changes, and picks the next phase. It is a short chat message plus a note `debrief` reads at the end.
+The start-of-session counterpart of `debrief`. A brief turns a one-line ask into shared understanding and a plan before any work starts, and picks the next phase. The ask can be code work or anything else (a doc, a decision, an investigation); the code-only steps say so. It is a short chat message plus a note `debrief` reads at the end.
 
 ## 1. Read the ask
 
@@ -20,14 +20,14 @@ Read, without asking the user for any of it:
 
 - the project knowledge catalogs (`docs/agents/README.md` and the private store's), `CONTEXT.md`, and the ADRs in the area;
 - earlier notes for the same objective under `<store>/notes/<objective>/` (a resumed objective starts from its last debrief);
-- the code the ask touches: entry points, callers, tests, recent history;
-- recent PRs and open issues on the same area.
+- for code work, the code the ask touches: entry points, callers, tests, recent history, and recent PRs on the same area;
+- open issues on the same area.
 
 Done when you can say what exists today and where the ask lands in it, with a `path:line` or link per claim.
 
 ## 3. Research the unknowns
 
-List what you'd need to know to plan the work. Answer each from the code and primary sources inline. An unknown that could change the plan and is too big to answer inline goes to `research-scope`, in a background agent when the host has one. Stop when the remaining unknowns are ones only the user, or a grill, can settle.
+List what you'd need to know to plan the work. Answer each from the code (for code work) and primary sources inline. An unknown that could change the plan and is too big to answer inline goes to `research-scope`, in a background agent when the host has one. Stop when the remaining unknowns are ones only the user, or a grill, can settle.
 
 ## 4. Present the brief
 
@@ -54,8 +54,8 @@ List what you'd need to know to plan the work. Answer each from the code and pri
 
 Predict the three axes of [work sizing](references/work-sizing.md) from the plan, then make the call:
 
-- **Defect**: next is `fix-bug`, to establish the cause before any fix.
-- **Trivial**: next is building: `build` for a tracker feature, otherwise test-first (the `tdd` skill when installed).
+- **Defect**: next is `fix-bug` when installed, to establish the cause before any fix; without it, find the cause before changing anything.
+- **Trivial**: for code work, next is `build` when installed for a tracker ticket, otherwise test-first (the `tdd` skill when installed). For anything else, do the work directly.
 - **Non-trivial**: next is `grilling` (or one question at a time when it isn't installed), seeded with the Unknown list and each high axis: the design for Complexity, the options for Taste, the rollback and blast radius for Risk.
 
 Keep each list to about five items; the plan names times.

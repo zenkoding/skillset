@@ -61,4 +61,4 @@ Commit and open one PR with `publish`:
 - **Why**: the rule in one line and every instance that led here, linked (review comments, debriefs, investigation reports).
 - **Reviewer notes**: the `Guard` line naming the new check, plus any baseline or excludes.
 
-Done when the PR is open, or, when `retrospect` called this skill, when the change is on `retrospect`'s branch for its one PR.
+Done when the PR is open. When a retro called this skill (`retrospect` when installed), done when the change is on the retro's branch for its one PR.
