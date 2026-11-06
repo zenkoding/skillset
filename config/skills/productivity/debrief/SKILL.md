@@ -37,6 +37,9 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 **Worth understanding**
 - `path:line`: <why it matters to the user's mental model> (1-2 items)
 
+**Codify candidates**
+- Codify: <the rule, one line>. Seen at <where the mistake happened>.
+
 **Proposed fixes**
 - <for friction seen before: the concrete change to a skill, instruction or doc>. Awaiting your OK.
 ```
@@ -47,6 +50,10 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
   it before posting.
 - Friction that spans several objectives is `retrospect`'s job: say so in the debrief instead of proposing a one-off fix.
 - When the objective finished the last open feature of an epic or milestone, offer `retrospect` for it.
+- A Codify candidate is a mechanical mistake from this objective that is
+  **codifiable** ([work sizing](references/work-sizing.md)): one a reviewer, a
+  test or the user caught, or one the agent made and fixed. List it; building
+  the check is `retrospect`'s call.
 - A friction item is **seen before** when an earlier note under
   `<store>/notes/` records the same friction: grep the notes for its key
   words. Only seen-before friction gets a Proposed fix.
@@ -64,8 +71,9 @@ ADR-worthy decision ──────> docs/adr/NNNN-*.md      ├ proposed in 
 recurring friction ───────> skill / instruction fix ┘ written on the user's OK
 ```
 
-- Append the debrief's Decisions and Friction bullets, dated, to the
-  objective's note, so a later debrief can find seen-before friction.
+- Append the debrief's Decisions, Friction and Codify candidates bullets,
+  dated, to the objective's note, so a later debrief can find seen-before
+  friction and `retrospect` can count repeated candidates.
 - A decision is **ADR-worthy** when it is hard to reverse, surprising
   without context, and a real trade-off. Otherwise it stays in the note or a
   doc.

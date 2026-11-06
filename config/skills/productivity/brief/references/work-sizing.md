@@ -23,6 +23,12 @@ Work is **trivial** when its scope is bounded and every axis is low. Any high ax
 
 A **defect** is a separate track: behaviour that differs from what the code or docs promise. Establish the cause first; the fix is then sized like any other work.
 
+## Codifiable
+
+A mistake is **codifiable** when a deterministic check (lint rule, type, test, CI step or codemod) could catch every instance from syntax or types, with low false positives and no judgment needed. A banned API, an import shape or a file in the wrong place is codifiable; a misleading name or a missing abstraction is not.
+
+Skills that find a codifiable mistake tag it as a **Codify candidate**, written `Codify: <the rule, one line>`, and build nothing. `retrospect` collects the candidates and runs `codify` when one recurs in two or more objectives, or after a single miss that was `Crucial`.
+
 ## Counted lines
 
 Additions plus deletions in the diff, excluding lockfiles, generated or vendored files, pure renames and test fixtures. **Large** means 500 or more counted lines. Size is not an axis: it only sets review mechanics (splitting a diff, parallel review passes), never how dangerous a change is.

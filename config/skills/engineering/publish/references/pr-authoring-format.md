@@ -26,6 +26,8 @@ Follow the repository's PR template and conventions. When none exist, use the te
 ### Reviewer notes
 
 **Merge danger**: <one-way | two-way> door: <why>. Blast radius: <what else this can break>.
+
+**Guard**: <optional: the check this PR adds, or the one it needs>
 ```
 
 ### What
@@ -65,6 +67,8 @@ Always carries **Merge danger**:
 
 - **Door**: one-way or two-way, as [work sizing](work-sizing.md) defines it.
 - **Blast radius**: one line on what else this can break.
+
+Add **Guard** only when the PR fixes a class of mistake or sets a convention: one line naming the check it adds, or `Codify: <the rule>` when a check is still needed ([codifiable](work-sizing.md)). Leave it out otherwise; it is never a separate step.
 
 PRs with high Risk or a large diff add the full notes; see [reviewer-notes.md](reviewer-notes.md).
 
