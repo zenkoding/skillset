@@ -27,7 +27,7 @@ Done when every unknown is answered with a source or carried into the grill as a
 
 ## 3. Grill the person
 
-Run a grilling skill when installed (otherwise interview the person one question at a time), seeded with what step 2 left open. Cover, at least: the problem story, what is out of scope, how each outcome is checked, appetite, flags and rollout, and anything that would force a feature across epics.
+Run `grill`, seeded with what step 2 left open. Cover, at least: the problem story, what is out of scope, how each outcome is checked, appetite, flags and rollout, and anything that would force a feature across epics.
 
 Done when every branch of the design tree has an answer or is recorded as an open question in the spec.
 

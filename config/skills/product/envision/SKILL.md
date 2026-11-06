@@ -16,7 +16,7 @@ Read the vision doc, the project-wide decisions doc when the repo has one, the g
 
 3. **Make it concrete.** Build one thing a person can look at: a UI mockup or a logic PoC (`build-poc`, or a prototype skill when installed). It is throwaway and lives on a throwaway branch; it answers "does this feel right?", not "does it work in production". Link it from the Research doc and, later, the PR. Skip only when the user says the change is wording-only (a principle or non-goal reworded). Done when the user has seen it and said what they think.
 
-4. **Grill.** Run a grilling skill when installed (otherwise interview the user one question at a time) on the drafted change, seeded with the research and the mockup. Push hardest on: who the first audience is, the diagnosis and guiding policy, what we won't do, which principles break ties, and the top risks. Record every settled answer. Done when the design tree has no open frontier, or the user calls it.
+4. **Grill.** Run `grill` on the drafted change, seeded with the research and the mockup. Push hardest on: who the first audience is, the diagnosis and guiding policy, what we won't do, which principles break ties, and the top risks. Record every settled answer. Done when the design tree has no open frontier, or the user calls it.
 
 5. **Write the brief.** Edit the vision doc to follow the template, within its page budget. Keep the existing wording wherever the grill did not change it. On a first run, map the doc's current headings onto the template's sections and fill the new ones from the grill. Add a dated Changelog line naming the change and linking the research. Done when every `<...>` placeholder is replaced or its section deliberately left empty, and every claim traces to the grill or the research.
 
