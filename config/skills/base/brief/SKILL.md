@@ -1,69 +1,61 @@
 ---
 name: brief
-description: Brief the user at the start of work on an idea, ticket or problem: collect context, research the unknowns, present understanding and a plan, then hand off to a grill, building or bug investigation. Run as /brief Start working on <idea | ticket | problem>.
+description: Turn a high-level problem, idea or ticket into a plan the user has signed off on, so build has something concrete to work against. Researches, drafts, grills, writes the plan and its companion, then asks for sign-off. Run as /brief <idea | ticket | problem>.
 ---
 
 # Brief
 
-The start-of-session counterpart of `debrief`. A brief turns a one-line ask into shared understanding and a plan before any work starts, and picks the next phase. The ask can be code work or anything else (a doc, a decision, an investigation); the code-only steps say so. It is a short chat message plus a note `debrief` reads at the end.
+The start-of-work counterpart of `debrief`, and the planning orchestrator. A brief takes a high-level problem and ends with a **plan** the user has signed off on, plus a **companion** for the agent that builds it. The ask can be code work or anything else (a doc, a decision, an investigation); the code-only steps say so.
+
+It runs the [planning loop](references/planning-loop.md) at ticket level; the output is a plan in the [plan template](references/plan-template.md).
+
+```
+/brief <problem>
+  1 read the ask and its context
+  2 research the big unknowns       predict the sizing → route
+  3 draft the plan in chat          short, to argue with
+  4 grill the open decisions        settle the sizing
+  5 write the pair                  plan      → docs store, linked on the issue
+                                    companion → <store>/notes/<objective>/
+  6 sign-off                        the user approves the plan → build
+```
 
 ## 1. Read the ask
 
 - **Ticket** (an identifier or URL): read the issue, its comments, its parent, and every doc it links. `docs/contributing/issues.md` says how to reach the tracker, and `docs/contributing/docs.md` where docs live.
 - **Idea or problem** (free text): take it as given. Search the tracker for an existing issue on it and read that too.
 
-Name the **objective** in a few words; it names the notes directory.
-
-## 2. Collect context
-
-Read, without asking the user for any of it:
-
-- the private store's catalog, `CONTRIBUTING.md` and the docs it points to for the area, `CONTEXT.md`, and the history of past decisions (`git log -S '<term>'`);
-- earlier notes for the same objective under `<store>/notes/<objective>/` (a resumed objective starts from its last debrief);
-- for code work, the code the ask touches: entry points, callers, tests, recent history, and recent PRs on the same area;
-- open issues on the same area.
+Name the **objective** in a few words; it names the notes directory. Then read the context the loop's step 1 lists, plus the private store's catalog, and, for code work, the code the ask touches: entry points, callers, tests, recent history and recent PRs on the area.
 
 Done when you can say what exists today and where the ask lands in it, with a `path:line` or link per claim.
 
-## 3. Research the unknowns
+## 2. Research and route
 
-List what you'd need to know to plan the work. Answer each from the code (for code work) and primary sources inline. An unknown that could change the plan and is too big to answer inline goes to `research-scope`, in a background agent when the host has one. Stop when the remaining unknowns are ones only the user, or a grill, can settle.
+Research as the loop's step 2 says: answer small unknowns inline, and send an unknown that could change the plan and is too big to answer inline to `research`. Then predict the axes of [work sizing](references/work-sizing.md) and pick the route:
 
-## 4. Present the brief
+- **Defect**: behaviour differs from what the code or docs promise. Next is `fix-bug` when installed, to establish the cause before any fix; without it, find the cause before changing anything. The fix then comes back here, sized like any other work.
+- **Trivial**: bounded scope, every axis low. Skip the grill. Write the **short plan** (Context, Proposal, Approach) on the issue, or in chat when there is none, and go to step 6.
+- **Non-trivial**: any high axis. Run steps 3 to 6.
 
-```markdown
-### Brief: <objective>
+Tell the user the route and why in one line; a different call from the user wins.
 
-**Understanding**: <the problem, who it's for, the goal: 2-3 sentences>
+## 3. Draft
 
-**Known**
-- <fact> (<path:line, doc or issue link>)
+Post the draft plan in chat, short enough to argue with: Context, Proposal and Approach in a few lines each, the predicted sizing, and the open decisions.
 
-**Unknown**
-- <open question>; <who or what settles it>
+## 4. Grill
 
-**Plan**
-1. <step> (~<time>)
+Run `grill` on the draft, seeded with the open decisions and each high axis. Then re-size: the settled axes and the why for each go in the plan's Risks section. When the grill turned the work trivial, say so and write the short plan instead.
 
-**Sizing**: Risk <low | high>, Complexity <low | high>, Taste <low | high>: <why, for each high axis>
+## 5. Write the pair
 
-**Call**: <trivial | non-trivial | defect>
+- **The plan**, in the plan template, in the docs store where `docs/contributing/docs.md` says. Link it from the tracker issue; create the issue first when there is none and the user agrees. Without a docs store, the plan goes in the issue body.
+- **The companion** at `<store>/notes/<objective>/companion.md`, by the absolute store path the session-start hook prints: the commit, code pointers, per-step instructions and tests, the sizing call, and the grill's decision log. On a resumed objective, update it in place.
 
-**Next**: <the next phase>. Go?
-```
+The plan never links the companion. When they disagree, the plan wins; edit both in the same pass.
 
-Predict the three axes of [work sizing](references/work-sizing.md) from the plan, then make the call:
+## 6. Sign-off
 
-- **Defect**: next is `fix-bug` when installed, to establish the cause before any fix; without it, find the cause before changing anything.
-- **Trivial**: for code work, next is `build` when installed for a tracker ticket, otherwise test-first (the `tdd` skill when installed). For anything else, do the work directly.
-- **Non-trivial**: next is `grill`, seeded with the Unknown list and the sizing.
+Show the user the plan and ask for sign-off. Apply wording rounds to both documents. On sign-off, the next step is `build` when installed (with the ticket), otherwise test-first (the `tdd` skill when installed); for work that isn't code, do it directly.
 
-Keep each list to about five items; the plan names times.
-
-Wait for the user's go. A go starts the named phase; a different call from the user wins.
-
-## 5. File the brief
-
-Write the brief, as posted, to `<store>/notes/<objective>/brief.md` by the absolute store path the session-start hook prints (see "Project knowledge" in your user instructions). On a resumed objective, append a dated section instead of overwriting. Nothing is committed.
-
-Done when the brief is posted, filed, and the user has said go or redirected it.
+Done when the user has signed off the plan, the plan is linked on the issue, and the companion is written.

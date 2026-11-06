@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 Take one epic from a one-line outcome to a spec a person can approve and a set of features an agent can build. Read `docs/contributing/issues.md` and `docs/contributing/docs.md` first: they say where epics, features and docs live and how to write to them. Use glossary terms throughout.
 
+It runs the [planning loop](references/planning-loop.md) at epic level: the doc is the epic spec, and the extra step is cutting the vertical slices (the features).
+
 The argument is an epic identifier. If none is given, ask for one.
 
 ## 1. Load the epic
@@ -21,13 +23,13 @@ Done when you can state the epic's outcome in one line and name every source you
 
 ## 2. Research the unknowns
 
-List what you would need to know to write **Done when** and cut features: how the code works today, what an external API allows, what prior art exists. Answer each from the code and primary sources. A question too big to answer inline goes to `research-scope`, in a background agent when the host has them; its findings go to the docs store as a Research doc for this epic, not the repo.
+List what you would need to know to write **Done when** and cut features: how the code works today, what an external API allows, what prior art exists. Research as the loop says. A question too big to answer inline goes to `research`; its findings go to the docs store as a Research doc for this epic, not the repo.
 
 Done when every unknown is answered with a source or carried into the grill as a question.
 
 ## 3. Grill the person
 
-Run `grill`, seeded with what step 2 left open. Cover, at least: the problem story, what is out of scope, how each outcome is checked, appetite, flags and rollout, and anything that would force a feature across epics.
+Draft and grill as the loop says, seeded with what step 2 left open. Cover, at least: the problem story, what is out of scope, how each outcome is checked, appetite, flags and rollout, and anything that would force a feature across epics.
 
 Done when every branch of the design tree has an answer or is recorded as an open question in the spec.
 
