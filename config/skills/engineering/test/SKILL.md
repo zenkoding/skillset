@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Run a feature's **How to test** steps against a fresh build of the PR and post a **verdict** per step on the PR. You are the reviewer's eyes in the running app: a step passes only when you saw its expected result yourself. The PR comment is the deliverable.
 
-Arguments: the PR, then the stack mode the repo's e2e doc defines (its default when omitted). The feature plan's format and the tracker operations are in `docs/agents/issue-tracker.md`.
+Arguments: the PR, then the stack mode the repo's testing doc defines (its default when omitted). The feature plan's format and the tracker operations are in `docs/contributing/issues.md`.
 
 ## 1. Find the feature
 
@@ -24,9 +24,9 @@ Done when you hold the PR number, the head SHA and the steps. Empty or missing s
 
 ## 2. Bring up the stack
 
-Check out the head SHA on a clean tree (`gh pr checkout <pr>`). Then follow `docs/agents/e2e.md` for the chosen mode ([format](references/e2e-doc.md)): build, start, wait for health, set flags.
+Check out the head SHA on a clean tree (`gh pr checkout <pr>`). Then follow the **E2E stack** section of `docs/contributing/testing.md` for the chosen mode ([format](references/e2e-doc.md)): build, start, wait for health, set flags.
 
-Without `docs/agents/e2e.md`, infer the same steps from `README.md`, `CONTRIBUTING.md` and `AGENTS.md`, and say in the report which commands you inferred and from where. When the docs don't settle a step, the run is **blocked** on it: never guess a command that writes outside the checkout.
+Without that section, infer the same steps from `README.md`, `CONTRIBUTING.md`, `docs/contributing/local-dev.md` and `AGENTS.md`, say in the report which commands you inferred and from where, and suggest `/setup-repo e2e` (when installed) to write the section. When the docs don't settle a step, the run is **blocked** on it: never guess a command that writes outside the checkout.
 
 Set every flag named in **Flags** to the stage the plan gives. A flag you can't set makes the steps that need it **blocked**, with the reason.
 
@@ -58,7 +58,7 @@ The report is one comment per PR. Find an earlier one: `gh pr view <pr> --json c
 ```markdown
 ## E2E: <pass | fail | blocked> · <feature id> @ <short SHA>
 
-Stack: <mode> · Flags: <as set, or none> · Setup: <docs/agents/e2e.md, or "inferred from <files>">
+Stack: <mode> · Flags: <as set, or none> · Setup: <docs/contributing/testing.md, or "inferred from <files>">
 
 | # | Step | Verdict | Evidence |
 | - | ---- | ------- | -------- |

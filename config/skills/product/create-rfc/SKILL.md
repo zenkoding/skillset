@@ -17,7 +17,7 @@ Separate design scope from delivery milestones. Establish from the request wheth
 
 Follow the repository's RFC location and numbering convention. Otherwise use `rfc/NNN-title.md`, selecting the next available number starting at `001`. Outside a repository, use a suitable user-visible working directory. Keep subsequent revisions in the same file. If the destination is shared, prepare a private copy until publication is authorized.
 
-Create an initial RFC with established facts and clearly marked open questions. Use it as the single design document rather than creating separate glossaries, context documents, ADRs or research reports. Place terminology near the end, followed by a references section when needed. Required private execution notes may hold resumption state, but must not become an alternative design source. Keep incidental experiment artifacts out of the RFC's narrative.
+Create an initial RFC with established facts and clearly marked open questions. Use it as the single design document rather than creating separate glossaries, context documents, decision records or research reports. Place terminology near the end, followed by a references section when needed. Required private execution notes may hold resumption state, but must not become an alternative design source. Keep incidental experiment artifacts out of the RFC's narrative.
 
 ## Research and interview in rounds
 

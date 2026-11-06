@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Build one **ticket** (whatever the tracker calls a unit of work: a feature, task, story or bug) from its **plan** to a PR into the default branch.
 
-`docs/agents/issue-tracker.md` says how to read and change the ticket, where the plan lives, which plan sections you may edit, and the delivery rules. Use its operations for every tracker step below.
+`docs/contributing/issues.md` says how to read and change the ticket, where the plan lives, which plan sections you may edit, and the delivery rules. Use its operations for every tracker step below.
 
 ## Steps
 
@@ -21,7 +21,7 @@ Build one **ticket** (whatever the tracker calls a unit of work: a feature, task
 
 3. **Branch.** Work on a branch whose name carries the identifier in lower case (the tracker's suggested branch name works). Keep the current branch if it already carries the identifier (a worktree session often starts on one); otherwise cut one from the current default branch. Done when `git branch --show-current` contains the identifier.
 
-4. **Read the plan.** Read every section of the plan, the parent epic's description and the docs it links. Then open the repo docs that apply to this change from the docs catalog (`docs/agents/README.md`): usually the decisions doc, the architecture doc, ADRs in the area, and the glossary for names. Done when each **Done when** item maps to a check you know how to run.
+4. **Read the plan.** Find it where `docs/contributing/issues.md` says plans live, or in the objective's notes (`<store>/notes/<objective>/`). With no plan, warn the user and offer `brief` then `grill` to write one. The user may say go on without it; then `publish`'s Reviewer notes say the work had no plan. Read every section of the plan, the parent epic's description and the docs it links. Then open the repo docs that apply to this change from `CONTRIBUTING.md`: usually `ARCHITECTURE.md` (or `docs/architecture/`), `CONTEXT.md` for names, and the history of decisions in the area (`git log -S '<term>'`). Done when each **Done when** item maps to a check you know how to run.
 
 5. **Resolve open questions.** Every item under the plan's **Open questions**, and every gap step 4 found, gets an answer before code:
    - Answer it from the code, the repo docs or the epic's spec when they settle it. Write the answer and its source under **Open questions**.
@@ -31,7 +31,7 @@ Build one **ticket** (whatever the tracker calls a unit of work: a feature, task
 
 6. **Build test-first.** Read the plan's **Flags**; if it names a flag, put unfinished work behind it. Otherwise keep unfinished UI unlinked, so the default branch stays deployable after every PR. Work test-first with `tdd`. The **Done when** checks are the pre-agreed seams; a seam the plan does not name goes through step 5 first. Tick each **Done when** item on the ticket once its check passes. Done when every item is ticked, or noted for the step 9 report with why it can't be checked from the branch.
 
-7. **Check.** Run the check command that `AGENTS.md` names (lint, tests, build) and fix what it reports until it exits 0. When it fails on code this ticket didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
+7. **Check.** Run the check command that `docs/contributing/testing.md` names (lint, tests, build; `AGENTS.md` when the repo has no testing doc yet) and fix what it reports until it exits 0. When it fails on code this ticket didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
 
 8. **Open the PR.** Commit, push, and open one PR with `publish`. `publish` writes the title; its **Why** links the ticket, and its **How to test** starts from the plan's. The branch name carries the identifier, so trackers that link by branch still link the PR. Add the PR link to the ticket. Done when the PR is open and its Why links the ticket.
 

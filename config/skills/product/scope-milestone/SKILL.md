@@ -4,7 +4,7 @@ description: Scope the next milestone. Compare where the project is with the vis
 disable-model-invocation: true
 ---
 
-Turn "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the adapters say: `docs/agents/issue-tracker.md` and `docs/agents/product-docs.md`.
+Turn "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the repo's contributing docs say: `docs/contributing/issues.md` and `docs/contributing/docs.md`.
 
 The person decides the goal, the non-goals, the "done when" and which epics exist. You find the facts and draft.
 
@@ -14,7 +14,7 @@ When the previous milestone is closed and no `retrospect` ran on it, offer one f
 
 Read, without asking the person for any of it:
 
-- The vision doc, the project-wide decisions doc when the repo has one, and the glossary.
+- `VISION.md`, the glossary `CONTEXT.md`, and the decisions already made in the area (`git log -S '<term>'`).
 - The project's milestones and epics in the tracker: what is Done, In Progress and in Backlog.
 - The docs store: briefs of earlier milestones and research tagged for the milestone being scoped.
 - What runs on the default branch today: recent merged PRs and the project home, enough to say what the product does.
@@ -34,7 +34,7 @@ Done when the frontier is empty and the person confirms the shared understanding
 
 ## 3. Write the brief
 
-List the docs store's overview docs for this milestone first; if a brief exists, update it instead of creating another. Otherwise fill the template and create the brief as `docs/agents/product-docs.md` says: type Overview, the new milestone, today's date, tracker link empty until step 4.
+List the docs store's overview docs for this milestone first; if a brief exists, update it instead of creating another. Otherwise fill the template and create the brief as `docs/contributing/docs.md` says: type Overview, the new milestone, today's date, tracker link empty until step 4.
 
 Show the person the brief and wait for approval. Edits go into the doc before anything is created in the tracker.
 
@@ -43,7 +43,7 @@ Show the person the brief and wait for approval. Edits go into the doc before an
 1. List the milestones, then the milestone's epics, in the tracker. Create the milestone only if it is missing, and only the epics from the brief's table that are missing. A re-run then completes a half-finished run instead of duplicating it.
 2. Create the milestone: named by its stage (`PoC`, `MVP`), description the "done when" sentence and the brief link.
 3. Create each missing epic in Backlog in that milestone: description the outcome in one line and the brief link. Add blocks between epics where the table gives an order.
-4. Do whatever else `docs/agents/product-docs.md` asks for a new milestone or epic (an index page, a tag option), so `shape-epic` can file its docs under it.
+4. Do whatever else `docs/contributing/docs.md` asks for a new milestone or epic (an index page, a tag option), so `shape-epic` can file its docs under it.
 5. Fill the epic links in the brief's table, and set the brief's tracker link to the milestone.
 
 If a call fails, stop and report what exists and what does not, by name and URL.

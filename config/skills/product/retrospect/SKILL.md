@@ -22,10 +22,10 @@ Done when you can name the work in scope, where it was tracked, and the goal it 
 
 Read every source in scope that you can reach, not a sample. List the ones you could not reach; they go in the report.
 
-1. **Tracker.** The epic or issues and their comments, as `docs/agents/issue-tracker.md` says. Open every doc they link through the matching adapter (`docs/agents/product-docs.md` for a docs store): specs, briefs, research, handovers. Read handovers and results first.
-2. **Project knowledge.** The public catalog (`docs/agents/README.md`, `CONTEXT.md`, `docs/adr/`) and what changed in it during the work in scope, the vision doc and the decisions doc when the repo has them, plus any debrief notes a user asked to commit (search the repo for `### Debrief:` headings) and investigation reports from `fix-bug` (`docs/investigations/` unless the repo says otherwise).
+1. **Tracker.** The epic or issues and their comments, as `docs/contributing/issues.md` says. Open every doc they link, reaching the docs store as `docs/contributing/docs.md` says: specs, briefs, research, handovers. Read handovers and results first.
+2. **Project knowledge.** The public docs (`CONTRIBUTING.md` and what it points to, `CONTEXT.md`, `VISION.md`, `ARCHITECTURE.md`) and what changed in them during the work in scope, plus the decisions recorded in the merged PR bodies, and any debrief notes a user asked to commit (search the repo for `### Debrief:` headings).
 3. **PRs.** Each PR in scope with its review comments and reviews (`gh pr view <n> --comments`, `gh api repos/{owner}/{repo}/pulls/<n>/reviews`), its CI failures, and reverts or fixup commits in git history.
-4. **Local only, when present.** The private store's catalog and its briefs and debriefs under `<store>/notes/` (the store path is in "Project knowledge" in your user instructions); session transcripts: Claude Code under `~/.claude/projects/<project>/*.jsonl` (`<project>` is the repo path with `/` replaced by `-`), Codex under `~/.codex/sessions/`.
+4. **Local only, when present.** The private store's catalog and its briefs, debriefs, research and `fix-bug` reports under `<store>/notes/` (the store path is in "Project knowledge" in your user instructions); session transcripts: Claude Code under `~/.claude/projects/<project>/*.jsonl` (`<project>` is the repo path with `/` replaced by `-`), Codex under `~/.codex/sessions/`.
 
 Done when every reachable source is read and the unreachable ones are listed.
 
@@ -43,7 +43,7 @@ For each lesson give: the target path, the exact change (a diff or the new text)
 
 ## 5. Land them
 
-- **With a person**: show the list, process and product apart, and ask which to apply. Apply the process edits on one branch and open one PR with `publish`. Product lessons go where the product lane keeps them: a vision change through `envision`, input for the next milestone into its brief through `scope-milestone`, new work as Backlog issues in the tracker. Edits to the vision, the glossary (`CONTEXT.md`) or a project-wide decisions doc are listed under **Reviewer notes** so the reviewer approves each one.
+- **With a person**: show the list, process and product apart, and ask which to apply. Apply the process edits on one branch and open one PR with `publish`. Product lessons go where the product lane keeps them: a vision change through `envision`, input for the next milestone into its brief through `scope-milestone`, new work as Backlog issues in the tracker. Edits to `VISION.md`, the glossary (`CONTEXT.md`) or a project-wide rule in `CONTRIBUTING.md` or `docs/contributing/` are listed under **Reviewer notes** so the reviewer approves each one.
 - **Routine run**: open no PR. Post the list as a comment on the epic or tracker issue in scope, or as the run's final message, with the unreachable sources named.
 
 Done when every lesson is in the PR, handed to the product lane, declined by the user, or posted.
@@ -51,10 +51,10 @@ Done when every lesson is in the PR, handed to the product lane, declined by the
 ## Where a lesson goes
 
 - **Skill**: a step was missing, wrong or ambiguous while running a skill. Fix the step or its completion criterion in place.
-- **Navigation**: the agent took long to find something. Add a pointer to the docs catalog (`docs/agents/README.md`) or the doc the agent was already reading. `AGENTS.md` loads every turn, so it holds pointers only.
-- **`docs/agents/`**: the agent misused the tracker, the docs store, labels or the domain docs. Fix the adapter file.
-- **ADR** (`docs/adr/`): a technical choice was re-argued or made inconsistently. Propose a new ADR or an amendment.
-- **Glossary, vision, decisions**: a term was used two ways, scope drifted, or a settled rule was reopened.
+- **Navigation**: the agent took long to find something. Add a pointer to `CONTRIBUTING.md` or the doc the agent was already reading. `AGENTS.md` loads every turn, so it holds pointers only.
+- **Contributing docs** (`docs/contributing/`): the agent misused the tracker, the docs store, labels or the tests. Fix the doc; a human contributor reads it too.
+- **Architecture**: a technical choice was re-argued or made inconsistently. Edit `ARCHITECTURE.md` (or `docs/architecture/<component>.md`) so it states the choice; the PR body records why.
+- **Glossary, vision, rules**: a term was used two ways, scope drifted, or a settled rule was reopened.
 - **Automated check**: the mistake is **codifiable** (a banned API, an import shape, a file location). Run `codify` for a Codify candidate seen in two or more objectives, or after one miss that was `Crucial`; it lands on this retro's branch. A single non-`Crucial` candidate waits for its repeat: list it in the report, build nothing.
 - **Review rule**: a judgement call a reviewer should have caught. Add it to `REVIEW.md` at the repo root, creating it if missing; `review` reads it.
 - **Tooling and access**: an expensive or repeated tool call, or information the agent could not reach. Propose the script, connector or read access.
@@ -64,4 +64,4 @@ Product lessons:
 
 - **Vision**: a goal, audience or non-goal the work proved wrong. Hand it to `envision`.
 - **Next milestone**: a "done when" missed or cut, or a gap the work exposed. It becomes input for the next milestone brief via `scope-milestone`.
-- **Backlog**: an idea or follow-up the work turned up. File it as a Backlog issue as `docs/agents/issue-tracker.md` says, after the user agrees.
+- **Backlog**: an idea or follow-up the work turned up. File it as a Backlog issue as `docs/contributing/issues.md` says, after the user agrees.

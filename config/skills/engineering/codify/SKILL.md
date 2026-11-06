@@ -38,7 +38,7 @@ Done when the fixtures exist and the empty or missing rule fails on the bad one.
 
 ## 4. Write the rule
 
-Write the rule until it flags the bad fixture and passes the good and near-miss ones. Its failure message says what is wrong and what to write instead, in one line, and names the doc or ADR behind the rule when there is one. When the tool supports autofixes, add one for mechanical rewrites.
+Write the rule until it flags the bad fixture and passes the good and near-miss ones. Its failure message says what is wrong and what to write instead, in one line, and names the doc behind the rule when there is one. When the tool supports autofixes, add one for mechanical rewrites.
 
 Done when the tool's own test run passes on the fixtures.
 

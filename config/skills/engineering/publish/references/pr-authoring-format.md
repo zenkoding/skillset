@@ -18,7 +18,9 @@ Follow the repository's PR template and conventions. When none exist, use the te
 
 ### Why
 
-<the problem; link the issue, tracker plan, RFC or ADR that asked for or settled it>
+<the problem; link the issue, tracker plan or RFC that asked for it>
+
+<when the PR changes a decision: Chose X over Y because Z>
 
 ### How to test
 
@@ -37,7 +39,9 @@ Open with the smallest visual that makes the change clear, then one or two sente
 
 ### Why
 
-What the change is for, in a line or two. Link what asked for it: the issue, or the tracker's plan when the repo uses one (`docs/agents/issue-tracker.md` says how to link it; put the tracker identifier in the title or branch when the tracker links PRs that way). Link the RFC or ADR that settled the approach. In a stack, say which part this PR delivers and what is left.
+What the change is for, in a line or two. Link what asked for it: the issue, or the tracker's plan when the repo uses one (`docs/contributing/issues.md` says how to link it; put the tracker identifier in the title or branch when the tracker links PRs that way). Link the RFC that settled the approach.
+
+When the PR settles or changes a decision (a rule, an approach, what a doc says the project does), write it here as **Chose X over Y because Z**: the why and the rejected alternative. The squash merge makes the PR body the commit message, so this is the decision's permanent record; the PR also edits the living doc the decision changes. In a stack, say which part this PR delivers and what is left.
 
 ### How to test
 

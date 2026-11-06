@@ -20,7 +20,7 @@ Fill every part that has something real to say; drop the rest. Merge danger stay
 **Merge danger**: <one-way | two-way> door: <why>. Blast radius: <what else this can break>. Rollback: <how>.
 
 **Main decisions**
-- <chose X over Y because Z> ([ADR-NNNN](https://github.com/<owner>/<repo>/blob/<head-branch>/docs/adr/NNNN-....md))
+- <chose X over Y because Z> ([<doc it changes>](https://github.com/<owner>/<repo>/blob/<head-branch>/<path>))
 
 **Contentious points**
 - <unusual choice a reviewer will ask "why like this?" about>
@@ -48,7 +48,8 @@ When an axis came out higher than the plan or brief predicted, say which and why
 
 ## Rules
 
-- **Main decisions** quotes the session's `debrief` Decisions bullets when there are any, and links `docs/adr/` entries the branch adds. Never link `.docs/` paths or the private store (`~/.local/share/agents/`): they are private and absent from the repo.
+- **Main decisions** quotes the session's `debrief` Decisions bullets when there are any, and links the doc each one changes; the same decisions appear in **Why** as Chose X over Y because Z. Never link `.docs/` paths or the private store (`~/.local/share/agents/`): they are private and absent from the repo.
+- When the work was built without a plan (build's step 4), say so under **Contentious points**.
 - Every path in Where to focus is in the PR diff.
 - Links in the notes are absolute `https://github.com/<owner>/<repo>/blob/<head-branch>/` URLs; relative links in a PR body resolve under `/pull/` and 404.
 - Every Must check item names what to confirm.
