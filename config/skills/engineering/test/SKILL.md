@@ -26,7 +26,7 @@ Done when you hold the PR number, the head SHA and the steps. Empty or missing s
 
 Check out the head SHA on a clean tree (`gh pr checkout <pr>`). Then follow `docs/agents/e2e.md` for the chosen mode ([format](references/e2e-doc.md)): build, start, wait for health, set flags.
 
-Without `docs/agents/e2e.md`, infer the same steps from `README.md`, `CONTRIBUTING.md`, `AGENTS.md` and `CLAUDE.md`, and say in the report which commands you inferred and from where. When the docs don't settle a step, the run is **blocked** on it: never guess a command that writes outside the checkout.
+Without `docs/agents/e2e.md`, infer the same steps from `README.md`, `CONTRIBUTING.md` and `AGENTS.md`, and say in the report which commands you inferred and from where. When the docs don't settle a step, the run is **blocked** on it: never guess a command that writes outside the checkout.
 
 Set every flag named in **Flags** to the stage the plan gives. A flag you can't set makes the steps that need it **blocked**, with the reason.
 

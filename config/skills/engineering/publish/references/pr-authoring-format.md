@@ -2,6 +2,7 @@
 
 Follow the repository's PR template and conventions. When none exist, use the template below. A reviewer should be able to answer three questions from the body alone: what changed, why, and how to check it.
 
+- Write the title, and the commit messages the PR adds, as [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (`<type>(<optional scope>): <summary>`, with `!` or a `BREAKING CHANGE:` footer for breaking changes), unless the repository sets its own format in its contributing docs, `AGENTS.md`, a commit-lint config or a consistent history. Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `build`, `ci`, `chore`.
 - Base the description on the actual changes and tests, not the branch name or diff statistics.
 - Preserve the user's supplied title and body. If they conflict with a required repository rule, explain the specific conflict rather than silently rewriting them.
 - Distinguish passed checks, failures, skipped checks, and work still pending. Do not invent test evidence or claim a PR is merged or approved without confirmation.
@@ -30,26 +31,7 @@ Follow the repository's PR template and conventions. When none exist, use the te
 
 ### What
 
-Open with the smallest visual that makes the change clear, then one or two sentences. Pick one:
-
-- logic or an algorithm as pseudocode
-- runtime control flow as a call tree
-- UI structure as a component tree, with the state and module boundaries that matter
-- file responsibilities or a broad refactor as a shallow file tree
-- interaction between components as a Mermaid sequence diagram
-- a `diff` sketch when the shape already exists and the point is what changes
-
-```diff
- submitForm
-   createSession
-     persistPrompt
-+    expandSkillMention
-     launchAgent
-```
-
-Keep only the calls, files, props and states the reviewer needs. Then the before/after evidence, best first: a screenshot when the change is visible; command output or the test that failed before and passes now; for a refactor with no visible change, the tests that show behaviour stayed the same.
-
-The menu of visuals comes from Dex Horthy's [`show-me`](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md) skill (HumanLayer), adapted to a diff.
+Open with the smallest visual that makes the change clear, then one or two sentences. Pick one from the [visuals menu](visuals.md): pseudocode, a call tree, a component tree, a file tree, a Mermaid sequence diagram, or a `diff` sketch of the shape that changes. Keep only the calls, files, props and states the reviewer needs. Then the before/after evidence, best first: a screenshot when the change is visible; command output or the test that failed before and passes now; for a refactor with no visible change, the tests that show behaviour stayed the same.
 
 ### Why
 
