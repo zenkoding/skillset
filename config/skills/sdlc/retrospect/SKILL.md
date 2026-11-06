@@ -51,7 +51,7 @@ Done when every lesson is in the PR, handed to the product lane, declined by the
 ## Where a lesson goes
 
 - **Skill**: a step was missing, wrong or ambiguous while running a skill. Fix the step or its completion criterion in place.
-- **Navigation**: the agent took long to find something. Add a pointer to the docs catalog (`docs/agents/README.md`) or the doc the agent was already reading. `AGENTS.md` and `CLAUDE.md` load every turn, so they hold pointers only.
+- **Navigation**: the agent took long to find something. Add a pointer to the docs catalog (`docs/agents/README.md`) or the doc the agent was already reading. `AGENTS.md` loads every turn, so it holds pointers only.
 - **`docs/agents/`**: the agent misused the tracker, the docs store, labels or the domain docs. Fix the adapter file.
 - **ADR** (`docs/adr/`): a technical choice was re-argued or made inconsistently. Propose a new ADR or an amendment.
 - **Glossary, vision, decisions**: a term was used two ways, scope drifted, or a settled rule was reopened.

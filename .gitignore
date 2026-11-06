@@ -44,3 +44,7 @@ docs/investigations
 
 # Rendered instruction files (skillset)
 /build/
+/config/build/
+
+# Shared references the installer copies into skills (source: config/shared)
+config/skills/**/work-sizing.md

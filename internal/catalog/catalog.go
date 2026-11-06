@@ -33,6 +33,10 @@ import (
 // SetsDir holds the sets, relative to the catalog root.
 const SetsDir = "sets"
 
+// SharedDir holds reference files several skills link, relative to the
+// catalog root. The installer writes each into the skills that link it.
+const SharedDir = "shared"
+
 // Manifest is a set's set.toml file name.
 const Manifest = "set.toml"
 
@@ -321,6 +325,11 @@ var HostSkillDirs = map[string][]string{
 // Settings fragments merge; two sets setting the same key is an error.
 func (c *Catalog) Source(sets []*Set, hosts []string) (install.Source, error) {
 	src := install.Source{Root: c.Root, Instructions: map[string][]string{}, SkillDirs: []string{}}
+	shared, err := filepath.Glob(filepath.Join(c.Root, SharedDir, "*.md"))
+	if err != nil {
+		return src, err
+	}
+	src.Shared = shared
 	want := map[string]bool{}
 	for _, h := range hosts {
 		if !known(h) {
