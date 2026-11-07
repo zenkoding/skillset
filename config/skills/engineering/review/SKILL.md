@@ -35,12 +35,9 @@ Done when every changed file is matched to the rules that govern it and you hold
 
 ## 3. Review, in order of importance
 
-1. **Product fit.** Does the change belong in this project? Check it against the vision, non-goals and `CONTEXT.md`.
-2. **Rationale.** Does it add a useful feature, make a necessary enhancement, or fix a real issue? Give each acceptance criterion and each Reviewer notes Must check item a verdict: met, partial, missing, or not checkable from the diff. Note scope nobody asked for.
-3. **Approach.** Does it reach its goal in a reasonable way? Weigh complexity (less is better), consistency with the codebase, and verbosity (less code is better while it stays easy to read). Check the repo's written rules here. When Complexity is high, check that each new abstraction or cross-component change is earned. When Taste is high and nothing (issue, PR body, git history) says who picked the option or why, ask with a `Question`. When the PR changes a decision, check its **Why** says Chose X over Y because Z and that it edits the living doc the decision changes.
-4. **Security and bugs.** Trace each changed path for a concrete input that breaks it: error paths, boundaries, leaks on failure, concurrency, callers of changed behaviour. Run a separate security pass when Risk is high. Note missing or weak tests for new behaviour.
+Judge the change against the [review criteria](references/review-criteria.md), in their order: product fit, rationale, approach, then security and bugs. When Taste is high and nobody says who picked the option, ask with a `Question`.
 
-An earlier area outranks a later one: a change that doesn't belong needs no bug hunt. Skip what `REVIEW.md` or the defaults say not to report.
+Skip what `REVIEW.md` or the defaults say not to report.
 
 For a large diff, when the host supports subagents, run the four areas as parallel finders, each given the scope summary, the intent, the rules and the touched files. Then hand all candidates to one verifier subagent for step 4. Smaller diffs run one pass yourself.
 
