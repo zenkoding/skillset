@@ -11,7 +11,7 @@ Run it once per objective, at the end of substantial work ([work sizing](referen
 
 ## 1. Write the debrief
 
-When the objective has a `brief.md` from `brief` in its notes, read it first: Decisions and Friction name where the work left the plan.
+When the objective has a `companion.md` from `brief` in its notes, read it and the plan it belongs to first: Decisions and Friction name where the work left the plan.
 
 Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 

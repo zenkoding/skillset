@@ -61,3 +61,27 @@ func TestSharedReferencesRendered(t *testing.T) {
 		})
 	}
 }
+
+// A shared file that links another shared file brings it along, next to
+// itself, so the link works in every skill that carries the first one.
+func TestSharedReferencesFollowLinks(t *testing.T) {
+	repo, home := t.TempDir(), t.TempDir()
+	write(t, filepath.Join(repo, "skills/eng/alpha/SKILL.md"), skill("alpha")+"[loop](references/loop.md)\n")
+	write(t, filepath.Join(repo, "shared/loop.md"), "# Loop\n[sizing](sizing.md)\n")
+	write(t, filepath.Join(repo, "shared/sizing.md"), "# Sizing\n[loop](loop.md)\n")
+	src := Source{Root: repo, SkillRoots: []string{"skills"}, Shared: []string{"shared/loop.md", "shared/sizing.md"}}
+
+	p, err := MakeSourcePlan(src, home)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got []string
+	for _, r := range p.Renders {
+		rel, _ := filepath.Rel(filepath.Join(repo, "skills/eng/alpha"), r.Path)
+		got = append(got, rel)
+	}
+	want := []string{"references/loop.md", "references/sizing.md"}
+	if strings.Join(got, ",") != strings.Join(want, ",") {
+		t.Fatalf("renders = %v, want %v", got, want)
+	}
+}

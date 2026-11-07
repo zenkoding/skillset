@@ -8,6 +8,8 @@ Turn "what should we do next" into one milestone: a brief in the docs store, a m
 
 The person decides the goal, the non-goals, the "done when" and which epics exist. You find the facts and draft.
 
+It runs the [planning loop](references/planning-loop.md) at milestone level: the doc is the milestone brief, and the extra step is the retro on the previous milestone (step 1).
+
 ## 1. Gather where we are
 
 When the previous milestone is closed and no `retrospect` ran on it, offer one first (when installed): its product lessons are input for this milestone.
@@ -23,7 +25,7 @@ Done when you can write, with a link or PR for each claim, what the product does
 
 ## 2. Grill the goal
 
-Run `grill` on the gap. The design tree starts at the goal and branches into every section of [`milestone-brief.md`](milestone-brief.md): goal, rough shape, non-goals, done when with appetite, and epics. The template holds the shape rules for each; hold every answer to them.
+Draft and grill as the loop says, on the gap. The design tree starts at the goal and branches into every section of [`milestone-brief.md`](milestone-brief.md): goal, rough shape, non-goals, done when with appetite, and epics. The template holds the shape rules for each; hold every answer to them.
 
 Two rules the template cannot carry:
 
@@ -36,7 +38,7 @@ Done when the frontier is empty and the person confirms the shared understanding
 
 List the docs store's overview docs for this milestone first; if a brief exists, update it instead of creating another. Otherwise fill the template and create the brief as `docs/contributing/docs.md` says: type Overview, the new milestone, today's date, tracker link empty until step 4.
 
-Show the person the brief and wait for approval. Edits go into the doc before anything is created in the tracker.
+Get the person's sign-off on the brief as the loop says. Edits go into the doc before anything is created in the tracker.
 
 ## 4. Create the milestone and seed the epics
 
