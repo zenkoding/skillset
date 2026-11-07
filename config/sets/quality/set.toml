@@ -1,5 +1,5 @@
 name = "quality"
-description = "Bugs and security lane: fix-bug"
+description = "Bugs and security lane: find-bugs, find-vulns, fix-bug"
 hosts = ["claude", "codex"]
 requires = ["development"]
 replaces = ["engineering"]

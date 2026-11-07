@@ -75,7 +75,7 @@ base  <-  development  <-  product
 | `development` | when-to-use instructions for its skills; the build loop: build, tdd, publish, review, test, address, codify |
 | `triage` | triage-prs, triage-issues |
 | `architecture` | when-to-use instructions for its skills; optimize |
-| `quality` | when-to-use instructions for its skills; fix-bug |
+| `quality` | when-to-use instructions for its skills; find-bugs, find-vulns, fix-bug |
 | `product` | when-to-use instructions for its skills; envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
 | `productivity` | i-have-adhd and the session-start instruction that invokes it; the writing style for docs people read |
 
