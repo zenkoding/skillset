@@ -1,6 +1,6 @@
 ---
 name: address
-description: Address what stands between a pull request and merge: review findings by their labels, failing CI and base-branch conflicts, then refresh the PR body and hand back for re-review. Never merges. Run as /address <PR number or URL>.
+description: "Address what stands between a pull request and merge: triage review findings against the review criteria, fix what needs no judgement, bring the rest to the user through grill, fix failing CI and base-branch conflicts, then refresh the PR body and hand back for re-review. Never merges. Run as /address <PR number or URL>."
 compatibility: Requires Git, authenticated gh, a writable checkout, and project verification tools.
 ---
 
@@ -18,25 +18,27 @@ Done when you hold the head SHA, the failing checks for it, and the unresolved r
 
 ## 2. Triage the findings
 
-`review` labels each finding ([semantic labels](references/semantic-labels.md)). Act by label:
+Judge every unresolved finding, from `review` or from a person, against the [review criteria](references/review-criteria.md): the same product fit, intent, approach and correctness bar the review used. Read the sources they name first: the vision, the architecture, the PR's plan and the repo's rules. A finding's [semantic label](references/semantic-labels.md) says how strongly the reviewer asked; the criteria say whether acting on it is right for this PR. `Suggestion`, `Hint` and `Remark` get the same test as `Crucial`: a Hint the criteria back can be worth doing now, and a Crucial that contradicts the plan is not.
 
-| Label | Action |
-| --- | --- |
-| `Crucial`, `Important` | Fix. |
-| `Suggestion` | Weigh it: fix when it is cheap and in scope, otherwise reply why not. |
-| `Question` | Answer it on the thread, from the diff and the plan; change code only when the answer shows a defect. |
-| `Hint`, `Remark` | Leave them; no reply needed. |
+Then route each finding by [work sizing](references/work-sizing.md):
 
-Unlabelled feedback from a person is read for intent: treat a request as `Important` unless it says it is optional. A finding that needs a product or scope choice goes to the user with the options, not into code.
+| Route | When | Action |
+| --- | --- | --- |
+| **Fix** | It holds up against the criteria, keeps the PR on its intended purpose, and its fix raises no axis (Risk, Complexity, Taste). | Fix it without asking. |
+| **Answer** | A `Question`, or a finding the diff or plan already settles. | Reply on the thread; change code only when the answer shows a defect. |
+| **Leave** | A `Hint` or `Remark` the criteria back that asks for no change now. | Nothing; no reply needed. |
+| **Ask** | It fails the criteria, would move the PR away from its intended purpose, or its fix would raise Risk, Complexity or Taste. | Bring it to the user. |
 
-Done when every unresolved thread has an action.
+For the Ask route, show the user one list, each entry holding the finding, the action you propose and the context that decides it (the criterion it fails, the axis it raises, the plan's wording). Then run `grill` on the list: one finding at a time, with your recommendation. A request from the person who owns the PR is already their call: fix it, unless it moves the PR off its intent, then ask.
+
+Done when every unresolved thread has a route, and every Ask finding has the user's answer.
 
 ## 3. Fix
 
 - **Conflicts.** Integrate the base when conflicts or repository policy require it; being behind alone does not require rewriting history. Resolve conflicts by preserving intended behavior and regenerate generated files with project tooling.
 - **CI.** Reproduce each failure on the current head, find its cause and fix it. A failure that is red on the base branch too is not this PR's: say so and leave it.
 - **Findings.** Make targeted changes, test-first where behaviour changes. Reply on each thread with what changed, or why not, once the fix is pushed.
-- **Sizing.** When a fix raises an axis of [work sizing](references/work-sizing.md) (new Risk, a new abstraction, a new Taste choice), stop and flag it to the user before pushing: the PR is no longer what its reviewer approved.
+- **Sizing.** When a fix turns out to raise an axis after all (new Risk, a new abstraction, a new Taste choice), stop and move it to the Ask route before pushing: the PR is no longer what its reviewer approved.
 
 Delegate independent work only when useful, using the [worker briefs](references/subagent-prompts.md). Keep overlapping edits sequential. Failed workers or absent evidence do not satisfy a verification gate.
 
