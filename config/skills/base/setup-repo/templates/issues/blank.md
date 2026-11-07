@@ -4,7 +4,7 @@ Work is tracked in <tracker>.
 
 ## Where work lives
 
-<Milestones, epics, tickets, and where a ticket's plan lives.>
+<Milestones, epics, tickets; where a milestone's brief and a ticket's plan live.>
 
 ## Operations
 
