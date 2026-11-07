@@ -79,6 +79,59 @@ func TestSkillLinksFollowSets(t *testing.T) {
 	}
 }
 
+// TestInstructionLinksFollowSets checks the same rule for each set's
+// instruction fragments: they install with the set, so they may only name
+// skills the set installs or requires, unless "when installed" follows.
+func TestInstructionLinksFollowSets(t *testing.T) {
+	root, err := filepath.Abs("../../config")
+	if err != nil {
+		t.Fatal(err)
+	}
+	c, err := Load(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	setOf := map[string]string{}
+	for _, name := range c.Names() {
+		for _, dir := range c.Sets[name].Skills {
+			for skill := range skillsIn(t, dir) {
+				setOf[skill] = name
+			}
+		}
+	}
+	checked := 0
+	for _, name := range c.Names() {
+		s := c.Sets[name]
+		files := []string{s.Shared}
+		for _, p := range s.Instructions {
+			files = append(files, p)
+		}
+		reach := c.reachable(name)
+		for _, f := range files {
+			if f == "" {
+				continue
+			}
+			data, err := os.ReadFile(f)
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked++
+			rel, _ := filepath.Rel(root, f)
+			for _, line := range sentences(string(data)) {
+				for _, other := range names(setOf) {
+					if reach[setOf[other]] || !hardMention(line, other) {
+						continue
+					}
+					t.Errorf("%s (set %s) names %s (set %s), which the set does not require; add \"when installed\" or move the line:\n    %s", rel, name, other, setOf[other], strings.TrimSpace(line))
+				}
+			}
+		}
+	}
+	if checked == 0 {
+		t.Fatal("no instruction fragments found in any set")
+	}
+}
+
 // reachable lists set name and every set it requires, directly or not.
 func (c *Catalog) reachable(name string) map[string]bool {
 	seen := map[string]bool{}
