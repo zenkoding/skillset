@@ -42,6 +42,7 @@ companion decisions checks    reviewer    findings   re-review               fri
 ## Triage (triage set)
 
 - `triage-prs`: which open PRs need attention, and the command for each.
+- `triage-issues`: validate open issues, label them, ask for missing facts, and close the ones evidence settles.
 
 ## Architecture lane (architecture set)
 
