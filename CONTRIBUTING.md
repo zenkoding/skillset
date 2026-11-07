@@ -20,7 +20,7 @@ Config lives under `config/`, the catalog. Code lives everywhere else.
 |------|---------------|
 | `config/sets/<name>/` | Sets (`set.toml` manifests). |
 | `config/skills/<set>/<name>/` | Skills, one folder per set. `config/skills/in-progress/` holds drafts that are not installed. |
-| `config/instructions/` | `shared.md` plus `claude.md` / `codex.md`, and one file per set that has its own (`engineering.md`, `product.md`, `productivity.md`). |
+| `config/instructions/` | `shared.md` plus `claude.md` / `codex.md`, and one file per set that has its own (`development.md`, `architecture.md`, `quality.md`, `product.md`, `productivity.md`). |
 | `config/claude/` | Claude settings: `settings.json` (reasons in `settings.md`), `statusline.sh`, `hooks/`, output styles. |
 | `config/codex/` | Codex defaults, merged by hand. |
 | `config/dcg/` | destructive_command_guard config and packs. |

@@ -50,6 +50,7 @@ func TestLoadErrors(t *testing.T) {
 		{"home outside agent dirs", map[string]string{"sets/a/set.toml": "name = \"a\"\n[[files]]\nhome = \".ssh/authorized_keys\"\npath = \"x\"", "sets/a/x": ""}, "must be a relative path under"},
 		{"home is an agent dir", map[string]string{"sets/a/set.toml": "name = \"a\"\n[[files]]\nhome = \".claude\"\npath = \"x\"", "sets/a/x": ""}, "must be a relative path under"},
 		{"symlink leaves catalog", map[string]string{"sets/a/set.toml": "name = \"a\"\nshared = \"out.md\""}, "through a symlink"},
+		{"replaces a live set", map[string]string{"sets/a/set.toml": "name = \"a\"\nreplaces = [\"b\"]", "sets/b/set.toml": `name = "b"`}, `replaces "b", which is still a set`},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -116,7 +117,7 @@ func TestResolve(t *testing.T) {
 		"tools": {Name: "tools", Requires: []string{"dcg", "base"}},
 		"loopa": {Name: "loopa", Requires: []string{"loopb"}},
 		"loopb": {Name: "loopb", Requires: []string{"loopa"}},
-	}}
+	}, Replaced: map[string][]string{"old": {"dcg", "tools"}}}
 	tests := []struct {
 		name  string
 		pick  []string
@@ -126,6 +127,7 @@ func TestResolve(t *testing.T) {
 		{"requires come first", []string{"tools"}, "base,dcg,tools", ""},
 		{"no duplicates", []string{"dcg", "tools", "base"}, "base,dcg,tools", ""},
 		{"unknown", []string{"nope"}, "", `unknown set "nope"`},
+		{"replaced name resolves to its successors", []string{"old"}, "base,dcg,tools", ""},
 		{"cycle", []string{"loopa"}, "", "requires cycle: loopa -> loopb -> loopa"},
 	}
 	for _, tt := range tests {

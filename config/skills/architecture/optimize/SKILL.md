@@ -1,5 +1,5 @@
 ---
-name: optimize-performance
+name: optimize
 description: Find and land measured performance improvements in a code area using the project's benchmarks and profiles. Use when asked to make something faster or cheaper and prove it; not for diagnosing a single slow-request bug.
 compatibility: Requires a writable checkout, the project's build and test tools, and a runnable benchmark or a way to write one. Parallel subagents are optional.
 ---

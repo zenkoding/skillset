@@ -1,0 +1,7 @@
+name = "triage"
+description = "Triage open pull requests and issues"
+hosts = ["claude", "codex"]
+requires = ["development"]
+replaces = ["engineering"]
+
+skills = ["../../skills/triage"]

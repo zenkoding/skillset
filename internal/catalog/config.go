@@ -95,7 +95,7 @@ func (c *Catalog) LoadLocal(home string) (*Set, error) {
 		return nil, fmt.Errorf("%s: name must be %q", filepath.Join(dir, Manifest), LocalName)
 	}
 	for _, r := range s.Requires {
-		if c.Sets[r] == nil {
+		if !c.Has(r) {
 			return nil, fmt.Errorf("local set requires unknown set %q", r)
 		}
 	}

@@ -50,6 +50,7 @@ type Set struct {
 	Description  string            `toml:"description"`
 	Hosts        []string          `toml:"hosts"`
 	Requires     []string          `toml:"requires"`
+	Replaces     []string          `toml:"replaces"`     // old set names this set takes over
 	Shared       string            `toml:"shared"`       // default shared.md
 	Instructions map[string]string `toml:"instructions"` // host -> file, default <host>.md
 	Skills       []string          `toml:"skills"`       // default skills
@@ -79,6 +80,27 @@ func (s *Set) Supports(host string) bool {
 type Catalog struct {
 	Root string
 	Sets map[string]*Set
+	// Replaced maps an old set name to the sets that replace it, sorted, so
+	// a config that still names it resolves to its successors.
+	Replaced map[string][]string
+}
+
+// Has reports whether name is a set or a replaced set name.
+func (c *Catalog) Has(name string) bool {
+	return c.Sets[name] != nil || len(c.Replaced[name]) > 0
+}
+
+// expand replaces every replaced set name in names with its successors.
+func (c *Catalog) expand(names []string) []string {
+	var out []string
+	for _, n := range names {
+		if c.Sets[n] == nil && len(c.Replaced[n]) > 0 {
+			out = append(out, c.Replaced[n]...)
+			continue
+		}
+		out = append(out, n)
+	}
+	return out
 }
 
 // Names lists the catalog's set names, sorted.
@@ -101,7 +123,7 @@ func Load(root string) (*Catalog, error) {
 	if err != nil {
 		return nil, err
 	}
-	c := &Catalog{Root: root, Sets: map[string]*Set{}}
+	c := &Catalog{Root: root, Sets: map[string]*Set{}, Replaced: map[string][]string{}}
 	for _, e := range entries {
 		if !e.IsDir() {
 			continue
@@ -121,6 +143,15 @@ func Load(root string) (*Catalog, error) {
 				return nil, fmt.Errorf("set %s requires unknown set %q", s.Name, r)
 			}
 		}
+		for _, old := range s.Replaces {
+			if c.Sets[old] != nil {
+				return nil, fmt.Errorf("set %s replaces %q, which is still a set", s.Name, old)
+			}
+			c.Replaced[old] = append(c.Replaced[old], s.Name)
+		}
+	}
+	for _, names := range c.Replaced {
+		sort.Strings(names)
 	}
 	return c, nil
 }
@@ -271,8 +302,10 @@ func known(host string) bool {
 }
 
 // Resolve returns the named sets plus everything they require, each after
-// the sets it requires; ties keep name order.
+// the sets it requires; ties keep name order. A replaced set name resolves
+// to the sets that replace it.
 func (c *Catalog) Resolve(names []string) ([]*Set, error) {
+	names = c.expand(names)
 	var out []*Set
 	const (
 		visiting = 1

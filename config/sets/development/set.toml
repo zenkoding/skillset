@@ -1,0 +1,8 @@
+name = "development"
+description = "Build loop skills: build, tdd, publish, review, address, test, codify"
+hosts = ["claude", "codex"]
+requires = ["base"]
+replaces = ["engineering"]
+
+shared = "../../instructions/development.md"
+skills = ["../../skills/development"]

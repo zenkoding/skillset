@@ -75,7 +75,7 @@ func TestInitThenApply(t *testing.T) {
 	for p, body := range map[string]string{
 		"sets/base/set.toml":       "name = \"base\"\nhosts = [\"claude\", \"codex\"]",
 		"sets/base/shared.md":      "base\n",
-		"sets/dcg/set.toml":        "name = \"dcg\"\nhosts = [\"claude\", \"codex\"]\nrequires = [\"base\"]",
+		"sets/dcg/set.toml":        "name = \"dcg\"\nhosts = [\"claude\", \"codex\"]\nrequires = [\"base\"]\nreplaces = [\"guard\"]",
 		"sets/dcg/shared.md":       "dcg\n",
 		"sets/other/set.toml":      "name = \"other\"\nhosts = [\"claude\"]",
 		"sets/other/shared.md":     "other\n",
@@ -133,6 +133,19 @@ func TestInitThenApply(t *testing.T) {
 	}
 	if _, err := run(t, "init", "--catalog", root, "--home", home, "--host", "claude,codex", "--set", "dcg"); err != nil {
 		t.Fatal(err)
+	}
+
+	// A renamed set still installs, and init rewrites it to its successor.
+	writeFile(t, filepath.Join(home, ".config/skillset/config.toml"), "hosts = [\"claude\", \"codex\"]\nsets = [\"guard\"]\n")
+	if _, err := run(t, "plan", "--catalog", root, "--home", home); err != nil {
+		t.Fatalf("plan with a replaced set = %v", err)
+	}
+	if _, err := run(t, "init", "--catalog", root, "--home", home, "--host", "claude,codex"); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ = os.ReadFile(filepath.Join(home, ".config/skillset/config.toml"))
+	if !strings.Contains(string(cfg), `sets = ["base", "dcg"]`) {
+		t.Fatalf("config after init on a replaced set = %s", cfg)
 	}
 
 	// Dropping a host removes its links; --host alone keeps the saved sets.

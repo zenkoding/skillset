@@ -1,5 +1,5 @@
 # Everything: kept so existing installs that chose legacy keep the full setup.
 name = "legacy"
-description = "Full setup: every set (base, engineering, product, productivity)"
+description = "Full setup: every set"
 hosts = ["claude", "codex"]
-requires = ["base", "engineering", "product", "productivity"]
+requires = ["architecture", "base", "development", "product", "productivity", "quality", "triage"]
