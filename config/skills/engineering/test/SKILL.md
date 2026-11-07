@@ -24,7 +24,7 @@ Done when you hold the PR number, the head SHA and the steps. Empty or missing s
 
 ## 2. Bring up the stack
 
-Check out the head SHA on a clean tree (`gh pr checkout <pr>`). Then follow the **E2E stack** section of `docs/contributing/testing.md` for the chosen mode ([format](references/e2e-doc.md)): build, start, wait for health, set flags.
+Check out the head SHA on a clean tree (`gh pr checkout <pr>`). Then follow the **E2E stack** section of `docs/contributing/testing.md` for the chosen mode ([format](references/e2e-stack.md)): build, start, wait for health, set flags.
 
 Without that section, infer the same steps from `README.md`, `CONTRIBUTING.md`, `docs/contributing/local-dev.md` and `AGENTS.md`, say in the report which commands you inferred and from where, and suggest `/setup-repo e2e` (when installed) to write the section. When the docs don't settle a step, the run is **blocked** on it: never guess a command that writes outside the checkout.
 
