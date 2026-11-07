@@ -72,7 +72,7 @@ base  <-  engineering  <-  product
 | `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, grill, debrief, project-knowledge, research |
 | `engineering` | build, publish, review, test, address, fix-bug, optimize-performance, triage-prs, codify |
 | `product` | envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
-| `productivity` | i-have-adhd and the session-start instruction that invokes it |
+| `productivity` | i-have-adhd and the session-start instruction that invokes it; the writing style for docs people read |
 
 `legacy` requires all four, so installs that chose it keep the full setup. A skill names only skills in its own set or a set it requires; a link into any other set says "when installed" right after the name (a test enforces this).
 
