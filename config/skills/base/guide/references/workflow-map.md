@@ -50,7 +50,17 @@ companion decisions checks    reviewer    findings   re-review               fri
 
 ## Quality lane (quality set)
 
-- `fix-bug`: find the cause of a defect before anyone fixes it.
+Finds bugs and security problems and fixes them through the build loop.
+
+```
+find-bugs / find-vulns ──> triage-issues ──> fix-bug ──> publish ──> review ──> triage-prs
+issues or private          ready-for-agent   trivial: test + PR       (build loop)
+advisories                                   else: brief
+```
+
+- `find-bugs`: hunt for defects in an area, prove each with a failing check, file the proven ones.
+- `find-vulns`: hunt for vulnerabilities; on public repos report them as private security advisories.
+- `fix-bug`: find the cause of a defect; fix it test-first when trivial, otherwise hand it to `brief`.
 
 ## Development extras (development set)
 

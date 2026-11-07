@@ -1,6 +1,6 @@
 ---
 name: fix-bug
-description: Diagnose a defect, incident, GitHub issue, or unexplained behavior and save an evidence-backed investigation with a cause or useful next check.
+description: Diagnose a defect, incident, GitHub issue, or unexplained behavior, save an evidence-backed investigation, and fix it when the fix is trivial (regression test and PR) or hand it to brief when it isn't.
 compatibility: Requires access to relevant evidence and file writes for reports; Git, gh, or project tools as applicable.
 ---
 
@@ -26,4 +26,14 @@ Save an evidence-backed report using [report guidance](references/report-format.
 
 Once a cause is supported, name the **guard**: the test, check or review step that should have caught it, and why it didn't fire. When the mistake is **codifiable** ([work sizing](references/work-sizing.md)), add a `Codify: <the rule, one line>` line to the report for a later retro (`retrospect` when installed); don't build the check here.
 
-Return the supported cause or unresolved hypotheses, evidence, limitations, the guard, report path, and a concrete next action. Creating issues, posting findings, or implementing a fix requires its own authorization.
+## Fix
+
+Once a cause is supported, size the fix with [work sizing](references/work-sizing.md).
+
+- **Trivial** (every axis low, two-way door): fix it test-first (`tdd`). The regression test reproduces the defect and fails before the fix; keep it. Then open the PR with `publish`, linking the issue and the report's cause in its Why.
+- **Not trivial**: don't fix it here. Hand the issue and the report to `brief`, which plans the fix like any other work.
+- **Security issue** reported in a private advisory: the fix goes on the advisory's temporary private fork, never in a public branch or PR.
+
+Skip this step when the cause is unresolved, or when the user asked for a diagnosis only. Invoking `fix-bug` on an issue authorizes the branch and PR for a trivial fix; posting findings elsewhere or creating issues still needs its own approval.
+
+Return the supported cause or unresolved hypotheses, evidence, limitations, the guard, report path, and what happened next: the PR, the handoff to `brief`, or the concrete next check.
