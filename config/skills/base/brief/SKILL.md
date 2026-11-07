@@ -9,7 +9,7 @@ The start-of-session counterpart of `debrief`. A brief turns a one-line ask into
 
 ## 1. Read the ask
 
-- **Ticket** (an identifier or URL): read the issue, its comments, its parent, and every doc it links, through `docs/agents/issue-tracker.md` and `docs/agents/product-docs.md`.
+- **Ticket** (an identifier or URL): read the issue, its comments, its parent, and every doc it links. `docs/contributing/issues.md` says how to reach the tracker, and `docs/contributing/docs.md` where docs live.
 - **Idea or problem** (free text): take it as given. Search the tracker for an existing issue on it and read that too.
 
 Name the **objective** in a few words; it names the notes directory.
@@ -18,7 +18,7 @@ Name the **objective** in a few words; it names the notes directory.
 
 Read, without asking the user for any of it:
 
-- the project knowledge catalogs (`docs/agents/README.md` and the private store's), `CONTEXT.md`, and the ADRs in the area;
+- the private store's catalog, `CONTRIBUTING.md` and the docs it points to for the area, `CONTEXT.md`, and the history of past decisions (`git log -S '<term>'`);
 - earlier notes for the same objective under `<store>/notes/<objective>/` (a resumed objective starts from its last debrief);
 - for code work, the code the ask touches: entry points, callers, tests, recent history, and recent PRs on the same area;
 - open issues on the same area.

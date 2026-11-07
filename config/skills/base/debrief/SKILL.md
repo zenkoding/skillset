@@ -19,7 +19,7 @@ Post this in chat. Each section gets 1 to 3 bullets; drop empty sections.
 ### Debrief: <objective>
 
 **Decisions**
-- Chose <X> over <Y> because <Z>. (<link to ADR or doc, written or proposed>)
+- Chose <X> over <Y> because <Z>. (<the doc it changed, or the PR whose body records it>)
 
 **Learned**
 - <fact about the code, tools or domain that was not obvious>
@@ -54,13 +54,16 @@ Pick the destination per item. `<store>` is the repo's private project knowledge
 ```
 session-only ─────────────> <store>/notes/<objective>/        write now
 durable fact, private ────> <store>/*.md                       rewrite in place now
-durable fact, shared ─────> docs/agents/*.md        ┐
-ADR-worthy decision ──────> docs/adr/NNNN-*.md      ├ proposed in the debrief,
-recurring friction ───────> skill / instruction fix ┘ written on the user's OK
+durable fact, shared ─────> CONTRIBUTING.md,          ┐
+                            docs/contributing/*.md    │
+decision ─────────────────> the living doc it changes ├ proposed in the debrief,
+                            + the why in the PR body  │ written on the user's OK
+recurring friction ───────> skill / instruction fix   ┘
 ```
 
 - Append the debrief's Decisions, Friction and Codify candidates bullets, dated, to the objective's note, so a later debrief can find seen-before friction and a retro (`retrospect` when installed) can count repeated candidates.
-- A decision is **ADR-worthy** when it is hard to reverse, surprising without context, and a real trade-off. Otherwise it stays in the note or a doc.
-- Committed docs, ADRs, skills and instructions change only after the user approves, per the write policy in "Project knowledge".
+- A decision that changes how the project works edits the doc it affects; its why and the rejected alternative go in the PR body, which the squash merge keeps in git. A decision that changes nothing durable stays in the note.
+- A shared fact a human contributor needs goes in `CONTRIBUTING.md` or `docs/contributing/`; only agent-only facts go in `AGENTS.md` or `docs/agents/`.
+- Committed docs, skills and instructions change only after the user approves, per the write policy in "Project knowledge".
 
 Done when the debrief is posted, every session-only and private item is written, and every shared item is either written with approval or listed as a proposal.

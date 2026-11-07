@@ -4,13 +4,13 @@ description: Shape one Backlog epic into an approval-ready spec and a set of ver
 disable-model-invocation: true
 ---
 
-Take one epic from a one-line outcome to a spec a person can approve and a set of features an agent can build. Read `docs/agents/issue-tracker.md` and `docs/agents/product-docs.md` first: they say where epics, features and docs live and how to write to them. Use glossary terms throughout.
+Take one epic from a one-line outcome to a spec a person can approve and a set of features an agent can build. Read `docs/contributing/issues.md` and `docs/contributing/docs.md` first: they say where epics, features and docs live and how to write to them. Use glossary terms throughout.
 
 The argument is an epic identifier. If none is given, ask for one.
 
 ## 1. Load the epic
 
-Read the epic issue, its comments, its milestone, and every doc it links. Read the milestone brief and note the **Covers check** row or rows that name this epic: the spec must cover them. Read the vision doc, the project-wide decisions doc when there is one, and the ADRs in the area the epic touches. List the epic's sub-issues and its docs in the docs store.
+Read the epic issue, its comments, its milestone, and every doc it links. Read the milestone brief and note the **Covers check** row or rows that name this epic: the spec must cover them. Read `VISION.md`, `ARCHITECTURE.md` (or `docs/architecture/`) for the area the epic touches, and the decisions already made there (`git log -S '<term>'`). List the epic's sub-issues and its docs in the docs store.
 
 Stop and ask the person when:
 
@@ -35,18 +35,17 @@ Done when every branch of the design tree has an answer or is recorded as an ope
 
 Each settled call that later work must respect is a **decision**. Give each one home:
 
-- How the system is built: an ADR in `docs/adr/`.
-- A change to a contract other code or people depend on (an API, a schema, an artifact format): an RFC, written with `create-rfc`. Otherwise an ADR is enough.
-- A project-wide rule: an entry in the decisions doc. A person must approve that edit in review.
+- How the system is built, or a project-wide rule: an edit to the living doc it changes (`ARCHITECTURE.md`, `docs/architecture/<component>.md`, `CONTRIBUTING.md` or `docs/contributing/`). The PR body records the why and the rejected alternative; a person approves rule changes in review.
+- A change to a contract other code or people depend on (an API, a schema, an artifact format): an RFC, written with `create-rfc`.
 - A product call only this epic needs: the spec's **Rabbit holes**.
 
-ADRs, RFCs and decisions-doc edits land through a branch and a PR opened with `publish`. The spec links each one.
+Doc edits and RFCs land through a branch and a PR opened with `publish`. The spec links each one.
 
 Done when every decision from the grill has one home and each repo change is in an open PR.
 
 ## 5. Write the spec
 
-Fill [`epic-spec.md`](epic-spec.md). Its **Done when** covers every milestone **Covers check** row for this epic. Create it in the docs store as a Spec doc with the epic's milestone, epic and tracker link, as `docs/agents/product-docs.md` says. Link the spec from the epic issue.
+Fill [`epic-spec.md`](epic-spec.md). Its **Done when** covers every milestone **Covers check** row for this epic. Create it in the docs store as a Spec doc with the epic's milestone, epic and tracker link, as `docs/contributing/docs.md` says. Link the spec from the epic issue.
 
 Done when the spec fits on one page (hard cap two), every **Done when** row names its check, and **Non-goals** gives a reason for each item.
 

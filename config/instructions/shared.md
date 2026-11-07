@@ -50,14 +50,16 @@ Read relevant Linear, Notion and Google Drive context on your own. Linear holds 
 
 ## Project knowledge
 
-Each repo keeps what agents need to know as Markdown in three partitions. Each repo partition has a catalog, `README.md`: one line per doc saying what it covers and when to open it.
+Each repo keeps what people and agents need to know as Markdown in three partitions. Public docs are human-first: `CONTRIBUTING.md` indexes them, and `AGENTS.md` and `docs/agents/` only add what agents alone need. The private store has a catalog, `README.md`: one line per doc saying what it covers and when to open it.
 
 ```
-repo private  <store>/README.md                catalog; outside the repo, never committed
+repo private  <store>/README.md                  catalog; outside the repo, never committed
               <store>/*.md
-              <store>/notes/<objective>/       session notes
-repo public   <repo>/docs/agents/README.md     catalog, committed
-              <repo>/docs/agents/*.md, docs/adr/, CONTEXT.md, REVIEW.md
+              <store>/notes/<objective>/         session notes, plan companions, reports
+repo public   <repo>/CONTRIBUTING.md             index of the dev docs, committed
+              <repo>/docs/contributing/*.md      local-dev, testing, issues, docs
+              <repo>/VISION.md, ARCHITECTURE.md, CONTEXT.md, REVIEW.md, docs/rfcs/
+              <repo>/AGENTS.md, docs/agents/     agent-only overlay
 user          these instructions and the installed skills
 
 <store> = ~/.local/share/agents/projects/<key>/
@@ -70,7 +72,7 @@ When partitions disagree, private wins over public and public over user. Write t
 
 Every task runs consult, build, update:
 
-1. Consult: a session-start hook prints both catalogs. If it didn't, read the catalogs yourself when they exist. Open only the docs the task needs.
+1. Consult: a session-start hook prints the private catalog and the store path. If it didn't, read the catalog yourself when it exists. For the repo's own facts (tracker, docs store, tests, local dev), read `CONTRIBUTING.md` and the `docs/contributing/` doc it points to. Open only the docs the task needs.
 2. Build.
 3. Update: before you finish, fold what you learned back into the docs.
 
@@ -78,11 +80,12 @@ Write policy:
 
 - Private: edit without asking. Rewrite facts in place and delete what turned out wrong; don't append corrections.
 - Public and user: propose the change (path and the new text) and write it only when I say so.
-- A new doc gets its catalog line in the same edit.
+- A new doc gets its catalog line (private) or `CONTRIBUTING.md` line (public) in the same edit.
 
 Keep it small:
 
-- Record what code and history can't tell you: intent, decisions, gotchas, conventions. No code summaries or changelogs.
+- Record what code and history can't tell you: intent, gotchas, conventions. No code summaries or changelogs.
+- Decisions change the living doc they affect. The why and the rejected alternative go in the PR body, which a squash merge turns into the commit message, so git is the decision log. Before treating a question as open, search it with `git log -S '<term>'`. An existing `docs/adr/` is frozen history: read it, don't add to it.
 - One doc per subject. Update the existing doc before creating another; split a doc that no longer reads in one go.
 - Absolute dates, never "recently". No credentials.
 
@@ -90,4 +93,4 @@ For substantial work, keep a short note under `<store>/notes/<objective>/`: obje
 
 After work that changed code, opened a PR or made a decision, run the `debrief` skill before your final reply, once per objective; skip it for plain questions and for follow-up fixes to work already debriefed. It reports decisions, lessons and friction to me and files them here.
 
-The `project-knowledge` skill sets up a repo's catalogs and trims, splits or merges docs.
+The `project-knowledge` skill sets up the private catalog and trims, splits or merges docs.
