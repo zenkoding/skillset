@@ -52,3 +52,35 @@ Close only when evidence settles it, never on judgment alone:
 - **needs info gone stale**: `needs-info` for 14 days with no answer from the reporter (close as not planned).
 
 Anything else that looks closable, such as unclear fit, low value or a request nobody else wants, gets **Propose closing**. Every close and every label change gets a comment that says why in a sentence or two and names the evidence.
+
+## Pull requests
+
+`triage-prs` judges each open PR on its state, then on whether it is safe to merge without a person.
+
+### State, first match wins
+
+| State | When | Next |
+| --- | --- | --- |
+| **Draft** | the PR is a draft | leave it; its author is still working |
+| **Stacked** | its base is not the default branch | leave it; it lands after the PR below it |
+| **Broken** | CI is red, or it conflicts with its base | `address` |
+| **Unreviewed** | no review on its head commit | `review` (label `ready-for-agent` when that label starts the review routine) |
+| **Unaddressed** | review left `Crucial` or `Important` findings, change requests or unresolved threads | `address` |
+| **Waiting on CI** | checks still running | leave it; the next run judges it |
+| **Reviewed and green** | none of the above | the merge gate below |
+
+Bot reviews (logins ending in `-bot` or `[bot]`) count as checks, not as reviews: an approval passes, a change request fails.
+
+### Merge gate
+
+A reviewed, green PR merges without a person only when **every** line holds:
+
+- every [work sizing](work-sizing.md) axis is low, judged on the diff and the PR's What, and the change is a two-way door;
+- CI is green on the head commit;
+- the latest review on the head commit found no `Crucial` or `Important` issue, and no change request stands;
+- no review thread is unresolved;
+- its base is the default branch and it has no merge conflict.
+
+Then merge it by squash with GitHub auto-merge, so GitHub checks again before it lands. When the repo doesn't allow auto-merge, squash-merge it directly: the gate already saw green CI on this head. Comment first with one line per gate item, so the reason for the merge stays on the PR.
+
+Any line that fails sends the PR to a person: label it `ready-for-human` and comment with the line that failed. A high axis or a one-way door always goes to a person, however clean the review.

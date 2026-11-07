@@ -41,7 +41,7 @@ Then take the first row that matches:
 | an open PR with no review on its head | `/review <n>` |
 | review findings or change requests not yet addressed | `/address <n>` |
 | reviewed, and the plan has How to test steps not yet run | `/test <n>` |
-| approved and green | merge it (a person does); then `/debrief` |
+| approved and green | `/triage-prs <n>` merges it when it passes the merge gate, else a person does; then `/debrief` |
 | merged, and it finished the last ticket of an epic or milestone | `/retrospect` |
 
 When the skill a row names isn't installed, say what it would do and suggest the closest installed step, or doing it by hand.
