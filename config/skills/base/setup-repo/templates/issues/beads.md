@@ -4,7 +4,8 @@ Work is tracked in [Beads](https://github.com/gastownhall/beads), in the repo's 
 
 ## Where work lives
 
-- **Epics**: issues of type `epic`; their tickets depend on them as children.
+- **Milestones**: issues of type `epic` with the label `milestone`. A milestone's epics are its children (`bd dep add <epic id> <milestone id> --type parent-child`). The milestone brief lives in the docs store (see [docs](docs.md)) and is linked from the milestone's description.
+- **Epics**: issues of type `epic`; their tickets are children (`bd dep add <ticket id> <epic id> --type parent-child`).
 - **Tickets**: issues of type `task`, `feature` or `bug`. A ticket's plan is its description, or a plan doc linked from it (see [docs](docs.md)).
 
 ## Operations

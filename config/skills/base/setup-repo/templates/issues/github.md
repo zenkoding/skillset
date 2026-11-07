@@ -4,7 +4,7 @@ Work is tracked in GitHub Issues on `<owner>/<repo>`. Use the `gh` CLI; it infer
 
 ## Where work lives
 
-- **Milestones**: GitHub milestones.
+- **Milestones**: GitHub milestones. The milestone brief lives in the docs store (see [docs](docs.md)) and is linked from the milestone's description.
 - **Epics**: issues labelled `epic`; their tickets are sub-issues.
 - **Tickets**: issues. A ticket's plan is its issue body, or a plan doc linked from it (see [docs](docs.md)).
 

@@ -6,9 +6,12 @@ Product docs (plans, specs, milestone briefs, research) live in Google Drive, in
 
 | Doc | Folder | Name |
 | --- | --- | --- |
-| Plans and specs | `<folder>/Plans` | `Plan: <title>` |
-| Milestone briefs | `<folder>/Milestones` | `Milestone: <name>` |
-| Research | `<folder>/Research` | `Research: <title> (<YYYY-MM-DD>)` |
+| Plans | `<folder>/Plans` | `<YYYY-MM-DD>-<title>` |
+| Specs | `<folder>/Specs` | `<YYYY-MM-DD>-<title>` |
+| Milestone briefs | `<folder>/Milestones` | `<YYYY-MM-DD>-<milestone>` |
+| Research | `<folder>/Research` | `<YYYY-MM-DD>-<title>` |
+
+The date is the day the doc was created, so each folder sorts by age. The doc's own title line carries its type (`Plan: <title>`).
 
 The first lines of each doc carry its milestone, epic and ticket link.
 
