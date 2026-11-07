@@ -74,7 +74,7 @@ base  <-  development  <-  product
 | `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, grill, debrief, research, project-knowledge, setup-repo, guide |
 | `development` | when-to-use instructions for its skills; the build loop: build, tdd, publish, review, test, address, codify |
 | `triage` | triage-prs, triage-issues |
-| `architecture` | when-to-use instructions for its skills; optimize |
+| `architecture` | when-to-use instructions for its skills; find-drift, refactor, optimize |
 | `quality` | when-to-use instructions for its skills; find-bugs, find-vulns, fix-bug |
 | `product` | when-to-use instructions for its skills; envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
 | `productivity` | i-have-adhd and the session-start instruction that invokes it; the writing style for docs people read |
