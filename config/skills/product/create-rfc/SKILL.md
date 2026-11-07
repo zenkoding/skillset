@@ -7,6 +7,8 @@ description: Research, interview, and develop an engineering RFC from an idea, n
 
 Produce one self-contained RFC that engineers outside the conversation can review. Research establishes facts; the interview resolves consequential decisions. Maintain the same document throughout, using the [Rust-based RFC template](references/rfc-template.md). This skill ends with RFC review, not implementation or publication.
 
+It runs the [planning loop](references/planning-loop.md) at RFC level: the loop's read, research, draft, grill and sign-off steps, with the RFC as the doc. The sections below add what is particular to RFCs.
+
 ## Establish the starting point
 
 Read the supplied material, relevant repository guidance, and existing RFC conventions. Identify the problem, audience, constraints, settled decisions, and consequential gaps. An existing draft is the starting artifact: preserve its accepted decisions and focus on contradictions or missing reasoning.
@@ -19,23 +21,19 @@ Follow the repository's RFC location and numbering convention. Otherwise use `rf
 
 Create an initial RFC with established facts and clearly marked open questions. Use it as the single design document rather than creating separate glossaries, context documents, decision records or research reports. Place terminology near the end, followed by a references section when needed. Required private execution notes may hold resumption state, but must not become an alternative design source. Keep incidental experiment artifacts out of the RFC's narrative.
 
-## Research and interview in rounds
+## Research and grill
 
-Map the design as decisions and their dependencies. In each round, ask the independent consequential questions whose prerequisites are settled; defer questions that depend on unanswered ones. Use manageable batches, stable question numbers, concrete scenarios, and a recommended answer with its main tradeoff. Use the host's question tool when suitable, otherwise chat. Allow the user to propose a different answer.
+Research as the loop's step 2 says, and settle decisions with `grill` as its step 4 says: seed it with the design's open decisions, ordered so a question comes only once its prerequisites are settled. Grill behavior, scope, interfaces and meaningful tradeoffs; choose routine, reversible implementation details with engineering judgment. Leave technical checks that need implementation in unresolved questions, with the concrete evidence that would resolve them.
 
-Investigate factual questions yourself. Read relevant code, primary documentation, and available connected sources before asking the user to resolve uncertainty. Use bounded independent research agents when available and useful; otherwise perform the research directly. Keep synthesis and decisions with the lead. Do not delegate a product decision to a research agent.
+What the loop doesn't cover:
 
-Small, reversible local experiments may resolve a design question. State what the experiment tests, preserve existing work and data, and stop once the evidence answers it. Ask before substantial environment setup or implementation; keep external mutations within explicit authorization. An RFC request alone does not authorize deploying a prototype, changing shared systems, or messaging others.
-
-Distinguish source-supported capability, observed behavior, proposed design, and unverified integration. Evidence from one build or fixture establishes only what was exercised. Keep research provenance in working context or required private notes. In the RFC, cite only sources that help a reviewer assess a material claim, following the reference policy below. Disclose a relevant coverage gap rather than converting it into a universal limitation.
-
-After each answer, update the RFC immediately and recompute the open decisions. After scope changes or accepted exceptions, reconcile prose, command examples, schemas, diagrams and open questions together. Remove superseded behavior and check that each exception has the same boundary everywhere. Preserve the current design rather than appending an interview transcript. Do not reopen settled choices without new evidence or a contradiction; explain that evidence when reconsideration is needed.
-
-Grill behavior, scope, interfaces and meaningful tradeoffs. Choose routine, reversible implementation details with engineering judgment. Leave technical checks that require implementation in unresolved questions, with the concrete evidence needed to resolve them. Exhaustive questioning about incidental details is not the objective.
+- **Experiments.** A small, reversible local experiment may settle a design question. State what it tests, preserve existing work and data, and stop once the evidence answers it. Ask before substantial setup or implementation. An RFC request alone does not authorize deploying a prototype, changing shared systems, or messaging others.
+- **Evidence.** Distinguish source-supported capability, observed behavior, proposed design and unverified integration. Evidence from one build or fixture establishes only what was exercised. Disclose a relevant coverage gap rather than turning it into a universal limitation.
+- **One document.** After each grill answer, update the RFC and recompute the open decisions. After a scope change or an accepted exception, reconcile prose, command examples, schemas, diagrams and open questions together, and remove superseded behavior. The RFC holds the current design, not the interview transcript; the grill log keeps the answers.
 
 ## Write for fellow engineers
 
-Read the template when drafting or restructuring. Lead with the proposal and its effect, then follow the template's progression through motivation, scope, proposed UX and proposed architecture. Begin architecture with components and ownership boundaries before individual flows. Adapt headings to the proposal and repository conventions. Use direct, familiar language and connected paragraphs. Include technical detail where it helps assess a contract, tradeoff or failure mode; define domain-specific terms in the terminology section. Label illustrative schema fields or routes as provisional until selected.
+Follow the loop's style for docs people read. Read the template when drafting or restructuring. Lead with the proposal and its effect, then follow the template's progression through motivation, scope, proposed UX and proposed architecture. Begin architecture with components and ownership boundaries before individual flows. Adapt headings to the proposal and repository conventions. Use direct, familiar language and connected paragraphs. Include technical detail where it helps assess a contract, tradeoff or failure mode; define domain-specific terms in the terminology section. Label illustrative schema fields or routes as provisional until selected.
 
 For repository RFCs, keep reader-facing references within that repository unless the user requests external references. External documents, meetings and issue trackers may inform research; incorporate their relevant decisions and reasoning so readers can understand the proposal without opening them. Use descriptive links to repository files or pinned source revisions near material claims. Keep raw hashes, local checkout paths and source inventories in working notes rather than the prose. Apply the user's reference policy when working outside a repository.
 
