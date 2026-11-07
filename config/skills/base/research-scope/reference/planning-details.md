@@ -2,7 +2,7 @@
 
 For broad questions, group the requested dimensions into useful questions, not predetermined workers. Choose sources by what can resolve each question: specifications for guarantees; code and tests for observed implementation; project decisions for intended local use; studies for measured effects; current documentation for supported versions. Historical evidence may explain a decision but does not establish current behavior.
 
-For code research, cite concrete files/symbols/revisions and observed execution paths; read-only analysis does not authorize source edits. For project context, inspect relevant design docs, ADRs, runbooks and strategic documents. Distinguish current approved decisions from draft proposals. Note missing referenced documents rather than inventing their contents.
+For code research, cite concrete files/symbols/revisions and observed execution paths; read-only analysis does not authorize source edits. For project context, inspect relevant design docs, the decision history (`git log -S`, PR bodies), runbooks and strategic documents. Distinguish current approved decisions from draft proposals. Note missing referenced documents rather than inventing their contents.
 
 For external research, inspect original content rather than relying on snippets. Record URL/title, author or organization when known, publication/access dates and version. Prefer direct measurements and primary specifications to marketing claims. Match benchmark workload, dataset, hardware, concurrency, percentile and time window before comparing numbers. Verify current facts with current sources; do not use fixed historical cutoffs.
 
