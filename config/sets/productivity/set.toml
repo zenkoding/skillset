@@ -1,0 +1,7 @@
+name = "productivity"
+description = "Personal workflow skills: i-have-adhd, invoked at session start"
+hosts = ["claude", "codex"]
+requires = ["base"]
+
+shared = "../../instructions/productivity.md"
+skills = ["../../skills/productivity"]

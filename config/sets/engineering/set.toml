@@ -1,0 +1,6 @@
+name = "engineering"
+description = "Build loop and engineering skills: build, publish, review, test, fix-bug, triage-prs and more"
+hosts = ["claude", "codex"]
+requires = ["base"]
+
+skills = ["../../skills/engineering"]

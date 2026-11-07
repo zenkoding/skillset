@@ -19,7 +19,7 @@ Config lives under `config/`, the catalog. Code lives everywhere else.
 | Path | What it holds |
 |------|---------------|
 | `config/sets/<name>/` | Sets (`set.toml` manifests). |
-| `config/skills/<category>/<name>/` | Skills. `config/skills/in-progress/` holds drafts that are not installed. |
+| `config/skills/<set>/<name>/` | Skills, one folder per set. `config/skills/in-progress/` holds drafts that are not installed. |
 | `config/instructions/` | `shared.md` plus `claude.md` / `codex.md`. |
 | `config/claude/` | Claude settings: `settings.json` (reasons in `settings.md`), `statusline.sh`, `hooks/`, output styles. |
 | `config/codex/` | Codex defaults, merged by hand. |
@@ -37,5 +37,6 @@ Commit format: title / what / why.
 
 ## Adding a skill
 
-1. Create `config/skills/<category>/<name>/SKILL.md` with `name: <name>` in its frontmatter (drafts go in `config/skills/in-progress/`).
-2. Run `make plan`, then `make apply`.
+1. Create `config/skills/<set>/<name>/SKILL.md` with `name: <name>` in its frontmatter (drafts go in `config/skills/in-progress/`).
+2. To name a skill from a set yours doesn't require, write "`<skill>` when installed"; `make test` checks this.
+3. Run `make plan`, then `make apply`.
