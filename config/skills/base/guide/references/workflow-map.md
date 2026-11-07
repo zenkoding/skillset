@@ -49,14 +49,15 @@ companion decisions checks    reviewer    findings   re-review               fri
 Finds drift from the documented architecture and performance hotspots, and fixes them through the build loop.
 
 ```
-find-drift ──> triage-issues ──> refactor ──> publish ──> review ──> triage-prs
-issues         ready-for-agent   trivial: PR    (build loop)
-                                 else: brief
+find-drift    ──> triage-issues ──> refactor ──> publish ──> review ──> triage-prs
+find-hotspots                       optimize      (build loop)
+issues           ready-for-agent    trivial: PR, else: brief
 ```
 
 - `find-drift`: compare the code against `ARCHITECTURE.md` and recorded decisions; file each deviation.
 - `refactor`: bring one drift issue back in line, behaviour unchanged; trivial moves get a PR, others go to `brief`.
-- `optimize`: measured performance work.
+- `find-hotspots`: find where time, memory or money goes, from the telemetry store in `docs/contributing/performance.md`; file each hotspot with baseline numbers.
+- `optimize`: take one hotspot to a measured improvement; trivial changes get a PR, larger ones go to `brief`.
 
 ## Quality lane (quality set)
 
@@ -78,7 +79,7 @@ advisories                                   else: brief
 
 ## Setup and knowledge (base set)
 
-- `setup-repo`: write or migrate `CONTRIBUTING.md` and `docs/contributing/`; `e2e` and `review` parts on demand.
+- `setup-repo`: write or migrate `CONTRIBUTING.md` and `docs/contributing/`; `e2e`, `review` and `performance` parts on demand.
 - `research`: a source-backed report, saved privately.
 - `project-knowledge`: set up or tidy the private store.
 - `guide`: this map, and what to run next.

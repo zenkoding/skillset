@@ -1,6 +1,6 @@
 ---
 name: setup-repo
-description: Write or migrate a repo's human-first contributing docs (CONTRIBUTING.md, docs/contributing/, AGENTS.md) that the other skills read their repo facts from, with built-in tracker and docs-store templates. Run as /setup-repo, or /setup-repo e2e or /setup-repo review for one part.
+description: Write or migrate a repo's human-first contributing docs (CONTRIBUTING.md, docs/contributing/, AGENTS.md) that the other skills read their repo facts from, with built-in tracker and docs-store templates. Run as /setup-repo, or /setup-repo e2e, /setup-repo review or /setup-repo performance for one part.
 ---
 
 # Set up a repo
@@ -12,6 +12,7 @@ Write the docs a human contributor reads and the skills read too: `CONTRIBUTING.
 | `/setup-repo` | `CONTRIBUTING.md`, `docs/contributing/{local-dev,testing,issues,docs}.md`, `AGENTS.md` |
 | `/setup-repo e2e` | the **E2E stack** section of `docs/contributing/testing.md` |
 | `/setup-repo review` | `REVIEW.md` |
+| `/setup-repo performance` | `docs/contributing/performance.md` |
 
 ## 1. Look at what's there
 
@@ -86,5 +87,7 @@ Done when every confirmed file is written, the replaced adapters are gone, nothi
 
 - **`/setup-repo e2e`**: add an **E2E stack** section to `docs/contributing/testing.md` in the [E2E stack format](references/e2e-stack.md), one subsection per way to run the app (host, containers). Infer the commands from the build files and confirm each; a step you can't settle stays a question, never a guess. `test` when installed reads this section.
 - **`/setup-repo review`**: write `REVIEW.md` from the [default review rules](references/review-rules.md), then ask which defaults this repo changes (what blocks a merge, what not to report, label strength). Replace the defaults' opening paragraph with one about this repo. `review` when installed reads it in place of the defaults.
+
+- **`/setup-repo performance`**: write `docs/contributing/performance.md` from the [performance template](templates/performance.md): the telemetry store, the metrics with their queries and budgets, profiles and benchmarks. Look for them in CI, the build files, dashboards linked from the README and observability config (`prometheus.yml`, Datadog or OpenTelemetry setup); confirm each with the user, and leave out a section the project doesn't have. Add a line for it to `CONTRIBUTING.md`. `find-hotspots` and `optimize` when installed read it.
 
 Each part follows steps 1, 5 and 6 for its one file.
