@@ -3,4 +3,5 @@ description = "Product loop skills: envision, scope-milestone, shape-epic, retro
 hosts = ["claude", "codex"]
 requires = ["engineering"]
 
+shared = "../../instructions/product.md"
 skills = ["../../skills/product"]
