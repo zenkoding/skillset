@@ -73,7 +73,7 @@ base  <-  development  <-  product
 | --- | --- |
 | `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, grill, debrief, research, project-knowledge, setup-repo, guide |
 | `development` | when-to-use instructions for its skills; the build loop: build, tdd, publish, review, test, address, codify |
-| `triage` | triage-prs |
+| `triage` | triage-prs, triage-issues |
 | `architecture` | when-to-use instructions for its skills; optimize |
 | `quality` | when-to-use instructions for its skills; fix-bug |
 | `product` | when-to-use instructions for its skills; envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
