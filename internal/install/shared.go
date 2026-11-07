@@ -61,6 +61,32 @@ func (s Source) renderShared(skills []Skill) ([]Render, error) {
 			return nil, err
 		}
 	}
+	// A rendered shared file can link other shared files; bring each along
+	// at the path the link resolves to, so the link works in the skill too.
+	queue := make([]string, 0, len(targets))
+	for p := range targets {
+		queue = append(queue, p)
+	}
+	for len(queue) > 0 {
+		p := queue[0]
+		queue = queue[1:]
+		for _, m := range sharedLink.FindAllSubmatch(targets[p], -1) {
+			name := string(m[2])
+			content, ok := sources[name]
+			if !ok {
+				continue
+			}
+			target := filepath.Join(filepath.Dir(p), string(m[1]), name)
+			if _, done := targets[target]; done {
+				continue
+			}
+			if !strings.HasPrefix(target, skillOf(skills, p)+string(filepath.Separator)) {
+				return nil, fmt.Errorf("shared %s links %s outside the skill", filepath.Base(p), name)
+			}
+			targets[target] = content
+			queue = append(queue, target)
+		}
+	}
 	paths := make([]string, 0, len(targets))
 	for p := range targets {
 		paths = append(paths, p)
@@ -72,4 +98,14 @@ func (s Source) renderShared(skills []Skill) ([]Render, error) {
 		renders = append(renders, Render{Path: p, Content: targets[p], Exists: err == nil && bytes.Equal(cur, targets[p])})
 	}
 	return renders, nil
+}
+
+// skillOf returns the directory of the skill that holds path.
+func skillOf(skills []Skill, path string) string {
+	for _, sk := range skills {
+		if strings.HasPrefix(path, sk.Dir+string(filepath.Separator)) {
+			return sk.Dir
+		}
+	}
+	return ""
 }
