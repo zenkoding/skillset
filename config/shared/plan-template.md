@@ -51,11 +51,7 @@ For trivial work: three sections, written on the tracker issue itself.
 
 ## Style
 
-- Write for a competent engineer who doesn't know this area. Plain declaratives, "we" for what the team does, full sentences with a subject and a verb. No epigrammatic fragments, no rhetorical set-ups, no idioms where a literal description fits.
-- Name roles, not people ("the maintainers of the installer"). Drop dates, except one that identifies a state, such as the commit a fact was checked at.
-- Keep implementation detail out: file paths, symbols and line numbers belong in the companion. A crucial algorithm earns a short code block; boilerplate does not.
-- Mark an unverified claim where it is made, not only under Open questions.
-- Draw a diagram only when the structure is the point: a component diagram for architecture (grouped by how a reader should think, at one level), a sequence diagram for a flow across participants, especially where the bug is the ordering. A list of steps is a sentence, not a diagram. Check every diagram renders.
+Write the plan in the style for docs people read from the user instructions, when they have one. Without it, at least: plain declaratives for a competent engineer new to the area, roles rather than names, no file paths or line numbers (those go in the companion), and unverified claims marked where they are made.
 
 ## The companion
 
