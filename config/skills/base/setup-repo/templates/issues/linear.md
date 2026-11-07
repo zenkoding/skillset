@@ -4,7 +4,7 @@ Work is tracked in Linear: team `<team>`, project `<project>`. Agents use the Li
 
 ## Where work lives
 
-- **Milestones**: project milestones.
+- **Milestones**: project milestones. The milestone brief lives in the docs store (see [docs](docs.md)) and is linked from the milestone's description.
 - **Epics**: parent issues in the project; their tickets are sub-issues.
 - **Tickets**: issues. A ticket's plan is its description, or a plan doc linked from it (see [docs](docs.md)).
 

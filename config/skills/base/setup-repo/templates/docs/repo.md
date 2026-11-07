@@ -9,9 +9,13 @@ Docs live in this repo as Markdown.
 | Vision | `VISION.md` |
 | Architecture | `ARCHITECTURE.md`, growing into `docs/architecture/<component>.md` |
 | Glossary | `CONTEXT.md` |
-| RFCs | `docs/rfcs/<NNNN>-<slug>.md` |
-| Plans, specs, milestone briefs | `docs/plans/<YYYY-MM-DD>-<slug>.md` |
+| RFCs | `docs/rfcs/<YYYY-MM-DD>-<slug>.md` |
+| Plans | `docs/plans/<YYYY-MM-DD>-<slug>.md` |
+| Specs | `docs/specs/<YYYY-MM-DD>-<slug>.md` |
+| Milestone briefs | `docs/milestones/<YYYY-MM-DD>-<slug>.md` |
 | Research | `docs/research/<YYYY-MM-DD>-<slug>.md`, only when a person asks for it to be shared; it defaults to private notes |
+
+The date is the day the doc was created, so each directory sorts by age.
 
 ## Creating a doc
 
