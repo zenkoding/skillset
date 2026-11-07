@@ -53,3 +53,4 @@ config/skills/**/plan-template.md
 config/skills/**/semantic-labels.md
 config/skills/**/e2e-stack.md
 config/skills/**/review-rules.md
+config/skills/**/review-criteria.md
