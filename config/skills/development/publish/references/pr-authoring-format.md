@@ -2,7 +2,7 @@
 
 Follow the repository's PR template and conventions. When none exist, use the template below. A reviewer should be able to answer three questions from the body alone: what changed, why, and how to check it.
 
-- Write the title, and the commit messages the PR adds, as [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (`<type>(<optional scope>): <summary>`, with `!` or a `BREAKING CHANGE:` footer for breaking changes), unless the repository sets its own format in its contributing docs, `AGENTS.md`, a commit-lint config or a consistent history. Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `build`, `ci`, `chore`.
+- Write the title, and the commit messages the PR adds, as [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (`<type>(<optional scope>): <summary>`, with `!` or a `BREAKING CHANGE:` footer for breaking changes), unless the repository sets its own format in its contributing docs, `AGENTS.md`, a commit-lint config or a consistent history. Common types: feat, fix, docs, refactor, test, build, ci, chore.
 - Base the description on the actual changes and tests, not the branch name or diff statistics.
 - Preserve the user's supplied title and body. If they conflict with a required repository rule, explain the specific conflict rather than silently rewriting them.
 - Distinguish passed checks, failures, skipped checks, and work still pending. Do not invent test evidence or claim a PR is merged or approved without confirmation.

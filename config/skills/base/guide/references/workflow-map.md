@@ -46,6 +46,16 @@ companion decisions checks    reviewer    findings   re-review               fri
 
 ## Architecture lane (architecture set)
 
+Finds drift from the documented architecture and performance hotspots, and fixes them through the build loop.
+
+```
+find-drift ──> triage-issues ──> refactor ──> publish ──> review ──> triage-prs
+issues         ready-for-agent   trivial: PR    (build loop)
+                                 else: brief
+```
+
+- `find-drift`: compare the code against `ARCHITECTURE.md` and recorded decisions; file each deviation.
+- `refactor`: bring one drift issue back in line, behaviour unchanged; trivial moves get a PR, others go to `brief`.
 - `optimize`: measured performance work.
 
 ## Quality lane (quality set)

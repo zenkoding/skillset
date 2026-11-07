@@ -1,5 +1,5 @@
 name = "architecture"
-description = "Architecture and performance lane: optimize"
+description = "Architecture and performance lane: find-drift, refactor, optimize"
 hosts = ["claude", "codex"]
 requires = ["development"]
 replaces = ["engineering"]
