@@ -59,7 +59,22 @@ home = ".config/dcg/config.toml"
 path = "config.toml"
 ```
 
-Paths default to the layout above and must stay inside the catalog. Today the whole setup ships as one `legacy` set (`config/sets/legacy/`) that points at `config/skills/`, `config/instructions/` and `config/claude/`; splitting it into smaller sets is follow-up work.
+Paths default to the layout above and must stay inside the catalog. The catalog ships four sets, each pointing at its folder under `config/skills/`, with requires that point one way:
+
+```
+base  <-  engineering  <-  product
+  ^
+  └── productivity
+```
+
+| Set | Holds |
+| --- | --- |
+| `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, debrief, project-knowledge, research-scope |
+| `engineering` | build, publish, review, test, land-pr, fix-bug, optimize-performance, triage-prs, codify |
+| `product` | envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
+| `productivity` | i-have-adhd and the session-start instruction that invokes it |
+
+`legacy` requires all four, so installs that chose it keep the full setup. A skill names only skills in its own set or a set it requires; a link into any other set says "when installed" right after the name (a test enforces this).
 
 ### What apply does
 
