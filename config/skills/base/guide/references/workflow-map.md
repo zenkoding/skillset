@@ -41,7 +41,7 @@ companion decisions checks    reviewer    findings   re-review               fri
 
 ## Triage (triage set)
 
-- `triage-prs`: which open PRs need attention, and the command for each.
+- `triage-prs`: merge the PRs that pass the merge gate, send the rest to a person or to the next skill.
 - `triage-issues`: validate open issues, label them, ask for missing facts, and close the ones evidence settles.
 
 ## Architecture lane (architecture set)
