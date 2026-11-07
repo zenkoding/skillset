@@ -29,7 +29,7 @@ Build one **ticket** (whatever the tracker calls a unit of work: a feature, task
 
    Done when every item under **Open questions** has an answer.
 
-6. **Build test-first.** Read the plan's **Flags**; if it names a flag, put unfinished work behind it. Otherwise keep unfinished UI unlinked, so the default branch stays deployable after every PR. Work test-first (the `tdd` skill when installed). The **Done when** checks are the pre-agreed seams; a seam the plan does not name goes through step 5 first. Tick each **Done when** item on the ticket once its check passes. Done when every item is ticked, or noted for the step 9 report with why it can't be checked from the branch.
+6. **Build test-first.** Read the plan's **Flags**; if it names a flag, put unfinished work behind it. Otherwise keep unfinished UI unlinked, so the default branch stays deployable after every PR. Work test-first with `tdd`. The **Done when** checks are the pre-agreed seams; a seam the plan does not name goes through step 5 first. Tick each **Done when** item on the ticket once its check passes. Done when every item is ticked, or noted for the step 9 report with why it can't be checked from the branch.
 
 7. **Check.** Run the check command that `docs/contributing/testing.md` names (lint, tests, build; `AGENTS.md` when the repo has no testing doc yet) and fix what it reports until it exits 0. When it fails on code this ticket didn't touch, stop and report the failure instead of fixing it. Done when the last run exits 0.
 

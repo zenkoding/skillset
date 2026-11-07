@@ -70,7 +70,7 @@ base  <-  engineering  <-  product
 | Set | Holds |
 | --- | --- |
 | `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, grill, debrief, research, project-knowledge, setup-repo, guide |
-| `engineering` | when-to-use instructions for its skills; build, publish, review, test, address, fix-bug, optimize-performance, triage-prs, codify |
+| `engineering` | when-to-use instructions for its skills; build, tdd, publish, review, test, address, fix-bug, optimize-performance, triage-prs, codify |
 | `product` | when-to-use instructions for its skills; envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
 | `productivity` | i-have-adhd and the session-start instruction that invokes it |
 
