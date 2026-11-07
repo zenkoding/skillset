@@ -1,6 +1,6 @@
 ---
 name: brief
-description: Brief the user at the start of work on an idea, ticket or problem: collect context, research the unknowns, present understanding and a plan, then hand off to grilling, building or bug investigation. Run as /brief Start working on <idea | ticket | problem>.
+description: Brief the user at the start of work on an idea, ticket or problem: collect context, research the unknowns, present understanding and a plan, then hand off to a grill, building or bug investigation. Run as /brief Start working on <idea | ticket | problem>.
 ---
 
 # Brief
@@ -56,7 +56,7 @@ Predict the three axes of [work sizing](references/work-sizing.md) from the plan
 
 - **Defect**: next is `fix-bug` when installed, to establish the cause before any fix; without it, find the cause before changing anything.
 - **Trivial**: for code work, next is `build` when installed for a tracker ticket, otherwise test-first (the `tdd` skill when installed). For anything else, do the work directly.
-- **Non-trivial**: next is `grilling` (or one question at a time when it isn't installed), seeded with the Unknown list and each high axis: the design for Complexity, the options for Taste, the rollback and blast radius for Risk.
+- **Non-trivial**: next is `grill`, seeded with the Unknown list and the sizing.
 
 Keep each list to about five items; the plan names times.
 
