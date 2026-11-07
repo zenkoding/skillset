@@ -1,6 +1,6 @@
 # Planning loop
 
-brief, envision, scope-milestone and shape-epic run the same loop at different levels: a ticket's plan, the vision, a milestone brief, an epic spec. Each skill names its own output and adds its own step; this file holds what they share.
+brief, envision, scope-milestone, shape-epic and create-rfc run the same loop at different levels: a ticket's plan, the vision, a milestone brief, an epic spec, an RFC. Each skill names its own output and adds its own step; this file holds what they share.
 
 ```
 1 read the ask and its context
@@ -46,7 +46,7 @@ Write the skill's doc where `docs/contributing/docs.md` says docs live, and link
 
 Read the doc's steps back as a sequence and check each leaves the system working, including against changes later steps make.
 
-Style, for every doc: plain declaratives for a competent reader new to the area; roles, not names; no file paths; unverified claims marked where they are made; a diagram only when the structure is the point.
+Style, for every doc: the style for docs people read from the user instructions, when they have one. Without it: plain declaratives for a competent reader new to the area; roles, not names; no file paths; unverified claims marked where they are made; a diagram only when the structure is the point.
 
 ## 6. Sign-off
 
