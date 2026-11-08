@@ -11,7 +11,7 @@ Layout: code and config are split. `config/` is the catalog the installer reads:
 ## Working here
 
 - Develop with Matt Pocock's skills (`mattpocock-skills` plugin) for now. Track work in GitHub issues, not beads.
-- Preview with `make plan` before installing anything into `$HOME`.
+- Run `make install` to build the binary from this checkout. Preview with `skillset --catalog "$PWD/config" plan` before installing anything into `$HOME`.
 - Go code: `cmd/` for entry points, `internal/` for packages, table-driven tests, standard library first. Run `make test` before committing.
 - Commit format: title / what / why.
 - Markdown: no hard wraps. One line per paragraph or list item; the viewer wraps.

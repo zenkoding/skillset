@@ -16,7 +16,11 @@ skillset uninstall   # remove what apply installed (--dry-run to preview)
 
 `skillset update --ref <tag>` switches back to an older release, and `--ref main` follows main.
 
-For installation you can also clone the repo and use the [Developing](#developing) flow.
+Optional extras: from a clone of this repo, `./scripts/install-plugins.sh` installs the Claude plugins, marketplaces and MCP servers listed in `config/claude/settings.json`. The dcg binary installs separately; `skillset apply` links its config and packs:
+
+```sh
+curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh" | bash -s -- --no-configure --easy-mode
+```
 
 ## How it works
 
@@ -89,17 +93,16 @@ Each set's instructions say when to reach for its skills on their own: events an
 
 ## Developing
 
-The Makefile runs the installer from this checkout with `--catalog config`, so links point into the working tree and edits are live.
+The Makefile is for local development. `make install` puts a binary built from this checkout on your Go bin path. Pass `--catalog` so it reads this checkout's `config/` instead of the pinned release: links point into the working tree and edits are live.
 
 ```sh
-make init        # pick hosts and sets from this checkout's catalog
-make plan        # preview
-make apply       # install from the working tree
-make uninstall   # remove it (make uninstall/plan to preview)
-make validate    # lint, build, test, doc-rot guard
-make help        # everything else
+make install                                 # install the binary from this checkout
+skillset --catalog "$PWD/config" init        # pick hosts and sets
+skillset --catalog "$PWD/config" plan        # preview
+skillset --catalog "$PWD/config" apply       # install from the working tree
+skillset --catalog "$PWD/config" uninstall   # remove it (--dry-run to preview)
+make validate                                # lint, build, test, doc-rot guard
+make help                                    # everything else
 ```
-
-Optional extras: `make install/dcg` installs the dcg binary and `make install/plugins` the Claude plugins, marketplaces and MCP servers listed in `config/claude/settings.json`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow.

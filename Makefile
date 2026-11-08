@@ -1,5 +1,6 @@
-# Development tasks for skillset: run the installer from this checkout, and
-# build, lint and test the code.
+# Local development tasks for skillset: install the binary from this checkout,
+# and build, lint and test the code. The binary itself installs and manages
+# sets; end users start from the README.
 
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
@@ -11,7 +12,7 @@ GREEN := $(shell printf '\033[0;32m')
 YELLOW := $(shell printf '\033[1;33m')
 NC := $(shell printf '\033[0m')
 
-.PHONY: help init plan apply install uninstall uninstall/plan bin install/plugins install/tools install/dcg check-docs build lint test test/go test/json validate
+.PHONY: help install check-docs build lint test test/go test/json validate
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
@@ -28,52 +29,15 @@ help: ## Show this help message
 	@echo ""
 	@grep -E '^[a-zA-Z/_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(NC) %s\n", $$1, $$2}'
 	@echo ""
-	@echo "Common workflows (catalog: this checkout's config/):"
-	@echo "  $(YELLOW)First time:$(NC)      make init, make plan, then make apply"
-	@echo "  $(YELLOW)After edits:$(NC)     make apply"
-	@echo "  $(YELLOW)Remove:$(NC)          make uninstall/plan, then make uninstall"
+	@echo "Local development:"
+	@echo "  $(YELLOW)Install binary:$(NC)  make install"
+	@echo "  $(YELLOW)Try the catalog:$(NC) skillset --catalog \"\$$PWD/config\" plan, then apply"
+	@echo "  $(YELLOW)Before a PR:$(NC)     make validate"
 	@echo ""
 
-# The installer, run from this checkout against config/ so links point into
-# the working tree.
-SKILLSET := go run ./cmd/skillset --catalog "$(CURDIR)/config"
-
-init: ## Pick hosts and sets from this checkout's catalog
-	@$(SKILLSET) init
-
-plan: ## Preview what apply would change in ~/.claude, ~/.codex, ~/.agents and ~/.config/dcg
-	@$(SKILLSET) plan
-
-apply: ## Install the chosen sets from the working tree
-	@$(SKILLSET) apply
-
-install: apply ## Alias for apply
-
-uninstall/plan: ## Preview what uninstall would remove
-	@$(SKILLSET) uninstall --dry-run
-
-uninstall: ## Remove the links and unedited settings copies apply installed
-	@$(SKILLSET) uninstall
-
-bin: ## Install the skillset binary into GOPATH/bin
+install: ## Install the skillset binary from this checkout
 	@go install ./cmd/skillset
-	@echo "$(GREEN)✓$(NC) Installed $(shell go env GOPATH)/bin/skillset"
-
-install/plugins: ## Install Claude Code plugins, marketplaces, and MCP servers
-	@./scripts/install-plugins.sh
-
-# Tool install targets
-
-install/tools: install/dcg ## Install optional tools
-
-install/dcg: ## Install the destructive_command_guard (dcg) binary
-	@if command -v dcg >/dev/null 2>&1; then \
-		echo "$(GREEN)✓$(NC) dcg already installed ($$(dcg --version 2>&1 | head -1))"; \
-	else \
-		echo "$(BLUE)Installing dcg...$(NC)"; \
-		curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh" | bash -s -- --no-configure --easy-mode; \
-	fi
-	@echo "dcg config and packs are linked by make apply"
+	@gobin="$$(go env GOBIN)"; echo "$(GREEN)✓$(NC) Installed $${gobin:-$$(go env GOPATH)/bin}/skillset"
 
 build: ## Build all Go packages
 	@echo "$(BLUE)Building Go packages...$(NC)"

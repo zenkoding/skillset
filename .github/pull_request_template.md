@@ -17,5 +17,5 @@
 - [ ] I have reviewed the changes and verified the intended behavior.
 - [ ] I have added or updated tests and documentation where needed.
 - [ ] I have run `make validate` and verified that it passes.
-- [ ] I have previewed install changes with `make plan` where relevant.
+- [ ] I have previewed install changes with `skillset --catalog "$PWD/config" plan` where relevant.
 - [ ] I have linked the issue this PR closes.
