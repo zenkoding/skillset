@@ -12,7 +12,7 @@ GREEN := $(shell printf '\033[0;32m')
 YELLOW := $(shell printf '\033[1;33m')
 NC := $(shell printf '\033[0m')
 
-.PHONY: help install check-docs build lint test test/go test/json validate
+.PHONY: help install git-setup check-docs build lint test test/go test/json validate
 
 # Sandboxed tool binaries (version-pinned, never pollutes system PATH)
 BIN_DIR := target
@@ -38,6 +38,12 @@ help: ## Show this help message
 install: ## Install the skillset binary from this checkout
 	@go install ./cmd/skillset
 	@gobin="$$(go env GOBIN)"; echo "$(GREEN)✓$(NC) Installed $${gobin:-$$(go env GOPATH)/bin}/skillset"
+
+git-setup: ## Use the repo's commit template and commit-msg hook in this clone
+	@root="$$(dirname "$$(git rev-parse --path-format=absolute --git-common-dir)")"; \
+	git config commit.template "$$root/.gitmessage"; \
+	git config core.hooksPath "$$root/.githooks"
+	@echo "$(GREEN)✓$(NC) Commit template and hooks configured"
 
 build: ## Build all Go packages
 	@echo "$(BLUE)Building Go packages...$(NC)"

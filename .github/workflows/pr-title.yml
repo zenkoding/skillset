@@ -1,0 +1,21 @@
+name: PR title
+
+# The squash merge uses the PR title as the commit title on main.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Conventional Commits title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: ./scripts/check-commit-title.sh "$PR_TITLE"
