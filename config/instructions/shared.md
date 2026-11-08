@@ -94,3 +94,13 @@ For substantial work, keep a short note under `<store>/notes/<objective>/`: obje
 After work that changed code, opened a PR or made a decision, run the `debrief` skill before your final reply, once per objective; skip it for plain questions and for follow-up fixes to work already debriefed. It reports decisions, lessons and friction to me and files them here.
 
 The `project-knowledge` skill sets up the private catalog and trims, splits or merges docs.
+
+## Skills
+
+Skill descriptions say what each skill does; this says when to reach for one on your own. Skills a person runs by hand are left out: name their command to me instead.
+
+- New work that isn't trivial and has no signed-off plan: run `brief` before writing code or the doc.
+- An open decision, or I ask to stress-test an idea: run `grill`.
+- A question that needs a sourced answer worth keeping: run `research`.
+- A skill needs `CONTRIBUTING.md` or `docs/contributing/` and the repo has none: suggest `setup-repo`.
+- I ask what to do next or how the skills fit together: run `guide`.

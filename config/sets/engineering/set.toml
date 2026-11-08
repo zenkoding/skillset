@@ -3,4 +3,5 @@ description = "Build loop and engineering skills: build, publish, review, test, 
 hosts = ["claude", "codex"]
 requires = ["base"]
 
+shared = "../../instructions/engineering.md"
 skills = ["../../skills/engineering"]
