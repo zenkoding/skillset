@@ -88,6 +88,6 @@ Destructive or hard to undo; run by hand if really needed:
 - `sandbox.filesystem.allowWrite`: `~/.local/share/agents` holds each repo's private project knowledge store, written from any worktree.
 - `permissions.additionalDirectories`: `~/.local/share/agents`, so Edit and Write reach the private store without a prompt. Both grants must be user-level: project settings ignore them, and worktree sessions block writes into the main checkout.
 - `statusLine` runs `~/.claude/statusline.sh`.
-- `enabledPlugins`: `mattpocock-skills` is the current development skill set; `cc-plugin-you-should-know` is built in.
+- `enabledPlugins`: `cc-plugin-you-should-know` is built in.
 - `env`: disables the auto-updater, enables agent teams, and runs subagents on Sonnet.
 - The rest (`modelSettings`, `outputStyle`, `theme`, `editorMode`, `tui` and so on) are personal preferences.
