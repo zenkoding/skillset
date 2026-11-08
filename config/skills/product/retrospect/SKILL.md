@@ -64,4 +64,4 @@ Product lessons:
 
 - **Vision**: a goal, audience or non-goal the work proved wrong. Hand it to `envision`.
 - **Next milestone**: a "done when" missed or cut, or a gap the work exposed. It becomes input for the next milestone brief via `scope-milestone`.
-- **Backlog**: an idea or follow-up the work turned up. File it as a Backlog issue as `docs/agents/issue-tracker.md` says, after the user agrees.
+- **Backlog**: an idea or follow-up the work turned up. File it as a Backlog issue after the user agrees: `docs/contributing/issues.md` gives the structure and labels, and `docs/agents/issue-tracker.md` the commands.
