@@ -1,21 +1,17 @@
 ### What
 
-<!-- What does this PR do? Provide a high-level description of the changes made and explain key parts in more detail. -->
+<!-- The smallest visual that makes the change clear (pseudocode, a file tree, a diff sketch), then one or two sentences. Then the before/after evidence: a screenshot, command output, or the test that failed before and passes now. -->
 
 ### Why
 
-<!-- Why is this PR necessary? Link the issue it closes and other relevant resources. -->
+<!-- The problem, in a line or two. Link the issue, plan or RFC that asked for it, with "Closes #<number>" when this PR closes an issue. When this PR settles or changes a decision, write it as: Chose X over Y because Z. -->
 
-### How it was tested
+### How to test
 
-<!-- How did you verify that the PR achieves its stated goal? Include examples which show the behaviour before & after this change (if possible). -->
+<!-- Numbered steps a reviewer can run on a fresh checkout. Then what you ran and its result, and what was not tested. Include `make validate`, and `skillset --catalog "$PWD/config" plan` when the change affects what gets installed. -->
 
-### PR checklist
+### Reviewer notes
 
-<!-- Please complete these checks before marking the PR ready for review. -->
+<!-- Keep Merge danger. Add Guard only when this PR adds a check or a convention that needs one. -->
 
-- [ ] I have reviewed the changes and verified the intended behavior.
-- [ ] I have added or updated tests and documentation where needed.
-- [ ] I have run `make validate` and verified that it passes.
-- [ ] I have previewed install changes with `skillset --catalog "$PWD/config" plan` where relevant.
-- [ ] I have linked the issue this PR closes.
+**Merge danger**: <!-- One-way or two-way door, and why. Blast radius: what else this can break. -->
