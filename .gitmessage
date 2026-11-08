@@ -1,0 +1,8 @@
+
+# <type>(<optional scope>): <summary>
+#
+# Types: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test.
+# Put ! before the colon for a breaking change.
+# Example: feat(skills): add guide to suggest the next skill
+#
+# Then one paragraph on what changed, and one paragraph on why.

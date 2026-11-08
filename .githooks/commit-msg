@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# commit-msg: reject a commit whose title is not a Conventional Commit.
+# `make git-setup` enables this hook. Comment lines are still in the message
+# when this runs, so the title is the first line that is neither blank nor a
+# comment.
+set -euo pipefail
+
+title=$(awk '!/^[[:space:]]*(#|$)/ { print; exit }' "$1")
+
+case "$title" in
+  # An empty message: git aborts the commit itself.
+  "") exit 0 ;;
+  # Titles git generates. A squash merge replaces them on main.
+  "Merge "* | "Revert \""* | "fixup! "* | "squash! "* | "amend! "*) exit 0 ;;
+esac
+
+exec "$(dirname "$0")/../scripts/check-commit-title.sh" "$title"
