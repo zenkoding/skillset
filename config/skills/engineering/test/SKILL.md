@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Run a feature's **How to test** steps against a fresh build of the PR and post a **verdict** per step on the PR. You are the reviewer's eyes in the running app: a step passes only when you saw its expected result yourself. The PR comment is the deliverable.
 
-Arguments: the PR, then the stack mode the repo's testing doc defines (its default when omitted). The feature plan's format and the tracker operations are in `docs/contributing/issues.md`.
+Arguments: the PR, then the stack mode the repo's testing doc defines (its default when omitted). The feature plan's format is in `docs/contributing/issues.md` and the tracker operations are in `docs/agents/issue-tracker.md`.
 
 ## 1. Find the feature
 
@@ -70,6 +70,6 @@ Stack: <mode> · Flags: <as set, or none> · Setup: <docs/contributing/testing.m
 
 The headline is **pass** only when every step passed, **fail** when any step failed, else **blocked**. The **no plan** comment is the same headline with `blocked` and one line: which plan section is missing, or that no identifier was found.
 
-For each failing step, record the bug as the tracker adapter says: on a feature not yet Done, a checklist item under its **Open questions** (change no other section; skip an item already there for the same step); on a Done feature, a new bug issue in the same epic, unless one for this step is already open.
+For each failing step, record the bug as `docs/agents/issue-tracker.md` says: on a feature not yet Done, a checklist item under its **Open questions** (change no other section; skip an item already there for the same step); on a Done feature, a new bug issue in the same epic, unless one for this step is already open.
 
 Done when the comment is on the PR. Stop the stack as the e2e doc says.

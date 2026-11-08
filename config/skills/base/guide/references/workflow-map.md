@@ -48,7 +48,7 @@ companion decisions checks    reviewer    findings   re-review               fri
 
 ## Setup and knowledge (base set)
 
-- `setup-repo`: write or migrate `CONTRIBUTING.md` and `docs/contributing/`; `e2e` and `review` parts on demand.
+- `setup-repo`: write or migrate `CONTRIBUTING.md`, `docs/contributing/` and `docs/agents/issue-tracker.md`; `e2e` and `review` parts on demand.
 - `research`: a source-backed report, saved privately.
 - `project-knowledge`: set up or tidy the private store.
 - `guide`: this map, and what to run next.

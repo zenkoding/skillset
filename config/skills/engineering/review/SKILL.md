@@ -27,7 +27,7 @@ Done when you can state in two sentences what the change is meant to do and whic
 Read, before judging anything:
 
 - **The PR body.** Its `### Reviewer notes` (written by `publish`): start from the Merge danger and, when present, the Verdict, Must check items and High files, then verify the rest of the diff rather than trusting the notes. Its How to test steps are what a reviewer would run.
-- **The intent.** The linked issue, or the tracker's plan when the repo uses one: `docs/contributing/issues.md` says where plans live and how to find one from a branch name, PR title or body. Its acceptance criteria (**Done when** or similar) are what the change is judged against.
+- **The intent.** The linked issue, or the tracker's plan when the repo uses one: `docs/contributing/issues.md` says where plans live and how to find one from a branch name, PR title or body, and `docs/agents/issue-tracker.md` has the commands to read one. Its acceptance criteria (**Done when** or similar) are what the change is judged against.
 - **The rules.** `REVIEW.md` at the repo root, else the [default rules](references/review-rules.md) (and suggest `/setup-repo review` to write a `REVIEW.md` from them). Then `AGENTS.md`, `CONTRIBUTING.md` and the docs it points to for the touched area, `CONTEXT.md`, `VISION.md` when the repo has one, and the decision history of the area (`git log -S '<term>'`; PR bodies record each decision's why).
 - **The code.** Each touched file around the changed lines, not only the hunks; callers of changed interfaces; recent history. Run the project's build, lint and tests when that is cheap and safe; record what ran and the result.
 

@@ -22,7 +22,7 @@ It runs the [planning loop](references/planning-loop.md) at ticket level; the ou
 
 ## 1. Read the ask
 
-- **Ticket** (an identifier or URL): read the issue, its comments, its parent, and every doc it links. `docs/contributing/issues.md` says how to reach the tracker, and `docs/contributing/docs.md` where docs live.
+- **Ticket** (an identifier or URL): read the issue, its comments, its parent, and every doc it links. `docs/agents/issue-tracker.md` says how to reach the tracker, and `docs/contributing/docs.md` where docs live.
 - **Idea or problem** (free text): take it as given. Search the tracker for an existing issue on it and read that too.
 
 Name the **objective** in a few words; it names the notes directory. Then read the context the loop's step 1 lists, plus the private store's catalog, and, for code work, the code the ask touches: entry points, callers, tests, recent history and recent PRs on the area.

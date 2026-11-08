@@ -17,7 +17,7 @@ The first lines of each doc carry its milestone, epic and ticket link.
 
 ## Creating a doc
 
-Agents use the Google Drive connector: search the folder first and update an existing doc rather than create a duplicate; create the doc in its folder; link it from the ticket. People use the app.
+Search the folder first and update an existing doc rather than create a duplicate. Create the doc in its folder and link it from the ticket.
 
 ## Decisions
 

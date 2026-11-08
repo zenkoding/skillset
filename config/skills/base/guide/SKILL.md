@@ -25,14 +25,14 @@ Read, without asking:
 - whether `CONTRIBUTING.md` and `docs/contributing/` exist;
 - the current branch, and whether it is the default branch;
 - the PR for this branch (`gh pr view --json number,state,isDraft,reviewDecision,labels,statusCheckRollup`), its reviews and unresolved review threads;
-- the ticket in scope: the identifier in the branch name or PR body, read as `docs/contributing/issues.md` says;
+- the ticket in scope: the identifier in the branch name or PR body, read as `docs/agents/issue-tracker.md` says;
 - the objective's notes under `<store>/notes/<objective>/`: a companion, a grill log, a debrief.
 
 Then take the first row that matches:
 
 | State | Next |
 | --- | --- |
-| no `CONTRIBUTING.md` or `docs/contributing/` | `/setup-repo` |
+| no `CONTRIBUTING.md`, `docs/contributing/` or `docs/agents/issue-tracker.md` | `/setup-repo` |
 | a defect report, cause unknown | `/fix-bug <issue>` |
 | no ticket and no plan (default branch, or a fresh branch) | `/brief <problem>` |
 | a ticket with no plan, or a plan not yet signed off | `/brief <ticket>` |
