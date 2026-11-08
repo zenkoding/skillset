@@ -37,7 +37,7 @@ Go toolchain:
 Make targets:
 
 - `make build`, `check`, `clean`, `coverage`, `fmt`, `help`, `lint`, `test`, `vet`: common local targets.
-- `make plan`: this repo's installer dry run.
+- `skillset plan`: the installer's dry run.
 
 Kubernetes and Tanka reads:
 
@@ -83,7 +83,7 @@ Destructive or hard to undo; run by hand if really needed:
 
 ## Other keys
 
-- `hooks.SessionStart` runs `~/.claude/hooks/project-knowledge.sh` (linked from `config/claude/hooks/`) on every start, resume, clear and compaction. It prints the private store's absolute path and its catalog, `~/.local/share/agents/projects/<key>/README.md`, into context; nothing from the repo itself. See "Project knowledge" in `config/instructions/shared.md`. Outside a repo, or before `make apply` links the script, it prints nothing and exits 0.
+- `hooks.SessionStart` runs `~/.claude/hooks/project-knowledge.sh` (linked from `config/claude/hooks/`) on every start, resume, clear and compaction. It prints the private store's absolute path and its catalog, `~/.local/share/agents/projects/<key>/README.md`, into context; nothing from the repo itself. See "Project knowledge" in `config/instructions/shared.md`. Outside a repo, or before `skillset apply` links the script, it prints nothing and exits 0.
 - `hooks.PreToolUse` runs `dcg` (destructive command guard) from PATH before Bash, PowerShell and Monitor. Without `dcg` installed the hook exits 0 and does nothing. `exec` keeps stdin, so dcg still gets the hook JSON, and keeps dcg's exit code.
 - `sandbox.filesystem.allowWrite`: `~/.local/share/agents` holds each repo's private project knowledge store, written from any worktree.
 - `permissions.additionalDirectories`: `~/.local/share/agents`, so Edit and Write reach the private store without a prompt. Both grants must be user-level: project settings ignore them, and worktree sessions block writes into the main checkout.

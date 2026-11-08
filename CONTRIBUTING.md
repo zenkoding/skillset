@@ -4,10 +4,11 @@
 
 ```bash
 git clone <repo-url> && cd skillset
-make init       # pick hosts and sets (optional: default is everything)
-make plan       # preview
-make apply      # install from the working tree
-make validate   # lint, build, test, doc-rot guard
+make install                            # install the binary from this checkout
+skillset --catalog "$PWD/config" init   # pick hosts and sets (optional: default is everything)
+skillset --catalog "$PWD/config" plan   # preview
+skillset --catalog "$PWD/config" apply  # install from the working tree
+make validate                           # lint, build, test, doc-rot guard
 ```
 
 See [README.md](README.md) for sets and what apply installs.
@@ -40,4 +41,4 @@ Commit format: title / what / why.
 1. Create `config/skills/<set>/<name>/SKILL.md` with `name: <name>` in its frontmatter (drafts go in `config/skills/in-progress/`).
 2. To name a skill from a set yours doesn't require, write "`<skill>` when installed"; `make test` checks this. A file that only names skills conditionally (like guide's workflow map) can say so once with `<!-- every skill named here: when installed -->`.
 3. If the model should reach for it on its own at a moment its description can't catch (an event, a step in a loop), add one line to its set's instructions file. Skip skills only a person runs.
-4. Run `make plan`, then `make apply`.
+4. Run `skillset --catalog "$PWD/config" plan`, then the same command with `apply`.
