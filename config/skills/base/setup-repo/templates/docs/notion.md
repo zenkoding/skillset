@@ -18,7 +18,7 @@ All product docs go in the `<database>` database, one page per doc, with these p
 
 ## Creating a doc
 
-Agents use the Notion connector: search the database first and update an existing page rather than create a duplicate; create a page with every property above; link it from the ticket. People use the app.
+Search the database first and update an existing page rather than create a duplicate. Create a page with every property above and link it from the ticket.
 
 ## Decisions
 

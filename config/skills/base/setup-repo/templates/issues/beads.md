@@ -1,30 +1,24 @@
 # Issues
 
-Work is tracked in [Beads](https://github.com/gastownhall/beads), in the repo's `.beads/` directory, with the `bd` CLI. Check `bd --help` for the flags this version supports.
+Work is tracked in [Beads](https://github.com/gastownhall/beads), in the repo's `.beads/` directory.
 
 ## Where work lives
 
-- **Milestones**: issues of type `epic` with the label `milestone`. A milestone's epics are its children (`bd dep add <epic id> <milestone id> --type parent-child`). The milestone brief lives in the docs store (see [docs](docs.md)) and is linked from the milestone's description.
-- **Epics**: issues of type `epic`; their tickets are children (`bd dep add <ticket id> <epic id> --type parent-child`).
+- **Milestones**: issues of type `epic` with the label `milestone`. A milestone's epics are its children. The milestone brief lives in the docs store (see [docs](docs.md)) and is linked from the milestone's description.
+- **Epics**: issues of type `epic`; their tickets are children.
 - **Tickets**: issues of type `task`, `feature` or `bug`. A ticket's plan is its description, or a plan doc linked from it (see [docs](docs.md)).
 
-## Operations
+## Filing a ticket
 
-- **Create**: `bd create "<title>" -t <type> -p <priority> -d "<description>"`.
-- **Read**: `bd show <id>`.
-- **List**: `bd list --status open`; `bd ready` lists unblocked work.
-- **Update status or assignee**: `bd update <id> --status in_progress --assignee <name>`.
-- **Blocked by**: `bd dep add <id> <blocker id>`.
-- **Close**: `bd close <id> --reason "..."`.
+File and update tickets with the `bd` CLI; `bd --help` lists its commands.
 
 ## From a branch or PR to its ticket
 
 Branches and PR bodies carry the bead id (`<prefix>-<n>`).
 
-## Plans and status
+## Status
 
-- An agent may edit a plan's **Open questions** and tick its **Done when** boxes; other sections change only with a person's OK.
-- Status flow: open → in_progress → closed.
+Status flow: open → in_progress → closed.
 
 ## Labels and triage
 

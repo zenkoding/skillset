@@ -1,6 +1,6 @@
 # Issues
 
-Work is tracked in Linear: team `<team>`, project `<project>`. Agents use the Linear connector's tools; people use the app.
+Work is tracked in Linear: team `<team>`, project `<project>`.
 
 ## Where work lives
 
@@ -8,21 +8,17 @@ Work is tracked in Linear: team `<team>`, project `<project>`. Agents use the Li
 - **Epics**: parent issues in the project; their tickets are sub-issues.
 - **Tickets**: issues. A ticket's plan is its description, or a plan doc linked from it (see [docs](docs.md)).
 
-## Operations
+## Filing a ticket
 
-- **Create**: create an issue in team `<team>`, project `<project>`, with its milestone and parent. Check for a duplicate first by listing issues with a keyword query.
-- **Read**: get the issue, then list its comments (the description doesn't include them).
-- **List**: list issues filtered by project, status, label or assignee; follow the page cursor.
-- **Comment**, **label** (add or remove one label without replacing the set), **assign**, **set status**, **set blocked by**: the matching issue update.
+Search for a duplicate in the Linear app, then create the issue in team `<team>`, project `<project>`, with its milestone and parent.
 
 ## From a branch or PR to its ticket
 
 Branches carry the identifier in lower case (`<team key>-123-...`), which Linear's GitHub integration uses to link the PR and move the issue. A PR body names the identifier in its **Why**.
 
-## Plans and status
+## Status
 
-- An agent may edit a plan's **Open questions** and tick its **Done when** boxes; other sections change only with a person's OK.
-- Status flow: <Backlog → Todo → In Progress → In Review → Done>. The integration moves a ticket to In Progress when a branch with its identifier exists and to In Review when the PR opens; check it moved and set it by hand only if it didn't.
+Status flow: <Backlog → Todo → In Progress → In Review → Done>. The integration moves a ticket to In Progress when a branch with its identifier exists and to In Review when the PR opens; check it moved and set it by hand only if it didn't.
 
 ## Labels and triage
 

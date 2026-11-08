@@ -4,7 +4,7 @@ description: Shape one Backlog epic into an approval-ready spec and a set of ver
 disable-model-invocation: true
 ---
 
-Take one epic from a one-line outcome to a spec a person can approve and a set of features an agent can build. Read `docs/contributing/issues.md` and `docs/contributing/docs.md` first: they say where epics, features and docs live and how to write to them. Use glossary terms throughout.
+Take one epic from a one-line outcome to a spec a person can approve and a set of features an agent can build. Read `docs/contributing/issues.md` and `docs/agents/issue-tracker.md` (together, the tracker adapter) and `docs/contributing/docs.md` first: they say where epics, features and docs live and how to write to them. Use glossary terms throughout.
 
 It runs the [planning loop](references/planning-loop.md) at epic level: the doc is the epic spec, and the extra step is cutting the vertical slices (the features).
 

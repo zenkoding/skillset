@@ -1,15 +1,15 @@
 ---
 name: setup-repo
-description: Write or migrate a repo's human-first contributing docs (CONTRIBUTING.md, docs/contributing/, AGENTS.md) that the other skills read their repo facts from, with built-in tracker and docs-store templates. Run as /setup-repo, or /setup-repo e2e or /setup-repo review for one part.
+description: Write or migrate a repo's human-first contributing docs (CONTRIBUTING.md, docs/contributing/) and the agent-only overlay (AGENTS.md, docs/agents/issue-tracker.md) that the other skills read their repo facts from, with built-in tracker and docs-store templates. Run as /setup-repo, or /setup-repo e2e or /setup-repo review for one part.
 ---
 
 # Set up a repo
 
-Write the docs a human contributor reads and the skills read too: `CONTRIBUTING.md` and `docs/contributing/`. `AGENTS.md` only adds what agents alone need. Every write is shown to the user and confirmed first.
+Write the docs a human contributor reads and the skills read too: `CONTRIBUTING.md` and `docs/contributing/`. `AGENTS.md` and `docs/agents/issue-tracker.md` only add what agents alone need; nothing agent-specific goes in `docs/contributing/`. Every write is shown to the user and confirmed first.
 
 | Run | Writes |
 | --- | --- |
-| `/setup-repo` | `CONTRIBUTING.md`, `docs/contributing/{local-dev,testing,issues,docs}.md`, `AGENTS.md` |
+| `/setup-repo` | `CONTRIBUTING.md`, `docs/contributing/{local-dev,testing,issues,docs}.md`, `AGENTS.md`, `docs/agents/issue-tracker.md` |
 | `/setup-repo e2e` | the **E2E stack** section of `docs/contributing/testing.md` |
 | `/setup-repo review` | `REVIEW.md` |
 
@@ -18,7 +18,7 @@ Write the docs a human contributor reads and the skills read too: `CONTRIBUTING.
 Read, without asking:
 
 - `README.md`, `CONTRIBUTING.md`, `docs/contributing/`, `AGENTS.md`, `CLAUDE.md`, `REVIEW.md`, `VISION.md`, `ARCHITECTURE.md`, `CONTEXT.md`;
-- an older agent-only setup: `docs/agents/*.md` (tracker, labels, docs store, domain and e2e adapters, and its `README.md` catalog), `docs/vision.md`, `docs/adr/`;
+- an older agent-only setup: `docs/agents/*.md` other than a current `issue-tracker.md` (tracker, labels, docs store, domain and e2e adapters, and its `README.md` catalog), `docs/vision.md`, `docs/adr/`;
 - the build files (`Makefile`, `package.json`, `go.mod`, `pyproject.toml`, CI workflows) for the run and check commands;
 - the tracker in use: the git remote host, a `.beads/` directory, tracker identifiers in branch names and commit messages;
 - `.github/ISSUE_TEMPLATE/` and the repo's labels (`gh label list` on GitHub).
@@ -43,6 +43,7 @@ Fill each template with what step 1 found and step 2 settled. The repo owns the 
 | `docs/contributing/local-dev.md` | [local-dev](templates/local-dev.md); run commands inferred from the build files, each confirmed with the user |
 | `docs/contributing/testing.md` | [testing](templates/testing.md); the check command from CI or the `Makefile` |
 | `docs/contributing/issues.md` | [GitHub](templates/issues/github.md), [Linear](templates/issues/linear.md), [Beads](templates/issues/beads.md) or [blank](templates/issues/blank.md) |
+| `docs/agents/issue-tracker.md` | the same tracker: [GitHub](templates/agents/issue-tracker/github.md), [Linear](templates/agents/issue-tracker/linear.md), [Beads](templates/agents/issue-tracker/beads.md) or [blank](templates/agents/issue-tracker/blank.md) |
 | `docs/contributing/docs.md` | [repo](templates/docs/repo.md), [Notion](templates/docs/notion.md), [Google Docs](templates/docs/google-docs.md) or [blank](templates/docs/blank.md) |
 | `AGENTS.md` | [agents](templates/agents.md); keep `CLAUDE.md` a symlink to it, or a one-line pointer where symlinks don't work |
 
@@ -50,11 +51,13 @@ An existing file is edited, not replaced: add what's missing, keep what the repo
 
 ## 4. Migrate an older setup
 
-When step 1 found agent-only adapters, move their facts into the new docs:
+When step 1 found agent-only adapters, or agent-only content in `docs/contributing/`, move their facts into the new docs:
 
 | From | To |
 | --- | --- |
-| `docs/agents/issue-tracker.md`, `triage-labels.md` | `docs/contributing/issues.md` |
+| `docs/agents/issue-tracker.md` | stays, rewritten from its template: commands, bare-number resolution and the plan-edit rule; where work lives and status go to `docs/contributing/issues.md` |
+| `docs/agents/triage-labels.md` | `docs/contributing/issues.md` |
+| agent-only content in `docs/contributing/issues.md`: an **Operations** section, tracker commands, bare-number resolution, the rule on which plan sections an agent may edit | `docs/agents/issue-tracker.md` |
 | `docs/agents/product-docs.md`, `doc-storage.md` | `docs/contributing/docs.md` |
 | `docs/agents/e2e.md` | the **E2E stack** section of `docs/contributing/testing.md` |
 | `docs/agents/domain.md` | nothing: skills read `CONTEXT.md` directly |
@@ -63,7 +66,7 @@ When step 1 found agent-only adapters, move their facts into the new docs:
 | `docs/adr/` | stays as frozen history; `docs.md` says so |
 
 - **Keep the hand edits.** Compare each adapter with the stock text it started from (a template, or another tool's default); content the repo added is what matters, and it moves over in the repo's words.
-- **Remove what you replaced.** Delete an adapter once every fact in it has a new home, and update `AGENTS.md` and `CLAUDE.md` lines that pointed at it.
+- **Remove what you replaced.** Delete an adapter once every fact in it has a new home (never `docs/agents/issue-tracker.md`, which is current), and update `AGENTS.md` and `CLAUDE.md` lines that pointed at it.
 - **Show the diff first**: every move, edit and deletion, before anything is written.
 
 ## 5. Check the merge settings

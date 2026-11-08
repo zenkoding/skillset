@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Build one **ticket** (whatever the tracker calls a unit of work: a feature, task, story or bug) from its **plan** to a PR into the default branch.
 
-`docs/contributing/issues.md` says how to read and change the ticket, where the plan lives, which plan sections you may edit, and the delivery rules. Use its operations for every tracker step below.
+`docs/agents/issue-tracker.md` says how to read and change the ticket and which plan sections you may edit; `docs/contributing/issues.md` says where the plan lives and the delivery rules. Use the agent doc's operations for every tracker step below.
 
 ## Steps
 

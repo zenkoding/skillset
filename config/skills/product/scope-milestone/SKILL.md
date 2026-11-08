@@ -4,7 +4,7 @@ description: Scope the next milestone. Compare where the project is with the vis
 disable-model-invocation: true
 ---
 
-Turn "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the repo's contributing docs say: `docs/contributing/issues.md` and `docs/contributing/docs.md`.
+Turn "what should we do next" into one milestone: a brief in the docs store, a milestone in the tracker with its "done when", and epics waiting in Backlog for `shape-epic`. Use the glossary's terms (milestone, epic, feature). Every tracker and docs-store operation below runs as the repo's docs say: `docs/contributing/issues.md` for where milestones and epics live and their labels, `docs/agents/issue-tracker.md` for the tracker commands, and `docs/contributing/docs.md` for the docs store.
 
 The person decides the goal, the non-goals, the "done when" and which epics exist. You find the facts and draft.
 
