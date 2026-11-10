@@ -19,7 +19,7 @@ The date is the day the doc was created, so each directory sorts by age.
 
 ## Creating a doc
 
-Start each doc with a title line that carries its type (`# Plan: ...`, `# Spec: ...`). Put its milestone, epic and ticket link on one line under the title. Add it through a PR; link it from the ticket.
+Start each doc with a title line that carries its type (`# Plan: ...`, `# Spec: ...`). Put its milestone, epic and ticket link on one line under the title. An RFC stands on its own instead: it carries only its status there (`Status: Proposed` until it is implemented, then `Accepted`) and links no ticket, and the ticket links to it. Add it through a PR; link it from the ticket.
 
 ## Decisions
 

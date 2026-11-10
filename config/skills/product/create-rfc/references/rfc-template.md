@@ -7,6 +7,8 @@ Suggested outline:
 ```markdown
 # RFC: <Title>
 
+Status: Proposed
+
 ## Summary
 One paragraph describing the proposal and its effect.
 
@@ -46,5 +48,7 @@ Domain vocabulary and concise definitions. Include only terms that improve under
 ## References (optional)
 Prefer a few descriptive links near the claims they support. For repository RFCs, keep references within the repository unless the user requests external references. Incorporate relevant reasoning from external research into the RFC; keep its source inventory in working context or required private notes. Omit this section when inline links suffice.
 ```
+
+The status line is the RFC's only metadata. It reads `Proposed` from the first draft until the RFC is fully implemented; the PR that implements its last step changes it to `Accepted`. Link no issues, pull requests or tracker items: the RFC states the decisions they hold, and the issue links to the RFC.
 
 The RFC is the single deliverable. Put relevant research conclusions, unresolved questions and terminology here rather than requiring companion context files. Reference existing authoritative documentation instead of copying entire manuals.

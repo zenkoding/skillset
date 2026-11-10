@@ -36,6 +36,8 @@ These are independent attributes, not automatic stages. A merged PR, archived ch
 
 Update routine details directly when the evidence is clear: field names, route shapes, component placement, configuration and resolved technical questions. If implementation contradicts an agreed product or security requirement, describe the discrepancy and ask whether it is an intended design change or a defect. Do not silently redefine the requirement to match code. Continue unaffected updates while that decision is pending. An approved decision in supplied context need not be approved again.
 
+When the evidence shows the RFC's last step implemented, change its `Status: Proposed` line to `Status: Accepted` in the same change. Leave it `Proposed` while any step remains.
+
 Update only portions addressed by the implemented change and supported by existing evidence. Incorporate answers to resolved investigations and open questions into the relevant design sections, then remove those question entries; do not retain struck-through questions or a resolution log. For partially answered questions, retain only the unresolved portion. Preserve untouched design and intended but unimplemented scope.
 
 ## Edit a current engineering snapshot
