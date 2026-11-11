@@ -68,6 +68,9 @@ func Parse(arg string) (url, ref string, err error) {
 		}
 		url = GitHub + url
 	}
+	if Name(url) == "" {
+		return "", "", fmt.Errorf("%q has no repository name", url)
+	}
 	return url, ref, nil
 }
 

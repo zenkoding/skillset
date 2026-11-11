@@ -127,6 +127,13 @@ func TestInitSources(t *testing.T) {
 			savedSets: true,
 			error:     `unknown set "other"`,
 		},
+		{
+			name:      "new source lacks every saved set",
+			saved:     "schema = 1\nhosts = [\"claude\"]\nsets = [\"other\"]\n[[sources]]\nname = \"skillset\"\nurl = \"" + url + "\"\nref = \"main\"\n",
+			args:      []string{url + "@v1.0.0"},
+			savedSets: true,
+			error:     "none of the saved sets",
+		},
 		{name: "main assumed", args: []string{"file://" + trunk}, error: "no @ref given, so main was assumed"},
 		{name: "unknown ref", args: []string{url + "@nope"}, error: `ref "nope" not found`},
 		{name: "short commit", args: []string{url + "@" + branch[:7]}, error: "full commit hash"},
@@ -170,6 +177,10 @@ func TestInitSources(t *testing.T) {
 			}
 			if tt.commit != "" && !strings.Contains(out, tt.commit[:12]) {
 				t.Fatalf("output does not show commit %s:\n%s", tt.commit[:12], out)
+			}
+			// Until install (#50), plan ignores a git source: say so.
+			if tt.want.URL != "" && !strings.Contains(out, "plan and apply do not read this source yet") {
+				t.Fatalf("output does not warn that plan ignores the source:\n%s", out)
 			}
 		})
 	}

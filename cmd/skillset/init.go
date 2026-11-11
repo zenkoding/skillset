@@ -92,6 +92,11 @@ the sets they require are added at install time.`,
 				if len(dropped) > 0 {
 					cmd.Printf("dropped saved sets this source lacks: %s\n", strings.Join(dropped, ", "))
 				}
+				// With none left, an empty list would read as "nothing
+				// saved" and pick every set: make the user choose.
+				if len(dropped) > 0 && len(kept) == 0 && len(hosts) > 0 && len(opts.sets) == 0 {
+					return errors.New("none of the saved sets are in this source: pass --set")
+				}
 				cfg.Sets = kept
 			}
 			switch {
@@ -136,9 +141,11 @@ the sets they require are added at install time.`,
 			if _, err := exec.LookPath("dcg"); err != nil {
 				cmd.Printf("warning: dcg is not installed, so destructive commands are not guarded. Install it with:\n  %s\n", DcgInstall)
 			}
+			// Until install (#50), plan and apply ignore the source.
 			if src.Path != "" {
-				// Until install (#50), plan reads a local source through --catalog.
 				cmd.Printf("next: skillset --catalog %s plan\n", filepath.Join(src.Path, CatalogDir))
+			} else {
+				cmd.Println("note: plan and apply do not read this source yet; they use the pinned release")
 			}
 			return nil
 		},

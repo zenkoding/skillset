@@ -32,6 +32,7 @@ func TestParse(t *testing.T) {
 		{arg: "o/r@-c", error: "invalid ref"},
 		{arg: "o/r@a..b", error: "invalid ref"},
 		{arg: "-o/r", error: "not a source"},
+		{arg: "https://h.example/.git", error: "no repository name"},
 		{arg: "https://user:s3cret@github.com/o/r@main", error: "credential"},
 		{arg: "https://s3cret@github.com/o/r", error: "credential"},
 		{arg: "ssh://git:s3cret@host.example/o/r", error: "credential"},
