@@ -251,9 +251,9 @@ func TestSourceSettings(t *testing.T) {
 	}
 }
 
-// TestRepoCatalog checks that the legacy set in config/ installs cleanly
-// into an empty home: both instruction files, settings and every file it
-// lists.
+// TestRepoCatalog checks that every set in config/ installs cleanly into
+// an empty home: both instruction files, settings, every file base lists
+// and a skill from each lane.
 func TestRepoCatalog(t *testing.T) {
 	root, err := filepath.Abs("../../config")
 	if err != nil {
@@ -263,7 +263,25 @@ func TestRepoCatalog(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sets, err := c.Resolve([]string{"legacy"})
+	for _, tt := range []struct {
+		set  string
+		want bool
+	}{
+		{"base", true},
+		{"development", true},
+		{"triage", true},
+		{"architecture", true},
+		{"quality", true},
+		{"product", true},
+		{"productivity", true},
+		{"engineering", false},
+		{"legacy", false},
+	} {
+		if got := c.Sets[tt.set] != nil; got != tt.want {
+			t.Errorf("set %s present = %v, want %v", tt.set, got, tt.want)
+		}
+	}
+	sets, err := c.Resolve(c.Names())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -284,6 +302,12 @@ func TestRepoCatalog(t *testing.T) {
 		links[l.Path] = true
 	}
 	want := []string{".claude/CLAUDE.md", ".codex/AGENTS.md", ".claude/skills/i-have-adhd", ".agents/skills/i-have-adhd"}
+	for _, skill := range []string{"build", "triage-prs", "optimize", "fix-bug"} {
+		want = append(want, ".claude/skills/"+skill, ".agents/skills/"+skill)
+	}
+	if sets[0].Name != "base" {
+		t.Fatalf("first resolved set = %s, want base", sets[0].Name)
+	}
 	for _, f := range sets[0].Files {
 		want = append(want, f.Home)
 	}

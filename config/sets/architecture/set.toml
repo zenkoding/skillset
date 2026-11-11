@@ -1,0 +1,7 @@
+name = "architecture"
+description = "Architecture and performance lane: optimize"
+hosts = ["claude", "codex"]
+requires = ["development"]
+
+shared = "../../instructions/architecture.md"
+skills = ["../../skills/architecture"]
