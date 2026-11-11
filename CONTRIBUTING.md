@@ -8,7 +8,7 @@ skillset builds an agent setup for Claude Code and Codex from composable sets of
 git clone https://github.com/zenkoding/skillset.git && cd skillset
 make git-setup                          # use the repo's commit template and commit-msg hook
 make install                            # install the binary from this checkout
-skillset --catalog "$PWD/config" init   # pick hosts and sets (optional: default is everything)
+skillset init "$PWD"                    # pick hosts and sets from this checkout (optional: default is everything)
 skillset --catalog "$PWD/config" plan   # preview
 skillset --catalog "$PWD/config" apply  # install from the working tree
 make validate                           # lint, build, test, doc-rot guard

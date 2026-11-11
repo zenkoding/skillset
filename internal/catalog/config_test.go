@@ -15,17 +15,114 @@ func TestConfigRoundTrip(t *testing.T) {
 	if _, ok, err := ReadConfig(home); ok || err != nil {
 		t.Fatalf("ReadConfig on empty home = %v, %v", ok, err)
 	}
-	want := Config{Hosts: []string{"claude", "codex"}, Sets: []string{"base", "dcg"}}
-	if err := WriteConfig(home, Config{Hosts: []string{"codex", "claude"}, Sets: []string{"dcg", "base"}}); err != nil {
+	src := Source{Name: "skillset", URL: "https://github.com/zenkoding/skillset", Ref: "feature/x"}
+	want := Config{Schema: 1, Hosts: []string{"claude", "codex"}, Sets: []string{"base", "dcg"}, Sources: []Source{src}}
+	if err := WriteConfig(home, Config{Hosts: []string{"codex", "claude"}, Sets: []string{"dcg", "base"}, Sources: []Source{src}}); err != nil {
 		t.Fatal(err)
 	}
 	got, ok, err := ReadConfig(home)
 	if err != nil || !ok || !reflect.DeepEqual(got, want) {
 		t.Fatalf("ReadConfig = %+v, %v, %v; want %+v", got, ok, err, want)
 	}
-	write(t, ConfigPath(home), "sets = [\"a\"]\ncolour = 1\n")
-	if _, _, err := ReadConfig(home); err == nil || !strings.Contains(err.Error(), "unknown keys") {
-		t.Fatalf("ReadConfig with unknown key = %v", err)
+}
+
+// The config is merge-friendly: a fixed key order, sorted lists and no
+// timestamps, so the same choices always give the same bytes.
+func TestWriteConfigFormat(t *testing.T) {
+	tests := []struct {
+		name string
+		cfg  Config
+		want string
+	}{
+		{
+			name: "git source",
+			cfg: Config{
+				Hosts:   []string{"codex", "claude"},
+				Sets:    []string{"product", "base", "development"},
+				Sources: []Source{{Name: "skillset", URL: "https://github.com/zenkoding/skillset", Ref: "main"}},
+			},
+			want: "# Managed by skillset. Change it with `skillset install`.\n" +
+				"schema = 1\n" +
+				"hosts = [\"claude\", \"codex\"]\n" +
+				"sets = [\"base\", \"development\", \"product\"]\n" +
+				"\n" +
+				"[[sources]]\n" +
+				"name = \"skillset\"\n" +
+				"url = \"https://github.com/zenkoding/skillset\"\n" +
+				"ref = \"main\"\n",
+		},
+		{
+			name: "local source",
+			cfg: Config{
+				Hosts:   []string{"claude"},
+				Sets:    []string{"base"},
+				Sources: []Source{{Name: "mine", Path: "/src/mine"}},
+			},
+			want: "# Managed by skillset. Change it with `skillset install`.\n" +
+				"schema = 1\n" +
+				"hosts = [\"claude\"]\n" +
+				"sets = [\"base\"]\n" +
+				"\n" +
+				"[[sources]]\n" +
+				"name = \"mine\"\n" +
+				"path = \"/src/mine\"\n",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			home := t.TempDir()
+			for range 2 {
+				if err := WriteConfig(home, tt.cfg); err != nil {
+					t.Fatal(err)
+				}
+				got, err := os.ReadFile(ConfigPath(home))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if string(got) != tt.want {
+					t.Fatalf("config =\n%s\nwant\n%s", got, tt.want)
+				}
+			}
+		})
+	}
+}
+
+func TestReadConfig(t *testing.T) {
+	tests := []struct {
+		name  string
+		body  string
+		want  Config
+		error string
+	}{
+		{name: "old format", body: "hosts = [\"claude\"]\nsets = [\"base\"]\n", want: Config{Hosts: []string{"claude"}, Sets: []string{"base"}}},
+		{name: "unknown key", body: "sets = [\"a\"]\ncolour = 1\n", error: "unknown keys"},
+		{name: "newer schema", body: "schema = 2\n", error: "schema 2"},
+		{
+			name:  "two sources",
+			body:  "schema = 1\n[[sources]]\nname = \"a\"\npath = \"/a\"\n[[sources]]\nname = \"b\"\npath = \"/b\"\n",
+			error: "one source",
+		},
+		{name: "url and path", body: "schema = 1\n[[sources]]\nname = \"a\"\npath = \"/a\"\nurl = \"https://x/y\"\nref = \"main\"\n", error: "url or a path"},
+		{name: "neither url nor path", body: "schema = 1\n[[sources]]\nname = \"a\"\n", error: "url or a path"},
+		{name: "url without ref", body: "schema = 1\n[[sources]]\nname = \"a\"\nurl = \"https://x/y\"\n", error: "no ref"},
+		{name: "path with ref", body: "schema = 1\n[[sources]]\nname = \"a\"\npath = \"/a\"\nref = \"main\"\n", error: "no ref"},
+		{name: "no name", body: "schema = 1\n[[sources]]\npath = \"/a\"\n", error: "no name"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			home := t.TempDir()
+			write(t, ConfigPath(home), tt.body)
+			got, ok, err := ReadConfig(home)
+			if tt.error != "" {
+				if err == nil || !strings.Contains(err.Error(), tt.error) {
+					t.Fatalf("error = %v, want %q", err, tt.error)
+				}
+				return
+			}
+			if err != nil || !ok || !reflect.DeepEqual(got, tt.want) {
+				t.Fatalf("ReadConfig = %+v, %v, %v; want %+v", got, ok, err, tt.want)
+			}
+		})
 	}
 }
 

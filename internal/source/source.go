@@ -56,7 +56,16 @@ func Fetch(ctx context.Context, url, ref, cacheDir string) (dir, commit string, 
 	if err := ValidRef(ref); err != nil {
 		return "", "", err
 	}
-	dir = filepath.Join(cacheDir, ref)
+	return checkout(ctx, url, ref, cacheDir, ref)
+}
+
+// checkout makes cacheDir/name hold url at want (a ref or a commit) and
+// returns that dir and the commit. An existing checkout is reused.
+//
+// The checkout is built in a temp dir inside cacheDir and renamed into place,
+// so a failed fetch leaves no half checkout behind.
+func checkout(ctx context.Context, url, want, cacheDir, name string) (dir, commit string, err error) {
+	dir = filepath.Join(cacheDir, name)
 
 	if info, statErr := os.Stat(dir); statErr == nil && info.IsDir() {
 		commit, err = headCommit(ctx, dir)
@@ -77,12 +86,12 @@ func Fetch(ctx context.Context, url, ref, cacheDir string) (dir, commit string, 
 
 	steps := [][]string{
 		{"init", "--quiet"},
-		{"fetch", "--quiet", "--depth", "1", "--", url, ref},
+		{"fetch", "--quiet", "--depth", "1", "--", url, want},
 		{"-c", "advice.detachedHead=false", "checkout", "--quiet", "--detach", "FETCH_HEAD"},
 	}
 	for _, args := range steps {
 		if _, err := git(ctx, tmp, args...); err != nil {
-			return "", "", fmt.Errorf("fetch %s at %s: %w", url, ref, err)
+			return "", "", fmt.Errorf("fetch %s at %s: %w", url, want, err)
 		}
 	}
 	commit, err = headCommit(ctx, tmp)

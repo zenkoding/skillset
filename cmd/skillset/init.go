@@ -4,30 +4,69 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/charmbracelet/huh"
 	"github.com/spf13/cobra"
 
 	"github.com/zenkoding/skillset/internal/catalog"
+	"github.com/zenkoding/skillset/internal/source"
 )
+
+// DefaultSource is the source init records when none is given or saved:
+// this repository's main branch.
+var DefaultSource = catalog.Source{Name: "skillset", URL: "https://github.com/zenkoding/skillset", Ref: "main"}
+
+// DcgInstall is the command that installs dcg. skillset prints it and
+// never runs it.
+const DcgInstall = `curl -fsSL "https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh" | bash -s -- --no-configure --easy-mode`
 
 func newInitCmd(opts *options, in io.Reader) *cobra.Command {
 	var hosts []string
 	cmd := &cobra.Command{
-		Use:   "init",
-		Short: "Choose hosts and sets and save them to the config",
-		Long: `Choose hosts and sets in a picker and save them to
-~/.config/skillset/config.toml. Sets the chosen ones require are added.
-With --host or --set, no picker is shown: a flag replaces its part of the
-saved config and the other part is kept (everything when nothing is saved).`,
-		Args: cobra.NoArgs,
-		RunE: func(cmd *cobra.Command, _ []string) error {
-			c, _, err := opts.load(cmd, "", false)
+		Use:   "init [source]",
+		Short: "Choose a source, hosts and sets and save them to the config",
+		Long: `Choose a source, hosts and sets, and save them to
+~/.config/skillset/config.toml.
+
+The source is a local directory, a git URL or owner/repo on GitHub, with an
+optional @ref: a branch, a tag or a full commit hash. Without @ref it is
+main. Without a source, init keeps the saved one, or uses
+zenkoding/skillset@main. A git source is fetched to list its sets.
+
+Hosts and sets are chosen in a picker. With --host or --set, no picker is
+shown: a flag replaces its part of the saved config and the other part is
+kept (everything when nothing is saved). The config lists the chosen sets;
+the sets they require are added at install time.`,
+		Example: `  skillset init
+  skillset init zenkoding/skillset@v1.2.0
+  skillset init https://github.com/zenkoding/skillset@feature/x --host claude --set base
+  skillset init ~/src/skillset`,
+		Args: cobra.MaximumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if cmd.Flags().Changed("catalog") || cmd.Flags().Changed("url") {
+				return errors.New("init takes its source as an argument: skillset init <source>")
+			}
+			if opts.home == "" {
+				return errors.New("no home directory: set HOME or --home")
+			}
+			cfg, _, err := catalog.ReadConfig(opts.home)
 			if err != nil {
 				return err
 			}
-			cfg, _, err := catalog.ReadConfig(opts.home)
+			src := DefaultSource
+			switch {
+			case len(args) == 1:
+				if src, err = parseSource(args[0]); err != nil {
+					return err
+				}
+			case len(cfg.Sources) == 1:
+				src = cfg.Sources[0]
+			}
+			c, err := opts.openSource(cmd, src)
 			if err != nil {
 				return err
 			}
@@ -50,26 +89,30 @@ saved config and the other part is kept (everything when nothing is saved).`,
 			case !isTerminal(in):
 				return errors.New("no terminal for the picker: pass --host or --set")
 			default:
-				if cfg, err = pick(c, cfg, in, cmd.OutOrStdout()); err != nil {
+				picked, err := pick(c, cfg, in, cmd.OutOrStdout())
+				if err != nil {
 					return err
 				}
+				cfg.Hosts, cfg.Sets = picked.Hosts, picked.Sets
 			}
 			for _, h := range cfg.Hosts {
 				if !contains(catalog.Hosts, h) {
 					return fmt.Errorf("unknown host %q", h)
 				}
 			}
-			var added []string
-			if cfg.Sets, added, err = withRequires(c, cfg.Sets); err != nil {
+			// Check the names; the config keeps only the chosen ones.
+			if _, err := c.Resolve(cfg.Sets); err != nil {
 				return err
 			}
-			if len(added) > 0 {
-				cmd.Printf("added required sets: %s\n", strings.Join(added, ", "))
-			}
+			cfg.Sources = []catalog.Source{src}
 			if err := catalog.WriteConfig(opts.home, cfg); err != nil {
 				return err
 			}
-			cmd.Printf("wrote %s\nnext: skillset plan\n", catalog.ConfigPath(opts.home))
+			cmd.Printf("wrote %s\n", catalog.ConfigPath(opts.home))
+			if _, err := exec.LookPath("dcg"); err != nil {
+				cmd.Printf("warning: dcg is not installed, so destructive commands are not guarded. Install it with:\n  %s\n", DcgInstall)
+			}
+			cmd.Println("next: skillset plan")
 			return nil
 		},
 	}
@@ -77,20 +120,48 @@ saved config and the other part is kept (everything when nothing is saved).`,
 	return cmd
 }
 
-// withRequires returns names plus every set they require, in dependency
-// order, and the sets it added.
-func withRequires(c *catalog.Catalog, names []string) (all, added []string, err error) {
-	sets, err := c.Resolve(names)
-	if err != nil {
-		return nil, nil, err
-	}
-	for _, s := range sets {
-		all = append(all, s.Name)
-		if !contains(names, s.Name) {
-			added = append(added, s.Name)
+// parseSource turns init's argument into a source: an existing directory
+// is a local source, anything else a git source at its ref or main.
+func parseSource(arg string) (catalog.Source, error) {
+	if fi, err := os.Stat(arg); err == nil && fi.IsDir() {
+		abs, err := filepath.Abs(arg)
+		if err != nil {
+			return catalog.Source{}, err
 		}
+		return catalog.Source{Name: filepath.Base(abs), Path: abs}, nil
 	}
-	return all, added, nil
+	url, ref, err := source.Parse(arg)
+	if err != nil {
+		return catalog.Source{}, err
+	}
+	if ref == "" {
+		ref = DefaultSource.Ref
+	}
+	return catalog.Source{Name: source.Name(url), URL: url, Ref: ref}, nil
+}
+
+// openSource loads the catalog in src. A git source is resolved and
+// fetched into the cache by commit, so a branch name with a slash works.
+func (o *options) openSource(cmd *cobra.Command, src catalog.Source) (*catalog.Catalog, error) {
+	if src.Path != "" {
+		cmd.Printf("source: %s\n", src.Path)
+		return catalog.Load(filepath.Join(src.Path, CatalogDir))
+	}
+	ctx := cmd.Context()
+	commit, err := source.Resolve(ctx, src.URL, src.Ref)
+	if err != nil {
+		return nil, err
+	}
+	dir, err := source.FetchCommit(ctx, src.URL, commit, filepath.Join(o.home, CacheDir))
+	if err != nil {
+		return nil, err
+	}
+	cmd.Printf("source: %s at %s (%s)\n", src.URL, src.Ref, short(commit))
+	c, err := catalog.Load(filepath.Join(dir, CatalogDir))
+	if err != nil {
+		return nil, fmt.Errorf("source %s at %s: %w", src.URL, src.Ref, err)
+	}
+	return c, nil
 }
 
 // pick shows the picker, starting from cur (or everything when cur is
