@@ -39,7 +39,8 @@ zenkoding/skillset@main. A git source is fetched to list its sets.
 
 Hosts and sets are chosen in a picker. With --host or --set, no picker is
 shown: a flag replaces its part of the saved config and the other part is
-kept (everything when nothing is saved). The config lists the chosen sets;
+kept (everything when nothing is saved). A new source drops the saved sets
+it lacks. The config lists the chosen sets;
 the sets they require are added at install time.`,
 		Example: `  skillset init
   skillset init zenkoding/skillset@v1.2.0
@@ -57,18 +58,41 @@ the sets they require are added at install time.`,
 			if err != nil {
 				return err
 			}
-			src := DefaultSource
+			var saved catalog.Source
+			if len(cfg.Sources) == 1 {
+				saved = cfg.Sources[0]
+			}
+			src, assumed := DefaultSource, false
 			switch {
 			case len(args) == 1:
-				if src, err = parseSource(args[0]); err != nil {
+				if src, assumed, err = parseSource(args[0]); err != nil {
 					return err
 				}
-			case len(cfg.Sources) == 1:
-				src = cfg.Sources[0]
+			case saved != catalog.Source{}:
+				src = saved
 			}
 			c, err := opts.openSource(cmd, src)
+			if assumed && errors.Is(err, source.ErrRefNotFound) {
+				return fmt.Errorf("%w (no @ref given, so main was assumed: add @<branch>)", err)
+			}
 			if err != nil {
 				return err
+			}
+			if src != saved {
+				// The saved sets came from another source: keep the ones
+				// this source has, and say which were dropped.
+				var kept, dropped []string
+				for _, n := range cfg.Sets {
+					if _, ok := c.Sets[n]; ok {
+						kept = append(kept, n)
+					} else {
+						dropped = append(dropped, n)
+					}
+				}
+				if len(dropped) > 0 {
+					cmd.Printf("dropped saved sets this source lacks: %s\n", strings.Join(dropped, ", "))
+				}
+				cfg.Sets = kept
 			}
 			switch {
 			case len(hosts) > 0 || len(opts.sets) > 0:
@@ -125,22 +149,23 @@ the sets they require are added at install time.`,
 
 // parseSource turns init's argument into a source: an existing directory
 // is a local source, anything else a git source at its ref or main.
-func parseSource(arg string) (catalog.Source, error) {
+// assumed reports that the argument had no ref, so main was used.
+func parseSource(arg string) (src catalog.Source, assumed bool, err error) {
 	if fi, err := os.Stat(arg); err == nil && fi.IsDir() {
 		abs, err := filepath.Abs(arg)
 		if err != nil {
-			return catalog.Source{}, err
+			return catalog.Source{}, false, err
 		}
-		return catalog.Source{Name: filepath.Base(abs), Path: abs}, nil
+		return catalog.Source{Name: filepath.Base(abs), Path: abs}, false, nil
 	}
 	url, ref, err := source.Parse(arg)
 	if err != nil {
-		return catalog.Source{}, err
+		return catalog.Source{}, false, err
 	}
 	if ref == "" {
-		ref = DefaultSource.Ref
+		ref, assumed = DefaultSource.Ref, true
 	}
-	return catalog.Source{Name: source.Name(url), URL: url, Ref: ref}, nil
+	return catalog.Source{Name: source.Name(url), URL: url, Ref: ref}, assumed, nil
 }
 
 // openSource loads the catalog in src. A git source is resolved and

@@ -81,14 +81,22 @@ func TestInitSources(t *testing.T) {
 	repo := filepath.Join(github, "zenkoding", "skillset")
 	tag, branch, main := sourceRepo(t, repo)
 	url := "file://" + repo
+	// A repository whose only branch is trunk, not main.
+	trunk := filepath.Join(github, "o", "trunk")
+	if err := os.MkdirAll(trunk, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	gitRun(t, trunk, "init", "-q", "-b", "trunk")
+	gitRun(t, trunk, "commit", "-q", "--allow-empty", "-m", "one")
 
 	tests := []struct {
-		name   string
-		saved  string // config body before init, "" for none
-		args   []string
-		want   catalog.Source
-		commit string // printed commit, "" for a local source
-		error  string
+		name      string
+		saved     string // config body before init, "" for none
+		args      []string
+		savedSets bool // pass no --set, so init starts from the saved sets
+		want      catalog.Source
+		commit    string // printed commit, "" for a local source
+		error     string
 	}{
 		{name: "default", args: nil, want: catalog.Source{Name: "skillset", URL: "https://github.com/zenkoding/skillset", Ref: "main"}, commit: main},
 		{name: "tag", args: []string{url + "@v1.0.0"}, want: catalog.Source{Name: "skillset", URL: url, Ref: "v1.0.0"}, commit: tag},
@@ -104,6 +112,22 @@ func TestInitSources(t *testing.T) {
 			want:   catalog.Source{Name: "skillset", URL: url, Ref: "feature/x"},
 			commit: branch,
 		},
+		{
+			// other is not at v1.0.0: a new source drops the saved sets it lacks.
+			name:      "new source drops saved sets it lacks",
+			saved:     "schema = 1\nhosts = [\"claude\"]\nsets = [\"dcg\", \"other\"]\n[[sources]]\nname = \"skillset\"\nurl = \"" + url + "\"\nref = \"main\"\n",
+			args:      []string{url + "@v1.0.0"},
+			savedSets: true,
+			want:      catalog.Source{Name: "skillset", URL: url, Ref: "v1.0.0"},
+			commit:    tag,
+		},
+		{
+			name:      "saved source keeps a missing set an error",
+			saved:     "schema = 1\nhosts = [\"claude\"]\nsets = [\"other\"]\n[[sources]]\nname = \"skillset\"\nurl = \"" + url + "\"\nref = \"v1.0.0\"\n",
+			savedSets: true,
+			error:     `unknown set "other"`,
+		},
+		{name: "main assumed", args: []string{"file://" + trunk}, error: "no @ref given, so main was assumed"},
 		{name: "unknown ref", args: []string{url + "@nope"}, error: `ref "nope" not found`},
 		{name: "short commit", args: []string{url + "@" + branch[:7]}, error: "full commit hash"},
 		{name: "set missing at the ref", args: []string{url + "@v1.0.0", "--set", "other"}, error: `unknown set "other"`},
@@ -117,7 +141,7 @@ func TestInitSources(t *testing.T) {
 				writeFile(t, catalog.ConfigPath(home), tt.saved)
 			}
 			args := append([]string{"init", "--home", home, "--host", "claude"}, tt.args...)
-			if !contains(tt.args, "--set") {
+			if !tt.savedSets && !contains(tt.args, "--set") {
 				args = append(args, "--set", "dcg")
 			}
 			out, err := run(t, args...)

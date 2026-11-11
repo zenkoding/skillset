@@ -17,6 +17,9 @@ var (
 	shortSHA  = regexp.MustCompile(`^[0-9a-f]{4,39}$`)
 )
 
+// ErrRefNotFound is returned, wrapped, when a ref names no branch or tag.
+var ErrRefNotFound = errors.New("not found")
+
 // Parse splits a git source into its URL and ref. A source is a git URL
 // (scheme://host/path or the scp-like host:path) or an owner/repo shorthand
 // for GitHub, optionally followed by @ref. The ref starts at the first @
@@ -36,6 +39,16 @@ func Parse(arg string) (url, ref string, err error) {
 			return "", "", fmt.Errorf("%q is not a source: the URL has no path", arg)
 		}
 		pathStart = i + 3 + j
+		// The config is written to disk and, at repo scope, committed, so
+		// a URL must not carry a credential: a password, or any user part
+		// in HTTP(S), where it is a token. The error leaves the URL out.
+		if at := strings.LastIndex(arg[i+3:pathStart], "@"); at >= 0 {
+			user := arg[i+3 : i+3+at]
+			scheme := strings.ToLower(arg[:i])
+			if strings.Contains(user, ":") || scheme == "http" || scheme == "https" {
+				return "", "", errors.New("the source URL holds a credential: remove it and let git's credential helper log in")
+			}
+		}
 	} else if c := strings.Index(arg, ":"); c > 0 && !strings.Contains(arg[:c], "/") {
 		pathStart = c + 1
 	}
@@ -114,9 +127,9 @@ func Resolve(ctx context.Context, url, ref string) (string, error) {
 	case isTag:
 		return tagCommit, nil
 	case shortSHA.MatchString(ref):
-		return "", fmt.Errorf("ref %q not found in %s: give a commit as its full commit hash", ref, url)
+		return "", fmt.Errorf("ref %q %w in %s: give a commit as its full commit hash", ref, ErrRefNotFound, url)
 	}
-	return "", fmt.Errorf("ref %q not found in %s", ref, url)
+	return "", fmt.Errorf("ref %q %w in %s", ref, ErrRefNotFound, url)
 }
 
 // FetchCommit makes cacheDir/<commit> hold url at commit, a full commit
