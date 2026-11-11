@@ -52,14 +52,21 @@ func revParse(t *testing.T, dir, rev string) string {
 	return strings.TrimSpace(string(out))
 }
 
-// insteadOf makes git fetch every GitHub URL, HTTPS or SSH, from local
-// repositories under root, so tests of the shorthand and the default
-// source need no network. It hides the global and system git config,
-// whose own insteadOf rules would win.
-func insteadOf(t *testing.T, root string) {
+// isolateGit hides the global and system git config, whose insteadOf
+// and signing rules would change what the tests fetch and commit, and
+// lets git use only file:// remotes, so a test never reaches the network.
+func isolateGit(t *testing.T) {
 	t.Helper()
 	t.Setenv("GIT_CONFIG_GLOBAL", os.DevNull)
 	t.Setenv("GIT_CONFIG_NOSYSTEM", "1")
+	t.Setenv("GIT_ALLOW_PROTOCOL", "file")
+}
+
+// insteadOf makes git fetch every GitHub URL, HTTPS or SSH, from local
+// repositories under root, so tests of the shorthand and the default
+// source need no network.
+func insteadOf(t *testing.T, root string) {
+	t.Helper()
 	t.Setenv("GIT_CONFIG_COUNT", "2")
 	t.Setenv("GIT_CONFIG_KEY_0", "url.file://"+root+"/.insteadOf")
 	t.Setenv("GIT_CONFIG_VALUE_0", "https://github.com/")
@@ -68,10 +75,11 @@ func insteadOf(t *testing.T, root string) {
 }
 
 func TestInitSources(t *testing.T) {
+	isolateGit(t)
 	github := t.TempDir()
+	insteadOf(t, github)
 	repo := filepath.Join(github, "zenkoding", "skillset")
 	tag, branch, main := sourceRepo(t, repo)
-	insteadOf(t, github)
 	url := "file://" + repo
 
 	tests := []struct {
@@ -144,6 +152,7 @@ func TestInitSources(t *testing.T) {
 }
 
 func TestInitDcg(t *testing.T) {
+	isolateGit(t)
 	repo := t.TempDir()
 	sourceRepo(t, repo)
 	git, err := exec.LookPath("git")

@@ -112,7 +112,10 @@ the sets they require are added at install time.`,
 			if _, err := exec.LookPath("dcg"); err != nil {
 				cmd.Printf("warning: dcg is not installed, so destructive commands are not guarded. Install it with:\n  %s\n", DcgInstall)
 			}
-			cmd.Println("next: skillset plan")
+			if src.Path != "" {
+				// Until install (#50), plan reads a local source through --catalog.
+				cmd.Printf("next: skillset --catalog %s plan\n", filepath.Join(src.Path, CatalogDir))
+			}
 			return nil
 		},
 	}
