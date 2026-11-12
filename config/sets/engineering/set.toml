@@ -1,7 +1,0 @@
-name = "engineering"
-description = "Build loop and engineering skills: build, publish, review, test, fix-bug, triage-prs and more"
-hosts = ["claude", "codex"]
-requires = ["base"]
-
-shared = "../../instructions/engineering.md"
-skills = ["../../skills/engineering"]

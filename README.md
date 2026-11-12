@@ -65,22 +65,27 @@ home = ".config/dcg/config.toml"
 path = "config.toml"
 ```
 
-Paths default to the layout above and must stay inside the catalog. The catalog ships four sets, each pointing at its folder under `config/skills/`, with requires that point one way:
+Paths default to the layout above and must stay inside the catalog. Each set in the catalog points at its folder under `config/skills/`, with requires that point one way:
 
 ```
-base  <-  engineering  <-  product
-  ^
+base  <-  development  <-  product
+  ^                    <-  triage
+  |                    <-  architecture
+  |                    <-  quality
   └── productivity
 ```
 
 | Set | Holds |
 | --- | --- |
 | `base` | shared, Claude and Codex instructions, Claude settings, statusline, the project knowledge hook, dcg config; skills brief, grill, debrief, research, project-knowledge, setup-repo, guide |
-| `engineering` | when-to-use instructions for its skills; build, tdd, publish, review, test, address, fix-bug, optimize-performance, triage-prs, codify |
+| `development` | when-to-use instructions for its skills; the build loop: build, tdd, publish, review, test, address, codify |
+| `triage` | triage-prs |
+| `architecture` | when-to-use instructions for its skills; optimize |
+| `quality` | when-to-use instructions for its skills; fix-bug |
 | `product` | when-to-use instructions for its skills; envision, scope-milestone, shape-epic, retrospect, build-poc, create-rfc, update-rfc |
 | `productivity` | i-have-adhd and the session-start instruction that invokes it; the writing style for docs people read |
 
-`legacy` requires all four, so installs that chose it keep the full setup. A skill names only skills in its own set or a set it requires; a link into any other set says "when installed" right after the name (a test enforces this). The same rule holds for each set's instructions.
+A skill names only skills in its own set or a set it requires; a link into any other set says "when installed" right after the name (a test enforces this). The same rule holds for each set's instructions.
 
 Each set's instructions say when to reach for its skills on their own: events and loop order only, since skill descriptions already say what each skill does. A skill a person runs by hand stays out of them.
 

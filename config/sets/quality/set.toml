@@ -1,0 +1,7 @@
+name = "quality"
+description = "Bugs lane: fix-bug"
+hosts = ["claude", "codex"]
+requires = ["development"]
+
+shared = "../../instructions/quality.md"
+skills = ["../../skills/quality"]

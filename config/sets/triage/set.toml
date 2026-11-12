@@ -1,0 +1,6 @@
+name = "triage"
+description = "Triage open pull requests: triage-prs"
+hosts = ["claude", "codex"]
+requires = ["development"]
+
+skills = ["../../skills/triage"]

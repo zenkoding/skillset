@@ -25,7 +25,7 @@ Read every source in scope that you can reach, not a sample. List the ones you c
 1. **Tracker.** The epic or issues and their comments, as `docs/agents/issue-tracker.md` says. Open every doc they link, reaching the docs store as `docs/contributing/docs.md` says: specs, briefs, research, handovers. Read handovers and results first.
 2. **Project knowledge.** The public docs (`CONTRIBUTING.md` and what it points to, `CONTEXT.md`, `VISION.md`, `ARCHITECTURE.md`) and what changed in them during the work in scope, plus the decisions recorded in the merged PR bodies, and any debrief notes a user asked to commit (search the repo for `### Debrief:` headings).
 3. **PRs.** Each PR in scope with its review comments and reviews (`gh pr view <n> --comments`, `gh api repos/{owner}/{repo}/pulls/<n>/reviews`), its CI failures, and reverts or fixup commits in git history.
-4. **Local only, when present.** The private store's catalog and its briefs, debriefs, research and `fix-bug` reports under `<store>/notes/` (the store path is in "Project knowledge" in your user instructions); session transcripts: Claude Code under `~/.claude/projects/<project>/*.jsonl` (`<project>` is the repo path with `/` replaced by `-`), Codex under `~/.codex/sessions/`.
+4. **Local only, when present.** The private store's catalog and its briefs, debriefs, research and `fix-bug` (when installed) reports under `<store>/notes/` (the store path is in "Project knowledge" in your user instructions); session transcripts: Claude Code under `~/.claude/projects/<project>/*.jsonl` (`<project>` is the repo path with `/` replaced by `-`), Codex under `~/.codex/sessions/`.
 
 Done when every reachable source is read and the unreachable ones are listed.
 
