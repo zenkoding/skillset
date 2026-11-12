@@ -71,7 +71,8 @@ func run(t *testing.T, args ...string) (string, error) {
 }
 
 func TestInitThenApply(t *testing.T) {
-	root, home := t.TempDir(), t.TempDir()
+	src, home := t.TempDir(), t.TempDir()
+	root := filepath.Join(src, "config") // a local source holds its catalog in config/
 	for p, body := range map[string]string{
 		"sets/base/set.toml":       "name = \"base\"\nhosts = [\"claude\", \"codex\"]",
 		"sets/base/shared.md":      "base\n",
@@ -85,21 +86,18 @@ func TestInitThenApply(t *testing.T) {
 	}
 	writeFile(t, filepath.Join(home, ".config/skillset/local/shared.md"), "mine\n")
 
-	if _, err := run(t, "init", "--catalog", root, "--home", home); err == nil || !strings.Contains(err.Error(), "pass --host or --set") {
+	if _, err := run(t, "init", src, "--home", home); err == nil || !strings.Contains(err.Error(), "pass --host or --set") {
 		t.Fatalf("init without a terminal = %v", err)
 	}
-	if _, err := run(t, "init", "--catalog", root, "--home", home, "--host", "vim", "--set", "dcg"); err == nil {
+	if _, err := run(t, "init", src, "--home", home, "--host", "vim", "--set", "dcg"); err == nil {
 		t.Fatal("init accepted an unknown host")
 	}
-	out, err := run(t, "init", "--catalog", root, "--home", home, "--host", "claude,codex", "--set", "dcg")
-	if err != nil {
+	if _, err := run(t, "init", src, "--home", home, "--host", "claude,codex", "--set", "dcg"); err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(out, "added required sets: base") {
-		t.Fatalf("init output = %s", out)
-	}
+	// The config holds the chosen set; apply adds base, which dcg requires.
 	cfg, _ := os.ReadFile(filepath.Join(home, ".config/skillset/config.toml"))
-	if !strings.Contains(string(cfg), `sets = ["base", "dcg"]`) {
+	if !strings.Contains(string(cfg), `sets = ["dcg"]`) {
 		t.Fatalf("config = %s", cfg)
 	}
 	if _, err := run(t, "apply", "--catalog", root, "--home", home); err != nil {
@@ -131,16 +129,17 @@ func TestInitThenApply(t *testing.T) {
 	if _, err := run(t, "plan", "--catalog", root, "--home", home); err == nil || !strings.Contains(err.Error(), "config.toml; run skillset init") {
 		t.Fatalf("plan with a stale set = %v", err)
 	}
-	if _, err := run(t, "init", "--catalog", root, "--home", home, "--host", "claude,codex", "--set", "dcg"); err != nil {
+	if _, err := run(t, "init", src, "--home", home, "--host", "claude,codex", "--set", "dcg"); err != nil {
 		t.Fatal(err)
 	}
 
-	// Dropping a host removes its links; --host alone keeps the saved sets.
-	if _, err := run(t, "init", "--catalog", root, "--home", home, "--host", "claude"); err != nil {
+	// Dropping a host removes its links; --host alone keeps the saved
+	// sets, and no source keeps the saved source.
+	if _, err := run(t, "init", "--home", home, "--host", "claude"); err != nil {
 		t.Fatal(err)
 	}
 	cfg, _ = os.ReadFile(filepath.Join(home, ".config/skillset/config.toml"))
-	if !strings.Contains(string(cfg), `hosts = ["claude"]`) || !strings.Contains(string(cfg), `sets = ["base", "dcg"]`) {
+	if !strings.Contains(string(cfg), `hosts = ["claude"]`) || !strings.Contains(string(cfg), `sets = ["dcg"]`) {
 		t.Fatalf("config after --host only = %s", cfg)
 	}
 	if _, err := run(t, "apply", "--catalog", root, "--home", home); err != nil {

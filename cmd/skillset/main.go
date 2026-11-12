@@ -1,7 +1,7 @@
 // Command skillset installs sets from a catalog into ~/.claude, ~/.codex
 // and ~/.agents.
 //
-//	skillset init      choose hosts and sets
+//	skillset init      choose a source, hosts and sets
 //	skillset plan      show what would change
 //	skillset apply     make the changes
 //	skillset update    move the pin to the newest release tag, then apply

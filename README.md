@@ -7,12 +7,14 @@ Build your own agent setup for supported agents from composable **sets**: instru
 ```sh
 go install github.com/zenkoding/skillset/cmd/skillset@latest
 
-skillset init        # pick hosts (Claude, Codex) and sets; required sets are added
+skillset init        # pick a source (default zenkoding/skillset@main), hosts and sets
 skillset plan        # preview what changes in your home directory
 skillset apply       # install
 skillset update      # move to the newest release tag, then apply
 skillset uninstall   # remove what apply installed (--dry-run to preview)
 ```
+
+`init` takes a source: a git URL or `owner/repo`, with an optional `@ref` (a branch, a tag or a full commit hash), or a local directory. It writes `~/.config/skillset/config.toml` with the source, hosts and sets, and warns when dcg is missing. `plan`, `apply` and `update` do not read the source yet: they install from the release pin or `--catalog`.
 
 `skillset update --ref <tag>` switches back to an older release, and `--ref main` follows main.
 
@@ -102,7 +104,7 @@ The Makefile is for local development. `make install` puts a binary built from t
 
 ```sh
 make install                                 # install the binary from this checkout
-skillset --catalog "$PWD/config" init        # pick hosts and sets
+skillset init "$PWD"                         # pick hosts and sets from this checkout
 skillset --catalog "$PWD/config" plan        # preview
 skillset --catalog "$PWD/config" apply       # install from the working tree
 skillset --catalog "$PWD/config" uninstall   # remove it (--dry-run to preview)

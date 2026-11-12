@@ -21,10 +21,53 @@ const LocalDir = ConfigDir + "/local"
 // LocalName is the local set's name.
 const LocalName = "local"
 
-// Config is the user's choice of hosts and sets.
+// Schema is the config format WriteConfig writes. A config without a
+// schema predates it and holds only hosts and sets.
+const Schema = 1
+
+// Config is what the user asked for: the source, hosts and sets. Sets
+// lists only the sets the user chose, not the sets those require.
 type Config struct {
-	Hosts []string `toml:"hosts"`
-	Sets  []string `toml:"sets"`
+	Schema  int      `toml:"schema,omitempty"`
+	Hosts   []string `toml:"hosts"`
+	Sets    []string `toml:"sets"`
+	Sources []Source `toml:"sources,omitempty"`
+}
+
+// Source is where sets come from: a git URL at a ref (a branch, tag or
+// commit), or a local directory, which has no ref.
+type Source struct {
+	Name string `toml:"name"`
+	URL  string `toml:"url,omitempty"`
+	Ref  string `toml:"ref,omitempty"`
+	Path string `toml:"path,omitempty"`
+}
+
+// header heads every config WriteConfig writes.
+const header = "# Managed by skillset. Change it with `skillset install`.\n"
+
+func (c Config) validate() error {
+	if c.Schema > Schema {
+		return fmt.Errorf("schema %d is newer than this skillset reads (%d): upgrade skillset", c.Schema, Schema)
+	}
+	if len(c.Sources) > 1 {
+		return fmt.Errorf("%d sources: a config holds one source for now", len(c.Sources))
+	}
+	for _, s := range c.Sources {
+		if s.Name == "" {
+			return errors.New("a source has no name")
+		}
+		if (s.URL == "") == (s.Path == "") {
+			return fmt.Errorf("source %q needs a url or a path, not both", s.Name)
+		}
+		if s.URL != "" && s.Ref == "" {
+			return fmt.Errorf("source %q has a url but no ref", s.Name)
+		}
+		if s.Path != "" && s.Ref != "" {
+			return fmt.Errorf("source %q is a local path and takes no ref", s.Name)
+		}
+	}
+	return nil
 }
 
 // ConfigPath is the config file under home.
@@ -45,16 +88,29 @@ func ReadConfig(home string) (cfg Config, ok bool, err error) {
 	if keys := md.Undecoded(); len(keys) > 0 {
 		return Config{}, false, fmt.Errorf("%s: unknown keys %v", path, keys)
 	}
+	if err := cfg.validate(); err != nil {
+		return Config{}, false, fmt.Errorf("%s: %w", path, err)
+	}
 	return cfg, true, nil
 }
 
-// WriteConfig writes cfg to home's config file, sorted.
+// WriteConfig writes cfg to home's config file in the current schema:
+// keys in a fixed order, lists sorted, no timestamps, so the same choices
+// always give the same bytes and two people's changes merge cleanly.
 func WriteConfig(home string, cfg Config) error {
+	cfg.Schema = Schema
 	cfg.Hosts = sorted(cfg.Hosts)
 	cfg.Sets = sorted(cfg.Sets)
+	cfg.Sources = append([]Source(nil), cfg.Sources...)
+	sort.Slice(cfg.Sources, func(i, j int) bool { return cfg.Sources[i].Name < cfg.Sources[j].Name })
+	if err := cfg.validate(); err != nil {
+		return err
+	}
 	var b bytes.Buffer
-	b.WriteString("# Written by skillset init.\n")
-	if err := toml.NewEncoder(&b).Encode(cfg); err != nil {
+	b.WriteString(header)
+	enc := toml.NewEncoder(&b)
+	enc.Indent = ""
+	if err := enc.Encode(cfg); err != nil {
 		return err
 	}
 	path := ConfigPath(home)

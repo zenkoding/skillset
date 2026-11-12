@@ -14,7 +14,7 @@ skillset is a command-line installer with no server to run. Local development me
 git clone https://github.com/zenkoding/skillset.git && cd skillset
 make git-setup                          # use the repo's commit template and commit-msg hook
 make install                            # install the binary from this checkout
-skillset --catalog "$PWD/config" init   # pick hosts and sets
+skillset init "$PWD"                    # pick hosts and sets from this checkout
 ```
 
 `init` is optional. Without a saved config, every set is installed for both hosts.
