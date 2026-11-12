@@ -116,8 +116,8 @@ description = "Build loop: build, tdd, publish, review, address, test, codify"
 requires = ["base"]
 
 [[hooks]]
-event = "pre-tool-use"
-tools = ["shell"]
+event = "PreToolUse"
+matcher = "Bash|PowerShell|Monitor"
 command = "hooks/guard.sh"   # relative to the set; installed with an absolute path
 
 [mcp.docs]
@@ -130,7 +130,7 @@ enabled = ["kubernetes.kubectl", "platform.github"]
 
 Validation rejects any file or manifest key outside this layout. `requires` names sets in the same source and carries no version range, because one source means the sets move together.
 
-Hook events and tool matchers use host-neutral names (`session-start`, `pre-tool-use`, and the tool class `shell`), which each renderer maps to its host's names. MCP servers are installed under `<set>-<name>`, so two sets cannot collide and a reader can tell which set added an entry.
+Hook events and tool matchers use Claude's names (`SessionStart`, `PreToolUse`, and the matcher `Bash|PowerShell|Monitor`), which Codex accepts unchanged. On Codex, a dcg hook needs a dcg release that emits Codex's three-field deny; with an older release, Codex ignores the deny and runs the command. MCP servers are installed under `<set>-<name>`, so two sets cannot collide and a reader can tell which set added an entry.
 
 ### Shared reference files
 
@@ -226,11 +226,10 @@ To check once implemented:
 - Removing a set leaves the user's own hooks, MCP servers and dcg packs in place.
 - A fresh home on each host shows the prefixed skills, the hook firing and the instructions loaded.
 
-Not yet verified: that prefixed skills load on both hosts, that rendered hook entries fire, that dcg works with the Codex hook payload, and that a Codex agent follows the instruction reference line.
+Not yet verified: that prefixed skills load on both hosts, that rendered hook entries fire, and that a Codex agent follows the instruction reference line.
 
 ## Unresolved questions
 
-- **Codex hook behaviour.** Codex's hook documentation uses Claude's event names (`SessionStart`, `PreToolUse`), matches shell commands, including unified exec, as `Bash`, passes the command at `tool_input.command`, and accepts the same deny output and exit code 2. On paper, then, `session-start` renders to `SessionStart` on both hosts, and `pre-tool-use` on `shell` renders to `PreToolUse` with the matcher `Bash|PowerShell|Monitor` on Claude, today's matcher, and `Bash` on Codex. Untested: whether dcg and the session-start hook behave correctly under Codex once the user trusts them, and whether the Codex payload differs in any field dcg reads. Settled by registering each current hook in a scratch Codex home, trusting it, and running a matching tool call.
 - **Comment-preserving edits.** skillset adds entries to TOML files the user owns: the dcg config and the Codex config. Whether it can do so without dropping the user's comments and key order, using the TOML library it uses today, is unknown. Settled by a test against a commented file in the first feature that edits each of them.
 
 ## Future possibilities
