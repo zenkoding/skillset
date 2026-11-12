@@ -19,7 +19,7 @@ VISION.md    milestone brief     epic spec +                                   l
 - `retrospect`: after an epic or milestone, turn friction into skill, doc and check fixes; runs `codify` for repeated mistakes.
 - `create-rfc`, `update-rfc`: write or revise an RFC for a contract other code depends on.
 
-## Build loop (base and engineering sets)
+## Build loop (base and development sets)
 
 One ticket, from problem to merged PR.
 
@@ -39,12 +39,21 @@ companion decisions checks    reviewer    findings   re-review               fri
 - `test`: run the plan's How to test steps against a fresh build and post a verdict per step.
 - `debrief`: at the end, report decisions, lessons and friction, and file them.
 
-## Engineering (engineering set)
+## Development extras (development set)
+
+- `codify`: turn a repeated mechanical mistake into a check.
+
+## Triage (triage set)
+
+- `triage-prs`: which open PRs need attention, and the command for each.
+
+## Architecture lane (architecture set)
+
+- `optimize`: measured performance work.
+
+## Quality lane (quality set)
 
 - `fix-bug`: find the cause of a defect before anyone fixes it.
-- `optimize-performance`: measured performance work.
-- `triage-prs`: which open PRs need attention, and the command for each.
-- `codify`: turn a repeated mechanical mistake into a check.
 
 ## Setup and knowledge (base set)
 
